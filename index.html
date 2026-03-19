@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoNaija — Find Your Dream Ride</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,500;1,9..144,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ─── RESET & ROOT ─────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+input,select{font-family:inherit}
+
+:root{
+  /* Palette */
+  --ink:       #0f0b08;
+  --paper:     #faf6f0;
+  --cream:     #f2ebe0;
+  --amber:     #d97c2a;
+  --amber-lt:  #f0a04a;
+  --amber-dk:  #9a5218;
+  --rust:      #b84820;
+  --forest:    #1e4530;
+  --green-wa:  #25d366;
+  --muted:     #7a6e64;
+  --border:    #e0d8cc;
+
+  /* Fonts */
+  --f-display: 'Fraunces', serif;
+  --f-ui:      'Syne', sans-serif;
+  --f-mono:    'DM Mono', monospace;
+
+  /* Motion */
+  --ease:      cubic-bezier(.4,0,.2,1);
+  --spring:    cubic-bezier(.34,1.56,.64,1);
+}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-ui);
+  overflow-x:hidden;
+}
+
+/* ─── SCROLLBAR ────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--cream)}
+::-webkit-scrollbar-thumb{background:var(--amber);border-radius:10px}
+
+/* ─── SHARED HELPERS ───────────────────────────── */
+.container{max-width:1280px;margin:0 auto;padding:0 2rem}
+.chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(217,124,42,.1);border:1px solid rgba(217,124,42,.3);
+  color:var(--amber-dk);font-family:var(--f-mono);font-size:.68rem;
+  font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  padding:.3rem .8rem;border-radius:100px
+}
+.section-eyebrow{
+  font-family:var(--f-mono);font-size:.7rem;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--amber);
+  display:flex;align-items:center;gap:.75rem
+}
+.section-eyebrow::before{content:'';width:2rem;height:2px;background:var(--amber);display:block}
+h2.display{
+  font-family:var(--f-display);font-size:clamp(2.2rem,4vw,3.6rem);
+  font-weight:700;line-height:1.06;letter-spacing:-.02em;margin-top:.5rem
+}
+h2.display em{font-style:italic;color:var(--amber)}
+
+/* ─── TICKER BAR ───────────────────────────────── */
+.ticker-bar{
+  background:var(--ink);color:var(--paper);
+  padding:.55rem 0;overflow:hidden;border-bottom:3px solid var(--amber)
+}
+.ticker-track{
+  display:flex;gap:2.5rem;white-space:nowrap;
+  animation:tick 28s linear infinite;width:max-content
+}
+.ticker-item{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,246,240,.5)}
+.ticker-item.accent{color:var(--amber-lt)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ─── NAVIGATION ───────────────────────────────── */
+nav{
+  background:rgba(250,246,240,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:900
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:68px
+}
+.logo{display:flex;align-items:center;gap:.7rem}
+.logo-mark{
+  width:40px;height:40px;background:var(--ink);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--amber);font-size:1.2rem;flex-shrink:0
+}
+.logo-text{font-family:var(--f-display);font-size:1.55rem;font-weight:700;line-height:1;letter-spacing:-.02em}
+.logo-text span{color:var(--amber);font-style:italic}
+.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none}
+.nav-links a{
+  font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);transition:color .2s
+}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.nav-pill{
+  background:var(--ink);color:var(--amber) !important;
+  padding:.45rem 1.2rem;border-radius:4px;
+  transition:background .2s !important
+}
+.nav-pill:hover{background:var(--amber-dk) !important;color:var(--paper) !important}
+.nav-burger{display:none;background:none;border:none;color:var(--ink);font-size:1.3rem}
+
+/* ─── HERO ─────────────────────────────────────── */
+.hero{
+  position:relative;
+  background:var(--ink);
+  color:var(--paper);
+  overflow:hidden;
+  min-height:88vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+}
+
+/* diagonal split */
+.hero::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;
+  width:55%;
+  background:linear-gradient(135deg,transparent 0%,transparent 48%,rgba(217,124,42,.06) 48%);
+  pointer-events:none
+}
+
+.hero-left{
+  position:relative;z-index:2;
+  padding:6rem 3rem 6rem 0;
+  padding-left:max(2rem, calc((100vw - 1280px)/2 + 2rem))
+}
+
+.hero-tag{margin-bottom:2rem}
+.hero-tagline{
+  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--amber-lt);
+  display:flex;align-items:center;gap:.6rem
+}
+.hero-tagline::before{content:'';width:2.5rem;height:1px;background:var(--amber)}
+
+.hero h1{
+  font-family:var(--f-display);
+  font-size:clamp(3rem,6vw,5.8rem);
+  font-weight:700;line-height:.98;
+  letter-spacing:-.035em;
+  margin:1rem 0 1.8rem;
+  animation:heroIn .8s var(--ease) both
+}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero h1 .outline{
+  -webkit-text-stroke:2px var(--paper);
+  color:transparent
+}
+
+.hero-sub{
+  font-size:1rem;color:rgba(250,246,240,.6);
+  line-height:1.75;max-width:440px;
+  margin-bottom:2.5rem;
+  animation:heroIn .8s .15s var(--ease) both
+}
+
+.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap;animation:heroIn .8s .25s var(--ease) both}
+
+.btn-amber{
+  background:var(--amber);color:var(--ink);
+  padding:.85rem 2rem;border-radius:6px;
+  font-weight:700;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;
+  border:none;display:inline-flex;align-items:center;gap:.6rem;
+  transition:all .25s var(--ease);
+  box-shadow:0 4px 20px rgba(217,124,42,.35)
+}
+.btn-amber:hover{background:var(--amber-lt);transform:translateY(-2px);box-shadow:0 8px 32px rgba(217,124,42,.45)}
+.btn-outline{
+  background:transparent;color:var(--paper);
+  padding:.85rem 2rem;border-radius:6px;
+  font-weight:600;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid rgba(250,246,240,.25);
+  display:inline-flex;align-items:center;gap:.6rem;
+  transition:all .25s var(--ease)
+}
+.btn-outline:hover{border-color:var(--amber);color:var(--amber)}
+
+.hero-stats{
+  display:flex;gap:2.5rem;margin-top:3rem;
+  padding-top:2.5rem;border-top:1px solid rgba(250,246,240,.12);
+  animation:heroIn .8s .35s var(--ease) both;
+  flex-wrap:wrap
+}
+.stat .n{
+  font-family:var(--f-display);font-size:2.4rem;font-weight:700;
+  color:var(--amber);line-height:1;letter-spacing:-.04em
+}
+.stat .l{font-size:.7rem;color:rgba(250,246,240,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+
+.hero-right{
+  position:relative;height:100%;min-height:88vh;overflow:hidden
+}
+.hero-img-main{
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(.75) saturate(1.1);
+  animation:heroImg 1s var(--ease) both
+}
+.hero-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, var(--ink) 0%, transparent 30%),
+             linear-gradient(to top, rgba(15,11,8,.6) 0%, transparent 40%)
+}
+.hero-img-badge{
+  position:absolute;bottom:2.5rem;right:2.5rem;
+  background:rgba(15,11,8,.8);backdrop-filter:blur(10px);
+  border:1px solid rgba(217,124,42,.3);
+  color:var(--paper);padding:1.2rem 1.5rem;border-radius:10px;
+  text-align:center
+}
+.badge-num{font-family:var(--f-display);font-size:2rem;font-weight:700;color:var(--amber);line-height:1;display:block}
+.badge-txt{font-size:.68rem;color:rgba(250,246,240,.6);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;display:block}
+
+@keyframes heroIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heroImg{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
+
+/* ─── SEARCH STRIP ─────────────────────────────── */
+.search-strip{
+  background:var(--cream);
+  border-bottom:1px solid var(--border);
+  padding:0
+}
+.search-inner{
+  display:grid;
+  grid-template-columns:2.5fr 1.2fr 1.2fr 1.2fr auto;
+  gap:0;
+  border:1px solid var(--border);
+  border-radius:0;
+  overflow:hidden;
+  margin:0 -2rem;
+}
+@media(min-width:1280px){.search-inner{margin:0}}
+
+.s-field{
+  display:flex;flex-direction:column;
+  border-right:1px solid var(--border);
+  padding:1.1rem 1.4rem
+}
+.s-field:last-child{border-right:none;padding:0}
+.s-label{
+  font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.4rem
+}
+.s-input,.s-select{
+  background:transparent;border:none;
+  font-size:.92rem;font-weight:600;color:var(--ink);
+  width:100%
+}
+.s-input:focus,.s-select:focus{outline:none}
+.s-input::placeholder{color:var(--muted);font-weight:400}
+.s-select{appearance:none;cursor:pointer}
+.s-select option{background:var(--paper)}
+.s-btn{
+  background:var(--ink);color:var(--amber);
+  border:none;padding:0 2.2rem;
+  font-family:var(--f-ui);font-weight:700;font-size:.82rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.5rem;
+  transition:background .2s;white-space:nowrap
+}
+.s-btn:hover{background:var(--amber-dk)}
+
+/* ─── BRANDS ROW ───────────────────────────────── */
+.brands-row{
+  background:var(--paper);
+  border-bottom:1px solid var(--border);
+  padding:1.5rem 0;overflow:hidden
+}
+.brands-track{
+  display:flex;gap:2.5rem;width:max-content;
+  animation:tick 24s linear infinite
+}
+.brand-pill{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:100px;padding:.4rem 1.2rem;
+  font-size:.75rem;font-weight:700;letter-spacing:.05em;
+  color:var(--muted);white-space:nowrap;
+  transition:all .2s;cursor:default
+}
+.brand-pill i{color:var(--amber);font-size:.7rem}
+
+/* ─── LISTINGS ─────────────────────────────────── */
+.listings{padding:6rem 0}
+
+.listings-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:2rem;gap:1.5rem;flex-wrap:wrap
+}
+
+.tab-bar{
+  display:flex;gap:.4rem;margin-bottom:2.5rem;
+  flex-wrap:wrap
+}
+.tab{
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:.45rem 1.1rem;border-radius:100px;
+  font-size:.78rem;font-weight:600;letter-spacing:.03em;
+  transition:all .2s
+}
+.tab:hover{border-color:var(--amber);color:var(--amber-dk)}
+.tab.on{background:var(--ink);border-color:var(--ink);color:var(--amber)}
+
+.result-tag{
+  font-family:var(--f-mono);font-size:.72rem;font-weight:500;
+  letter-spacing:.08em;color:var(--muted);
+  background:var(--cream);border:1px solid var(--border);
+  padding:.35rem .9rem;border-radius:100px
+}
+
+/* CARD GRID */
+.car-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+  gap:1.25rem
+}
+
+.car-card{
+  background:var(--paper);
+  border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:all .35s var(--ease);
+  animation:cardUp .5s var(--ease) both
+}
+.car-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 48px rgba(15,11,8,.1),0 0 0 1px rgba(217,124,42,.2);
+  border-color:rgba(217,124,42,.35)
+}
+@keyframes cardUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+.card-img{
+  position:relative;height:200px;overflow:hidden;cursor:pointer
+}
+.card-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .55s var(--ease)
+}
+.car-card:hover .card-img img{transform:scale(1.07)}
+.card-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(15,11,8,.55) 0%,transparent 55%)
+}
+.card-loc{
+  position:absolute;top:12px;left:12px;
+  background:rgba(15,11,8,.75);backdrop-filter:blur(6px);
+  border:1px solid rgba(217,124,42,.35);
+  color:var(--amber-lt);font-family:var(--f-mono);font-size:.62rem;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:.28rem .65rem;border-radius:4px;
+  display:flex;align-items:center;gap:.35rem
+}
+.card-year{
+  position:absolute;top:12px;right:12px;
+  background:var(--amber);color:var(--ink);
+  font-family:var(--f-display);font-size:.95rem;font-weight:700;
+  padding:.18rem .6rem;border-radius:4px
+}
+.card-fuel{
+  position:absolute;bottom:12px;right:12px;
+  background:rgba(15,11,8,.75);backdrop-filter:blur(6px);
+  color:rgba(250,246,240,.7);font-family:var(--f-mono);font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.25rem .6rem;border-radius:4px
+}
+
+.card-body{padding:1.3rem;flex:1;display:flex;flex-direction:column}
+.card-make{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--amber-dk);margin-bottom:.2rem
+}
+.card-model{
+  font-family:var(--f-display);font-size:1.4rem;font-weight:700;
+  letter-spacing:-.02em;line-height:1.15;color:var(--ink);margin-bottom:.9rem
+}
+.card-specs{
+  display:flex;gap:1.2rem;flex-wrap:wrap;margin-bottom:1rem
+}
+.card-spec{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.72rem;color:var(--muted)
+}
+.card-spec i{color:var(--amber);font-size:.65rem;width:14px}
+
+.card-divider{border:none;border-top:1px solid var(--border);margin:.8rem 0}
+
+.card-price{
+  font-family:var(--f-display);font-size:1.65rem;font-weight:700;
+  color:var(--ink);letter-spacing:-.03em;line-height:1
+}
+.card-price-note{font-size:.68rem;color:var(--muted);margin-top:.2rem}
+
+.card-actions{display:flex;gap:.6rem;margin-top:1rem}
+.btn-outline-sm{
+  flex:1;background:transparent;border:1px solid var(--border);
+  color:var(--ink);padding:.65rem;border-radius:6px;
+  font-size:.78rem;font-weight:700;letter-spacing:.03em;
+  transition:all .2s
+}
+.btn-outline-sm:hover{border-color:var(--amber);background:rgba(217,124,42,.05);color:var(--amber-dk)}
+.btn-wa{
+  flex:1.4;background:var(--green-wa);color:#fff;border:none;
+  padding:.65rem;border-radius:6px;font-size:.78rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  transition:all .2s;text-decoration:none;letter-spacing:.03em
+}
+.btn-wa:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* Empty */
+.empty{
+  grid-column:1/-1;text-align:center;padding:5rem 2rem;
+  display:none
+}
+.empty i{font-size:3.5rem;color:var(--border);margin-bottom:1rem;display:block}
+.empty h3{font-family:var(--f-display);font-size:1.4rem;margin-bottom:.4rem}
+.empty p{color:var(--muted);font-size:.88rem}
+
+/* ─── NUMBERS BAND ─────────────────────────────── */
+.numbers{
+  background:var(--ink);color:var(--paper);
+  padding:4rem 0;
+  position:relative;overflow:hidden
+}
+.numbers::before{
+  content:'AUTONAIJA';
+  position:absolute;top:50%;left:0;transform:translateY(-50%);
+  font-family:var(--f-display);font-size:9rem;font-weight:700;
+  color:rgba(255,255,255,.025);white-space:nowrap;pointer-events:none;
+  letter-spacing:.05em
+}
+.numbers-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:2rem;position:relative;z-index:1
+}
+.num-item{text-align:center}
+.num-val{
+  font-family:var(--f-display);font-size:3.2rem;font-weight:700;
+  color:var(--amber);line-height:1;letter-spacing:-.04em;display:block
+}
+.num-label{
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(250,246,240,.4);margin-top:.4rem
+}
+.num-sep{width:1px;background:rgba(250,246,240,.08);margin:0 auto}
+
+/* ─── WHY SECTION ──────────────────────────────── */
+.why{padding:7rem 0;background:var(--cream)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.why-text p{
+  color:var(--muted);font-size:1rem;line-height:1.8;
+  margin:1.2rem 0 2.5rem;max-width:460px
+}
+.why-features{display:flex;flex-direction:column;gap:1rem}
+.why-feat{
+  display:flex;gap:1.1rem;align-items:flex-start;
+  padding:1.1rem;border-radius:8px;border:1px solid transparent;
+  transition:all .25s
+}
+.why-feat:hover{background:var(--paper);border-color:var(--border)}
+.why-icon{
+  width:42px;height:42px;flex-shrink:0;border-radius:8px;
+  background:var(--ink);color:var(--amber);
+  display:flex;align-items:center;justify-content:center;font-size:1rem
+}
+.why-feat h4{font-weight:700;font-size:.9rem;margin-bottom:.25rem;color:var(--ink)}
+.why-feat p{font-size:.8rem;color:var(--muted);line-height:1.6}
+
+.why-visual{position:relative;height:520px}
+.why-img-a{
+  position:absolute;top:0;left:0;width:78%;height:360px;
+  object-fit:cover;border-radius:12px;border:1px solid var(--border)
+}
+.why-img-b{
+  position:absolute;bottom:0;right:0;width:58%;height:230px;
+  object-fit:cover;border-radius:12px;
+  border:4px solid var(--cream);
+  box-shadow:-6px -6px 0 var(--amber)
+}
+.why-float{
+  position:absolute;top:48%;right:4%;
+  background:var(--ink);color:var(--paper);
+  border-radius:10px;padding:1.1rem 1.4rem;text-align:center;
+  box-shadow:0 12px 40px rgba(15,11,8,.25)
+}
+.why-float .n{font-family:var(--f-display);font-size:2rem;font-weight:700;color:var(--amber-lt);line-height:1;display:block}
+.why-float .t{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,246,240,.5);margin-top:.2rem}
+
+/* ─── HOW IT WORKS ─────────────────────────────── */
+.how{padding:7rem 0}
+.how-intro{text-align:center;max-width:580px;margin:0 auto 4rem}
+.how-intro p{color:var(--muted);margin-top:.8rem;line-height:1.75}
+.steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+  position:relative
+}
+.steps::after{
+  content:'';position:absolute;top:52px;left:14%;right:14%;height:1px;
+  background:linear-gradient(to right,transparent,var(--amber),transparent);
+  pointer-events:none
+}
+.step{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:12px;padding:2rem 1.5rem;text-align:center;
+  transition:all .3s var(--ease);cursor:default
+}
+.step:hover{
+  background:var(--ink);border-color:var(--ink);
+  transform:translateY(-6px);box-shadow:0 20px 40px rgba(15,11,8,.15)
+}
+.step:hover .step-n{background:var(--amber);color:var(--ink);border-color:var(--amber)}
+.step:hover h3,.step:hover p{color:var(--paper)}
+.step:hover p{color:rgba(250,246,240,.55)}
+.step-n{
+  width:50px;height:50px;border-radius:50%;margin:0 auto 1.5rem;
+  background:var(--paper);border:2px solid var(--amber);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-display);font-size:1.25rem;font-weight:700;
+  color:var(--amber);position:relative;z-index:1;
+  transition:all .3s
+}
+.step h3{font-family:var(--f-display);font-size:1.1rem;font-weight:700;margin-bottom:.6rem;transition:color .3s}
+.step p{font-size:.8rem;color:var(--muted);line-height:1.65;transition:color .3s}
+
+/* ─── TESTIMONIALS ─────────────────────────────── */
+.reviews{padding:7rem 0;background:var(--cream);border-top:1px solid var(--border)}
+.reviews-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.25rem;margin-top:3.5rem
+}
+.review-card{
+  background:var(--paper);border:1px solid var(--border);
+  border-radius:12px;padding:1.75rem;
+  transition:all .3s;position:relative;overflow:hidden
+}
+.review-card::before{
+  content:'"';position:absolute;top:-1rem;left:1.2rem;
+  font-family:var(--f-display);font-size:7rem;
+  color:rgba(217,124,42,.08);pointer-events:none;line-height:1
+}
+.review-card:hover{border-color:rgba(217,124,42,.4);transform:translateY(-3px);box-shadow:0 12px 32px rgba(15,11,8,.08)}
+.stars{display:flex;gap:.2rem;color:var(--amber);font-size:.8rem;margin-bottom:1rem}
+.review-text{
+  font-style:italic;font-size:.88rem;color:var(--muted);
+  line-height:1.75;margin-bottom:1.5rem;font-family:var(--f-display);font-weight:300
+}
+.reviewer{display:flex;align-items:center;gap:.75rem}
+.reviewer-av{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--amber-dk),var(--amber));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-display);font-size:.9rem;font-weight:700;
+  color:var(--paper);flex-shrink:0
+}
+.reviewer-name{font-weight:700;font-size:.85rem;color:var(--ink)}
+.reviewer-loc{font-size:.7rem;color:var(--muted);margin-top:.1rem}
+
+/* ─── LOGISTICS ────────────────────────────────── */
+.logistics{
+  padding:6rem 0;
+  background:var(--ink);color:var(--paper);
+  position:relative;overflow:hidden
+}
+.logistics::before{
+  content:'';position:absolute;top:0;right:0;
+  width:50%;height:100%;
+  background:linear-gradient(135deg,transparent 0%,rgba(217,124,42,.04) 100%)
+}
+.logistics-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.logistics-text .section-eyebrow{color:var(--amber);margin-bottom:1rem}
+.logistics-text h2{font-family:var(--f-display);font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:1rem}
+.logistics-text h2 em{font-style:italic;color:var(--amber)}
+.logistics-text p{color:rgba(250,246,240,.55);font-size:.92rem;line-height:1.75;margin-bottom:2rem}
+.logistics-list{display:flex;flex-direction:column;gap:.7rem}
+.logistics-li{display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:rgba(250,246,240,.7)}
+.logistics-li i{color:var(--amber);width:18px}
+
+.logistics-card{
+  background:rgba(250,246,240,.04);
+  border:1px solid rgba(250,246,240,.1);
+  border-radius:12px;padding:2rem
+}
+.logistics-card h4{font-family:var(--f-display);font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;color:var(--amber-lt)}
+.l-input-row{display:flex;gap:.5rem}
+.l-input{
+  flex:1;background:rgba(250,246,240,.06);
+  border:1px solid rgba(250,246,240,.15);
+  border-radius:6px;padding:.8rem 1rem;
+  color:var(--paper);font-size:.88rem
+}
+.l-input::placeholder{color:rgba(250,246,240,.3)}
+.l-input:focus{outline:none;border-color:var(--amber)}
+.l-btn{
+  background:var(--amber);color:var(--ink);
+  border:none;border-radius:6px;padding:.8rem 1.3rem;
+  font-weight:700;font-size:.78rem;letter-spacing:.06em;
+  white-space:nowrap;transition:background .2s
+}
+.l-btn:hover{background:var(--amber-lt)}
+.city-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+.city-chip{
+  background:rgba(217,124,42,.1);border:1px solid rgba(217,124,42,.25);
+  color:var(--amber-lt);font-family:var(--f-mono);font-size:.62rem;
+  letter-spacing:.08em;text-transform:uppercase;padding:.25rem .65rem;border-radius:100px
+}
+.l-note{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.06em;color:rgba(250,246,240,.3);margin-top:1rem}
+
+/* ─── E-MAGAZINE ───────────────────────────────── */
+.magazine{padding:7rem 0;border-top:1px solid var(--border)}
+.mag-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.mag-visual{position:relative}
+.mag-img{width:100%;height:420px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
+.mag-sticker{
+  position:absolute;top:-18px;right:-18px;
+  width:82px;height:82px;border-radius:50%;
+  background:var(--amber);color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:var(--f-display);text-align:center;line-height:1.2;
+  box-shadow:0 4px 24px rgba(217,124,42,.4)
+}
+.mag-sticker .s1{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.mag-sticker .s2{font-size:1.2rem;font-weight:700}
+.mag-text h2{font-size:clamp(2rem,3.5vw,2.8rem)}
+.mag-text p{color:var(--muted);font-size:.95rem;line-height:1.75;margin:1.1rem 0 1.5rem}
+.mag-perks{display:flex;flex-direction:column;gap:.55rem;margin-bottom:2rem}
+.mag-perk{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muted)}
+.mag-perk i{color:var(--amber);font-size:.75rem}
+.mag-form{display:flex;gap:.5rem}
+.mag-input{
+  flex:1;background:var(--cream);border:1px solid var(--border);
+  border-radius:6px;padding:.85rem 1.1rem;
+  color:var(--ink);font-size:.88rem
+}
+.mag-input::placeholder{color:var(--muted)}
+.mag-input:focus{outline:none;border-color:var(--amber)}
+.mag-btn{
+  background:var(--ink);color:var(--amber);border:none;
+  border-radius:6px;padding:.85rem 1.7rem;
+  font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.5rem;
+  transition:all .2s;white-space:nowrap
+}
+.mag-btn:hover{background:var(--amber-dk);color:var(--paper)}
+.mag-btn:disabled{opacity:.6;pointer-events:none}
+.mag-success{
+  display:none;align-items:center;gap:.5rem;
+  color:#4ade80;font-size:.8rem;font-weight:600;margin-top:.75rem
+}
+.mag-fine{font-size:.68rem;color:var(--muted);margin-top:.65rem}
+
+/* ─── FOOTER ───────────────────────────────────── */
+footer{background:var(--ink);color:var(--paper);padding:4rem 0 2rem;border-top:3px solid var(--amber)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand .logo-text{font-size:1.4rem}
+.footer-brand p{font-size:.82rem;color:rgba(250,246,240,.4);line-height:1.7;margin:1rem 0 1.4rem;max-width:260px}
+.socials{display:flex;gap:.6rem}
+.social{
+  width:36px;height:36px;background:rgba(250,246,240,.06);
+  border:1px solid rgba(250,246,240,.1);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(250,246,240,.5);font-size:.9rem;transition:all .2s
+}
+.social:hover{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.footer-col h5{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:1.2rem
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.footer-links a{font-size:.82rem;color:rgba(250,246,240,.4);transition:color .2s}
+.footer-links a:hover{color:var(--paper)}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:2rem;border-top:1px solid rgba(250,246,240,.08);
+  font-family:var(--f-mono);font-size:.68rem;color:rgba(250,246,240,.3);
+  flex-wrap:wrap;gap:1rem
+}
+
+/* ─── MODAL ────────────────────────────────────── */
+.modal-wrap{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(15,11,8,.88);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;padding:1.5rem
+}
+.modal-wrap.open{display:flex}
+.modal-box{
+  background:var(--paper);border-radius:14px;
+  max-width:700px;width:100%;max-height:92vh;overflow-y:auto;
+  position:relative;animation:mIn .35s var(--spring) both
+}
+@keyframes mIn{from{opacity:0;transform:scale(.92) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;z-index:10;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(15,11,8,.6);border:none;
+  color:var(--paper);font-size:.95rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;backdrop-filter:blur(4px)
+}
+.modal-close:hover{background:var(--rust)}
+.modal-img{width:100%;height:270px;object-fit:cover;border-radius:14px 14px 0 0}
+.modal-body{padding:1.75rem 2rem 2rem}
+.modal-make{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:.2rem}
+.modal-name{font-family:var(--f-display);font-size:1.9rem;font-weight:700;letter-spacing:-.025em;line-height:1.1;color:var(--ink)}
+.modal-price{font-family:var(--f-display);font-size:1.9rem;font-weight:700;color:var(--amber-dk);letter-spacing:-.03em;text-align:right;line-height:1.1}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem}
+.modal-loc{display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--muted);margin-bottom:1.4rem}
+.modal-loc i{color:var(--amber)}
+.modal-specs{
+  display:flex;gap:1.5rem;padding:1rem 0;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:1.4rem;flex-wrap:wrap
+}
+.modal-spec label{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.2rem}
+.modal-spec span{font-size:.88rem;font-weight:700;color:var(--ink)}
+.modal-desc{font-size:.88rem;color:var(--muted);line-height:1.75;margin-bottom:1.4rem}
+.modal-feats-label{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:.75rem}
+.modal-feats{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:1.5rem}
+.modal-feat{display:flex;align-items:center;gap:.45rem;font-size:.82rem;color:var(--muted)}
+.modal-feat i{color:var(--amber);font-size:.62rem}
+.modal-logistics{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:8px;padding:1.2rem;margin-bottom:1.4rem
+}
+.modal-logistics label{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--amber-dk);font-weight:500;margin-bottom:.75rem
+}
+.modal-l-input{
+  width:100%;background:var(--paper);border:1px solid var(--border);
+  border-radius:6px;padding:.75rem 1rem;color:var(--ink);font-size:.88rem;margin-bottom:.5rem
+}
+.modal-l-input::placeholder{color:var(--muted)}
+.modal-l-input:focus{outline:none;border-color:var(--amber)}
+.modal-l-note{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.06em;color:var(--muted)}
+.modal-wa{
+  width:100%;background:var(--green-wa);color:#fff;border:none;
+  border-radius:8px;padding:1rem;
+  font-weight:700;font-size:.92rem;letter-spacing:.04em;
+  display:flex;align-items:center;justify-content:center;gap:.65rem;
+  transition:all .25s
+}
+.modal-wa:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,211,102,.3)}
+
+/* ─── TOAST ────────────────────────────────────── */
+.toast{
+  position:fixed;bottom:2rem;left:50%;
+  transform:translateX(-50%) translateY(5rem);
+  background:var(--ink);border:1px solid var(--amber);
+  color:var(--paper);padding:.8rem 1.6rem;border-radius:100px;
+  font-family:var(--f-mono);font-size:.75rem;letter-spacing:.06em;
+  display:flex;align-items:center;gap:.55rem;
+  opacity:0;transition:all .4s var(--spring);z-index:9999;pointer-events:none;white-space:nowrap
+}
+.toast i{color:var(--amber)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ─── RESPONSIVE ───────────────────────────────── */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .hero-left{padding:5rem 0 4rem}
+  .why-grid{grid-template-columns:1fr}
+  .why-visual{display:none}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:860px){
+  .search-inner{grid-template-columns:1fr 1fr}
+  .s-btn{grid-column:1/-1;justify-content:center;padding:1.1rem}
+  .steps{grid-template-columns:1fr 1fr}
+  .steps::after{display:none}
+  .reviews-grid{grid-template-columns:1fr}
+  .logistics-grid{grid-template-columns:1fr}
+  .mag-grid{grid-template-columns:1fr}
+  .mag-visual{display:none}
+}
+@media(max-width:600px){
+  .nav-links{display:none}
+  .nav-burger{display:block}
+  .car-grid{grid-template-columns:1fr}
+  .tab-bar{gap:.3rem}
+  .listings-header{flex-direction:column;align-items:flex-start}
+  .steps{grid-template-columns:1fr}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .search-inner{grid-template-columns:1fr}
+  .mag-form{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ░░░ TICKER ░░░ -->
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <span class="ticker-item accent">🚗 New Arrivals Weekly</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Verified Sellers Only</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item accent">Nationwide Delivery Available</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Tokunbo &amp; Nigerian Used Cars</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item accent">WhatsApp-First Platform</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">All 36 States + FCT Covered</span>
+    <span class="ticker-item">·</span>
+    <!-- dup -->
+    <span class="ticker-item accent">🚗 New Arrivals Weekly</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Verified Sellers Only</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item accent">Nationwide Delivery Available</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Tokunbo &amp; Nigerian Used Cars</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item accent">WhatsApp-First Platform</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">All 36 States + FCT Covered</span>
+    <span class="ticker-item">·</span>
+  </div>
+</div>
+
+<!-- ░░░ NAV ░░░ -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark"><i class="fa-solid fa-car-side"></i></div>
+        <div class="logo-text">Auto<span>Naija</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#listings">Browse Cars</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#logistics">Logistics</a></li>
+        <li><a href="#magazine">Free Guide</a></li>
+        <li><a href="#" class="nav-pill">List Your Car</a></li>
+      </ul>
+      <button class="nav-burger"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░░ HERO ░░░ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">
+      <div class="hero-tagline">Nigeria's Most Trusted Car Marketplace</div>
+    </div>
+    <h1>
+      Your Next<br>
+      <em>Dream Car</em><br>
+      <span class="outline">Awaits.</span>
+    </h1>
+    <p class="hero-sub">
+      Browse hundreds of verified listings from trusted sellers across Nigeria.
+      Transparent pricing. Direct WhatsApp contact. Nationwide logistics sorted.
+    </p>
+    <div class="hero-btns">
+      <a href="#listings" class="btn-amber"><i class="fa-solid fa-magnifying-glass"></i>Browse All Cars</a>
+      <a href="#how" class="btn-outline"><i class="fa-regular fa-circle-play"></i>How It Works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="n">200+</span>
+        <div class="l">Active Listings</div>
+      </div>
+      <div class="stat">
+        <span class="n">₦4B+</span>
+        <div class="l">Cars Sold</div>
+      </div>
+      <div class="stat">
+        <span class="n">2,800+</span>
+        <div class="l">Happy Buyers</div>
+      </div>
+      <div class="stat">
+        <span class="n">36</span>
+        <div class="l">States Covered</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://picsum.photos/seed/naijahero/900/1000" alt="Premium Car" class="hero-img-main">
+    <div class="hero-img-overlay"></div>
+    <div class="hero-img-badge">
+      <span class="badge-num">4.9★</span>
+      <span class="badge-txt">Avg. Seller Rating</span>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ SEARCH STRIP ░░░ -->
+<div class="search-strip" id="search">
+  <div class="container" style="padding:0 2rem">
+    <div class="search-inner">
+      <div class="s-field">
+        <div class="s-label"><i class="fa-solid fa-magnifying-glass"></i> Search</div>
+        <input type="text" id="searchInput" class="s-input" placeholder="Make, model, or keyword…">
+      </div>
+      <div class="s-field">
+        <div class="s-label"><i class="fa-solid fa-location-dot"></i> Location</div>
+        <select id="filterLocation" class="s-select">
+          <option value="all">All Locations</option>
+          <option value="Lagos">Lagos</option>
+          <option value="Abuja">Abuja</option>
+          <option value="Port Harcourt">Port Harcourt</option>
+          <option value="Ibadan">Ibadan</option>
+        </select>
+      </div>
+      <div class="s-field">
+        <div class="s-label"><i class="fa-solid fa-naira-sign"></i> Budget</div>
+        <select id="filterPrice" class="s-select">
+          <option value="all">Any Price</option>
+          <option value="low">Under ₦5M</option>
+          <option value="mid">₦5M – ₦15M</option>
+          <option value="high">₦15M+</option>
+        </select>
+      </div>
+      <div class="s-field">
+        <div class="s-label"><i class="fa-solid fa-gas-pump"></i> Fuel Type</div>
+        <select id="filterFuel" class="s-select">
+          <option value="all">Any Fuel</option>
+          <option value="Petrol">Petrol</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="Electric">Electric</option>
+        </select>
+      </div>
+      <button class="s-btn" onclick="applyFilters()">
+        <i class="fa-solid fa-sliders"></i> Filter
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ BRANDS ░░░ -->
+<div class="brands-row">
+  <div class="brands-track">
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Toyota</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Mercedes-Benz</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Lexus</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Honda</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> BMW</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Infiniti</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Ford</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Audi</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Kia</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Hyundai</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Acura</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Chevrolet</div>
+    <!-- dup -->
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Toyota</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Mercedes-Benz</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Lexus</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Honda</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> BMW</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Infiniti</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Ford</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Audi</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Kia</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Hyundai</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Acura</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i> Chevrolet</div>
+  </div>
+</div>
+
+<!-- ░░░ LISTINGS ░░░ -->
+<section class="listings" id="listings">
+  <div class="container">
+    <div class="listings-header">
+      <div>
+        <div class="section-eyebrow">Inventory</div>
+        <h2 class="display">Available <em>Vehicles</em></h2>
+      </div>
+      <span class="result-tag" id="resultCount">Loading…</span>
+    </div>
+
+    <div class="tab-bar" id="tabBar">
+      <button class="tab on" onclick="setTab(this,'all')">All Cars</button>
+      <button class="tab" onclick="setTab(this,'Lagos')">Lagos</button>
+      <button class="tab" onclick="setTab(this,'Abuja')">Abuja</button>
+      <button class="tab" onclick="setTab(this,'Port Harcourt')">Port Harcourt</button>
+      <button class="tab" onclick="setTab(this,'Ibadan')">Ibadan</button>
+    </div>
+
+    <div id="carGrid" class="car-grid"></div>
+    <div id="emptyState" class="empty">
+      <i class="fa-regular fa-face-frown"></i>
+      <h3>No vehicles found</h3>
+      <p>Try adjusting your search or filters.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ NUMBERS ░░░ -->
+<section class="numbers">
+  <div class="container">
+    <div class="numbers-grid">
+      <div class="num-item">
+        <span class="num-val">200+</span>
+        <div class="num-label">Verified Listings</div>
+      </div>
+      <div class="num-item">
+        <span class="num-val">4.9★</span>
+        <div class="num-label">Average Rating</div>
+      </div>
+      <div class="num-item">
+        <span class="num-val">₦4B+</span>
+        <div class="num-label">Total Cars Sold</div>
+      </div>
+      <div class="num-item">
+        <span class="num-val">2,800+</span>
+        <div class="num-label">Happy Buyers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ WHY US ░░░ -->
+<section class="why" id="about">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-text">
+        <div class="section-eyebrow">Why AutoNaija</div>
+        <h2 class="display">Buy With<br><em>Confidence,</em><br>Zero Wahala.</h2>
+        <p>We connect verified sellers with serious buyers across Nigeria. No middlemen, no hidden charges — just clean deals that respect your hard-earned Naira.</p>
+        <div class="why-features">
+          <div class="why-feat">
+            <div class="why-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div>
+              <h4>Verified Sellers Only</h4>
+              <p>Every seller passes our ID check, ownership verification, and vehicle history review before listing.</p>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <div>
+              <h4>Transparent Pricing</h4>
+              <p>No "arrange" pricing. What you see is what you negotiate — backed by full market data.</p>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <div>
+              <h4>Nationwide Logistics</h4>
+              <p>Trusted haulage partners deliver safely to all 36 states and FCT, with GPS tracking.</p>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <h4>WhatsApp-First</h4>
+              <p>Connect directly with sellers via WhatsApp — the way Nigerians do business. Fast and personal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-visual">
+        <img src="https://picsum.photos/seed/showroom88/800/600" alt="Showroom" class="why-img-a">
+        <img src="https://picsum.photos/seed/carcheck77/600/400" alt="Inspection" class="why-img-b">
+        <div class="why-float">
+          <span class="n">5+</span>
+          <span class="t">Years in Business</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ HOW IT WORKS ░░░ -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="how-intro">
+      <div class="section-eyebrow" style="justify-content:center">Process</div>
+      <h2 class="display" style="text-align:center;font-size:clamp(2rem,4vw,3rem);margin-top:.5rem">From Browse to<br><em>Behind the Wheel</em></h2>
+      <p>Four simple steps separate you from your dream car.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <h3>Browse & Filter</h3>
+        <p>Search our curated inventory by location, budget, brand, or fuel type. Every listing is verified.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <h3>Contact Seller</h3>
+        <p>Tap Chat to open a direct WhatsApp conversation with the verified seller. Ask anything.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <h3>Inspect & Negotiate</h3>
+        <p>Meet the seller, inspect the car, and negotiate fairly. We provide guidance on market value.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <h3>Drive or Deliver</h3>
+        <p>Pick it up yourself, or book our nationwide door-to-door delivery service.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ REVIEWS ░░░ -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="section-eyebrow">Testimonials</div>
+    <h2 class="display" style="margin-top:.5rem">What <em>Buyers</em> Say</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p class="review-text">"I bought my Lexus RX 350 through AutoNaija. Chatted the seller on Tuesday, inspected Thursday, drove home Friday. No stories. Clean process from start to finish."</p>
+        <div class="reviewer">
+          <div class="reviewer-av">AO</div>
+          <div>
+            <div class="reviewer-name">Adebayo Okonkwo</div>
+            <div class="reviewer-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.6rem;margin-right:.2rem"></i> Lagos Island</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p class="review-text">"Based in Enugu, bought a RAV4 from Lagos. Their logistics team delivered it to my compound. Car was exactly as described. This is how it should work in Nigeria."</p>
+        <div class="reviewer">
+          <div class="reviewer-av">CN</div>
+          <div>
+            <div class="reviewer-name">Chidinma Nwosu</div>
+            <div class="reviewer-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.6rem;margin-right:.2rem"></i> Enugu</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+        <p class="review-text">"Finally a Nigerian car website that doesn't feel like a scam. Verified seller, fair price, and their free buyer's guide helped me negotiate properly. Highly recommend."</p>
+        <div class="reviewer">
+          <div class="reviewer-av">MH</div>
+          <div>
+            <div class="reviewer-name">Mohammed Hassan</div>
+            <div class="reviewer-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.6rem;margin-right:.2rem"></i> Abuja</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ LOGISTICS ░░░ -->
+<section class="logistics" id="logistics">
+  <div class="container">
+    <div class="logistics-grid">
+      <div class="logistics-text">
+        <div class="section-eyebrow">Delivery</div>
+        <h2>Nationwide <em>Logistics</em><br>Fully Sorted.</h2>
+        <p>Found your dream car in Lagos but you're in Sokoto? Not a problem. Our trusted haulage partners deliver to all 36 states with GPS tracking and full transit insurance.</p>
+        <div class="logistics-list">
+          <div class="logistics-li"><i class="fa-solid fa-circle-check"></i> Covered by transit insurance on every delivery</div>
+          <div class="logistics-li"><i class="fa-solid fa-circle-check"></i> Real-time GPS tracking from pickup to drop-off</div>
+          <div class="logistics-li"><i class="fa-solid fa-circle-check"></i> Typical delivery window: 24 – 72 hours</div>
+          <div class="logistics-li"><i class="fa-solid fa-circle-check"></i> Professional, experienced haulage partners</div>
+          <div class="logistics-li"><i class="fa-solid fa-circle-check"></i> All 36 states plus FCT covered</div>
+        </div>
+      </div>
+      <div class="logistics-card">
+        <h4><i class="fa-solid fa-truck-fast" style="margin-right:.5rem"></i>Get a Delivery Quote</h4>
+        <div class="l-input-row">
+          <input type="text" class="l-input" id="deliveryCity" placeholder="Your destination (e.g. Kaduna State)">
+          <button class="l-btn" onclick="quoteLogistics()">Quote via WhatsApp</button>
+        </div>
+        <div class="city-chips">
+          <span class="city-chip">Lagos</span>
+          <span class="city-chip">Abuja</span>
+          <span class="city-chip">PH</span>
+          <span class="city-chip">Kano</span>
+          <span class="city-chip">Ibadan</span>
+          <span class="city-chip">Enugu</span>
+          <span class="city-chip">Kaduna</span>
+          <span class="city-chip">+29 more</span>
+        </div>
+        <div class="l-note"><i class="fa-solid fa-info-circle" style="color:var(--amber);margin-right:.3rem"></i> Quotes provided via WhatsApp within 30 minutes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ E-MAGAZINE ░░░ -->
+<section class="magazine" id="magazine">
+  <div class="container">
+    <div class="mag-grid">
+      <div class="mag-visual">
+        <img src="https://picsum.photos/seed/guidebook99/600/800" alt="Car Buyer Guide" class="mag-img">
+        <div class="mag-sticker"><span class="s1">100%</span><span class="s2">FREE</span></div>
+      </div>
+      <div class="mag-text">
+        <div class="section-eyebrow">Free Resource</div>
+        <h2 class="display" style="font-size:clamp(2rem,3.5vw,2.8rem);margin-top:.5rem">
+          The Nigerian<br>Car Buyer's <em>Bible</em>
+        </h2>
+        <p>Before you spend your hard-earned Naira, get the knowledge that protects it. Our 2024 guide covers everything — from spotting a cloned car to negotiating customs.</p>
+        <div class="mag-perks">
+          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i> How to avoid common Tokunbo scams</div>
+          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i> Customs duty calculator & step-by-step guide</div>
+          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i> Negotiation tactics that actually work</div>
+          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i> Best cars for Nigerian roads per budget tier</div>
+          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i> Fuel efficiency comparison for 20+ popular models</div>
+        </div>
+        <div class="mag-form">
+          <input type="email" id="emailInput" class="mag-input" placeholder="Enter your email address">
+          <button id="magBtn" class="mag-btn" onclick="submitMag()">
+            <i class="fa-solid fa-download"></i> Get Free Guide
+          </button>
+        </div>
+        <div class="mag-success" id="magSuccess">
+          <i class="fa-solid fa-circle-check"></i> Your guide is on its way — check your inbox!
+        </div>
+        <p class="mag-fine">No spam, ever. Unsubscribe any time. 6,200+ Nigerians already downloaded this.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ FOOTER ░░░ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark"><i class="fa-solid fa-car-side"></i></div>
+          <div class="logo-text">Auto<span>Naija</span></div>
+        </div>
+        <p>Nigeria's most trusted platform for buying and selling quality vehicles. Transparent. Verified. Fast.</p>
+        <div class="socials">
+          <a href="#" class="social"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" class="social"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" class="social"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Marketplace</h5>
+        <ul class="footer-links">
+          <li><a href="#">Browse All Cars</a></li>
+          <li><a href="#">Sell Your Car</a></li>
+          <li><a href="#">Tokunbo Cars</a></li>
+          <li><a href="#">Nigerian Used</a></li>
+          <li><a href="#">Featured Listings</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul class="footer-links">
+          <li><a href="#">About AutoNaija</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Verified Sellers</a></li>
+          <li><a href="#">Blog & News</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <ul class="footer-links">
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Buyer's Guide</a></li>
+          <li><a href="#">Logistics Info</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 AutoNaija. All rights reserved.</span>
+      <span>🇳🇬 Made with pride in Nigeria</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ░░░ MODAL ░░░ -->
+<div class="modal-wrap" id="modalWrap" onclick="closeModal(event)">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ░░░ TOAST ░░░ -->
+<div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastMsg"></span></div>
+
+<!-- ░░░ SCRIPT ░░░ -->
+<script>
+const WA = '2348123456789';
+
+const cars = [
+  {id:1,make:'Mercedes-Benz',model:'C-Class AMG',year:2020,price:18500000,mileage:'45,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',image:'https://picsum.photos/seed/benz2020/800/550',desc:'Clean Nigerian used Mercedes C-Class. First body, nothing to fix. Perfectly maintained with full service history. Buy and drive.',features:['Sunroof','Leather Seats','Navigation','Reverse Camera','Keyless Entry','Ambient Lighting']},
+  {id:2,make:'Toyota',model:'RAV4 Hybrid',year:2021,price:22000000,mileage:'30,000 km',transmission:'CVT',fuel:'Hybrid',location:'Abuja',image:'https://picsum.photos/seed/rav42021/800/550',desc:'Fuel efficient SUV perfect for Nigerian roads. Accident free, alloy wheels, clean fabric interior.',features:['Android Auto','Apple CarPlay','Lane Assist','Eco Mode','Heated Seats','AWD']},
+  {id:3,make:'Lexus',model:'RX 350',year:2019,price:28000000,mileage:'60,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',image:'https://picsum.photos/seed/lexus350/800/550',desc:'Muscle on wheels. The V6 engine is powerful and very reliable. Perfect for Nigerian terrain. Customs duty fully paid.',features:['Panoramic Roof','Mark Levinson Audio','AWD','Ventilated Seats','360 Camera','Pre-Collision']},
+  {id:4,make:'Honda',model:'Accord',year:2022,price:15000000,mileage:'15,000 km',transmission:'Automatic',fuel:'Petrol',location:'Port Harcourt',image:'https://picsum.photos/seed/accord22/800/550',desc:'Tokunbo Honda Accord. Extremely neat interior and exterior. Very low mileage. Low fuel consumption.',features:['Push Start','Blind Spot Monitor','Cruise Control','Wireless Charging','Lane Keep']},
+  {id:5,make:'Toyota',model:'Camry',year:2020,price:12500000,mileage:'55,000 km',transmission:'Automatic',fuel:'Petrol',location:'Ibadan',image:'https://picsum.photos/seed/camry20/800/550',desc:'The ever reliable Camry. Ice silver color. Engine and gear in perfect condition. Ready to drive.',features:['Fabric Seats','Bluetooth','Backup Camera','Alloy Wheels','Toyota Safety Sense']},
+  {id:6,make:'Ford',model:'Explorer',year:2018,price:17000000,mileage:'80,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',image:'https://picsum.photos/seed/fordex18/800/550',desc:'American Spec SUV. Very spacious family car with strong V6 engine. Great for big families.',features:['3rd Row Seating','SYNC 3','Parking Sensors','Roof Rails','Trailer Tow Package']},
+  {id:7,make:'BMW',model:'3 Series',year:2021,price:24500000,mileage:'22,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',image:'https://picsum.photos/seed/bmw3s21/800/550',desc:'The ultimate driving machine. Barely used, perfectly maintained. iDrive infotainment fully functional.',features:['M Sport Pack','iDrive 7','Heated Seats','HUD','Parking Assist','Harman Kardon']},
+  {id:8,make:'Toyota',model:'Highlander',year:2022,price:31000000,mileage:'12,000 km',transmission:'Automatic',fuel:'Petrol',location:'Abuja',image:'https://picsum.photos/seed/highlander22/800/550',desc:'Almost brand new top-trim Highlander. Every option included. Full warranty still active.',features:['Captain Seats','JBL Audio','Panoramic Moonroof','Pre-Collision','Adaptive Cruise','360 Cam']},
+  {id:9,make:'Infiniti',model:'QX80',year:2019,price:42000000,mileage:'68,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',image:'https://picsum.photos/seed/qx80na/800/550',desc:'The king of Nigerian roads. Massive presence, V8 power, ultra-luxury interior. Total statement piece.',features:['V8 Engine','Full Leather','Bose Audio','Rear Entertainment','Air Suspension','Hydraulic Control']}
+];
+
+const fmt=new Intl.NumberFormat('en-NG',{style:'currency',currency:'NGN',maximumFractionDigits:0});
+let activeTab='all';
+
+/* ─ RENDER ─ */
+function render(list){
+  const grid=document.getElementById('carGrid');
+  const empty=document.getElementById('emptyState');
+  const badge=document.getElementById('resultCount');
+  grid.innerHTML='';
+  if(!list.length){grid.style.display='none';empty.style.display='block';badge.textContent='0 cars';return}
+  grid.style.display='grid';empty.style.display='none';
+  badge.textContent=`${list.length} car${list.length!==1?'s':''} found`;
+  list.forEach((c,i)=>{
+    const div=document.createElement('div');
+    div.className='car-card';div.style.animationDelay=`${i*.07}s`;
+    const price=fmt.format(c.price);
+    const waMsg=encodeURIComponent(`Hi, I'm interested in the ${c.year} ${c.make} ${c.model} listed for ${price} in ${c.location}. Is it available?`);
+    div.innerHTML=`
+      <div class="card-img" onclick="openModal(${c.id})">
+        <img src="${c.image}" alt="${c.make}" loading="lazy">
+        <div class="card-img-overlay"></div>
+        <div class="card-loc"><i class="fa-solid fa-location-dot" style="font-size:.55rem"></i>${c.location}</div>
+        <div class="card-year">${c.year}</div>
+        <div class="card-fuel">${c.fuel}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-make">${c.make}</div>
+        <div class="card-model">${c.model}</div>
+        <div class="card-specs">
+          <div class="card-spec"><i class="fa-solid fa-gauge-high"></i>${c.mileage}</div>
+          <div class="card-spec"><i class="fa-solid fa-gears"></i>${c.transmission}</div>
+        </div>
+        <hr class="card-divider">
+        <div class="card-price">${price}</div>
+        <div class="card-price-note">Negotiable · Verified Seller</div>
+        <div class="card-actions">
+          <button class="btn-outline-sm" onclick="openModal(${c.id})"><i class="fa-regular fa-eye" style="margin-right:.3rem"></i>Details</button>
+          <a href="https://wa.me/${WA}?text=${waMsg}" target="_blank" class="btn-wa"><i class="fa-brands fa-whatsapp"></i>Chat Now</a>
+        </div>
+      </div>`;
+    grid.appendChild(div);
+  });
+}
+
+/* ─ FILTERS ─ */
+function applyFilters(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const loc=document.getElementById('filterLocation').value;
+  const pr=document.getElementById('filterPrice').value;
+  const fu=document.getElementById('filterFuel').value;
+  render(cars.filter(c=>{
+    const ms=c.make.toLowerCase().includes(q)||c.model.toLowerCase().includes(q);
+    const ml=loc==='all'||c.location===loc;
+    const mf=fu==='all'||c.fuel===fu;
+    const mt=activeTab==='all'||c.location===activeTab;
+    let mp=true;
+    if(pr==='low')mp=c.price<5e6;
+    if(pr==='mid')mp=c.price>=5e6&&c.price<=15e6;
+    if(pr==='high')mp=c.price>15e6;
+    return ms&&ml&&mf&&mp&&mt;
+  }));
+}
+
+function setTab(el,tab){
+  activeTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('filterLocation').value=tab==='all'?'all':tab;
+  applyFilters();
+}
+
+['searchInput','filterLocation','filterPrice','filterFuel'].forEach(id=>{
+  document.getElementById(id).addEventListener('change',applyFilters);
+  if(id==='searchInput')document.getElementById(id).addEventListener('input',applyFilters);
+});
+
+/* ─ MODAL ─ */
+function openModal(id){
+  const c=cars.find(x=>x.id===id);if(!c)return;
+  const price=fmt.format(c.price);
+  const feats=c.features.map(f=>`<div class="modal-feat"><i class="fa-solid fa-check"></i>${f}</div>`).join('');
+  document.getElementById('modalContent').innerHTML=`
+    <img src="${c.image}" alt="${c.make}" class="modal-img">
+    <div class="modal-body">
+      <div class="modal-head">
+        <div><div class="modal-make">${c.make}</div><div class="modal-name">${c.model}</div></div>
+        <div class="modal-price">${price}</div>
+      </div>
+      <div class="modal-loc"><i class="fa-solid fa-location-dot"></i>${c.location}, Nigeria</div>
+      <div class="modal-specs">
+        <div class="modal-spec"><label>Year</label><span>${c.year}</span></div>
+        <div class="modal-spec"><label>Mileage</label><span>${c.mileage}</span></div>
+        <div class="modal-spec"><label>Transmission</label><span>${c.transmission}</span></div>
+        <div class="modal-spec"><label>Fuel Type</label><span>${c.fuel}</span></div>
+      </div>
+      <p class="modal-desc">${c.desc}</p>
+      <div class="modal-feats-label">Included Features</div>
+      <div class="modal-feats">${feats}</div>
+      <div class="modal-logistics">
+        <label><i class="fa-solid fa-truck-fast"></i>Arrange Delivery (Optional)</label>
+        <input type="text" class="modal-l-input" id="delivDest" placeholder="Your state or city (e.g. Kano, Enugu)">
+        <div class="modal-l-note"><i class="fa-solid fa-info-circle" style="color:var(--amber);margin-right:.3rem"></i>Delivery cost quoted via WhatsApp.</div>
+      </div>
+      <button class="modal-wa" onclick="sendEnquiry(${c.id})"><i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i>Book via WhatsApp</button>
+    </div>`;
+  document.getElementById('modalWrap').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modalWrap'))return;
+  document.getElementById('modalWrap').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function sendEnquiry(id){
+  const c=cars.find(x=>x.id===id);
+  const dest=(document.getElementById('delivDest')||{}).value||'';
+  const price=fmt.format(c.price);
+  let msg=`Hello! I'm interested in the ${c.year} ${c.make} ${c.model} listed for ${price} on AutoNaija.`;
+  if(dest.trim())msg+=` I'd like delivery to: ${dest}. Please quote logistics cost.`;
+  else msg+=` Please confirm availability.`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('modalWrap').classList.remove('open');document.body.style.overflow=''}});
+
+/* ─ LOGISTICS ─ */
+function quoteLogistics(){
+  const dest=document.getElementById('deliveryCity').value.trim();
+  if(!dest){showToast('Please enter a destination city or state.');return}
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I'd like a delivery quote to ${dest}. Please advise.`)}`,'_blank');
+}
+
+/* ─ MAGAZINE ─ */
+function submitMag(){
+  const email=document.getElementById('emailInput').value;
+  if(!email||!email.includes('@')){showToast('Please enter a valid email address.');return}
+  const btn=document.getElementById('magBtn');
+  btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Sending…';btn.disabled=true;
+  setTimeout(()=>{
+    document.getElementById('magSuccess').style.display='flex';
+    document.getElementById('emailInput').value='';
+    btn.innerHTML='<i class="fa-solid fa-check"></i> Sent!';
+    setTimeout(()=>{btn.innerHTML='<i class="fa-solid fa-download"></i> Get Free Guide';btn.disabled=false;document.getElementById('magSuccess').style.display='none';},4000);
+  },1500);
+}
+
+/* ─ TOAST ─ */
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+/* ─ INIT ─ */
+render(cars);
+</script>
+</body>
+</html>
