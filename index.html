@@ -3,14 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>AutoNaija — Find Your Dream Ride</title>
+<title>AutoNaija — Nigeria's Premium Car Marketplace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,500;1,9..144,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-/* ═══════════════════════════════════════════
-   RESET & TOKENS
-═══════════════════════════════════════════ */
+/* ═══════════════ RESET & TOKENS ═══════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 img,video{display:block;max-width:100%}
@@ -20,48 +18,33 @@ input,select,textarea{font-family:inherit}
 ul{list-style:none}
 
 :root{
-  --ink:#0f0b08;
-  --paper:#faf6f0;
-  --cream:#f2ebe0;
-  --amber:#d97c2a;
-  --amber-lt:#f0a04a;
-  --amber-dk:#9a5218;
-  --rust:#b84820;
-  --forest:#1e4530;
-  --green-wa:#25d366;
-  --muted:#7a6e64;
-  --border:#e0d8cc;
-  --sold:#dc2626;
-  --offer:#16a34a;
+  --ink:#0f0b08; --paper:#faf6f0; --cream:#f2ebe0;
+  --amber:#d97c2a; --amber-lt:#f0a04a; --amber-dk:#9a5218;
+  --rust:#b84820; --forest:#1e4530;
+  --green-wa:#25d366; --muted:#7a6e64; --border:#e0d8cc;
+  --sold:#dc2626; --offer:#16a34a;
+  --track:#0ea5e9;   /* GPS blue */
+  --surv:#7c3aed;    /* surveillance purple */
+  --body:#d97706;    /* body upgrade orange-amber */
+  --mech:#059669;    /* mechanic green */
   --f-display:'Fraunces',serif;
   --f-ui:'Syne',sans-serif;
   --f-mono:'DM Mono',monospace;
   --ease:cubic-bezier(.4,0,.2,1);
   --spring:cubic-bezier(.34,1.56,.64,1);
-  --r:12px;
-  --r-sm:6px;
-  /* safe areas for notched phones */
+  --r:12px; --r-sm:6px;
   --safe-top:env(safe-area-inset-top,0px);
   --safe-bot:env(safe-area-inset-bottom,0px);
   --safe-l:env(safe-area-inset-left,0px);
   --safe-r:env(safe-area-inset-right,0px);
 }
 
-body{
-  background:var(--paper);
-  color:var(--ink);
-  font-family:var(--f-ui);
-  overflow-x:hidden;
-  min-height:100dvh;
-}
-
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);overflow-x:hidden;min-height:100dvh}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--cream)}
 ::-webkit-scrollbar-thumb{background:var(--amber);border-radius:10px}
 
-/* ═══════════════════════════════════════════
-   LAYOUT HELPERS
-═══════════════════════════════════════════ */
+/* ═══════════════ LAYOUT ═══════════════ */
 .container{
   max-width:1280px;margin:0 auto;
   padding-left:max(1rem,calc(1rem + var(--safe-l)));
@@ -78,575 +61,402 @@ body{
 .section-eyebrow::before{content:'';width:1.8rem;height:2px;background:var(--amber);flex-shrink:0}
 h2.display{
   font-family:var(--f-display);
-  font-size:clamp(1.8rem,5vw,3.4rem);
+  font-size:clamp(1.8rem,5vw,3.2rem);
   font-weight:700;line-height:1.06;letter-spacing:-.02em;margin-top:.4rem
 }
 h2.display em{font-style:italic;color:var(--amber)}
 
-/* ═══════════════════════════════════════════
-   TICKER
-═══════════════════════════════════════════ */
-.ticker{
-  background:var(--ink);padding:.5rem 0;overflow:hidden;
-  border-bottom:2px solid var(--amber);position:relative;z-index:200
-}
-.ticker-track{display:flex;gap:2rem;width:max-content;animation:tickX 30s linear infinite}
-.ti{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,246,240,.4);white-space:nowrap}
+/* ═══════════════ TICKER ═══════════════ */
+.ticker{background:var(--ink);padding:.5rem 0;overflow:hidden;border-bottom:2px solid var(--amber)}
+.ticker-track{display:flex;gap:2rem;width:max-content;animation:tickX 32s linear infinite}
+.ti{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,246,240,.4);white-space:nowrap}
 .ti.a{color:var(--amber-lt)}
 @keyframes tickX{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ═══════════════════════════════════════════
-   NAVIGATION — mobile-first
-═══════════════════════════════════════════ */
-nav{
-  background:rgba(250,246,240,.95);backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:500;
-  padding-top:var(--safe-top)
-}
-.nav-inner{
-  display:flex;align-items:center;justify-content:space-between;
-  height:60px;gap:1rem
-}
+/* ═══════════════ NAV ═══════════════ */
+nav{background:rgba(250,246,240,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:500;padding-top:var(--safe-top)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px;gap:1rem}
 @media(min-width:768px){.nav-inner{height:68px}}
 .logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
-.logo-mark{
-  width:36px;height:36px;background:var(--ink);border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--amber);font-size:1.05rem
-}
+.logo-mark{width:36px;height:36px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:1.05rem}
 .logo-text{font-family:var(--f-display);font-size:1.35rem;font-weight:700;letter-spacing:-.02em;line-height:1}
 .logo-text span{color:var(--amber);font-style:italic}
-/* desktop links */
 .nav-links{display:none}
-@media(min-width:900px){
-  .nav-links{display:flex;align-items:center;gap:2rem}
-  .nav-links a{font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+@media(min-width:960px){
+  .nav-links{display:flex;align-items:center;gap:1.8rem;list-style:none}
+  .nav-links a{font-size:.76rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);transition:color .2s}
   .nav-links a:hover{color:var(--ink)}
   .nav-pill{background:var(--ink);color:var(--amber) !important;padding:.42rem 1.1rem;border-radius:4px}
   .nav-pill:hover{background:var(--amber-dk) !important;color:var(--paper) !important}
 }
-.nav-burger{
-  display:flex;width:40px;height:40px;align-items:center;justify-content:center;
-  border-radius:6px;border:1px solid var(--border);color:var(--ink);font-size:1.1rem;
-  transition:background .2s
-}
+.nav-burger{display:flex;width:40px;height:40px;align-items:center;justify-content:center;border-radius:6px;border:1px solid var(--border);color:var(--ink);font-size:1.1rem;transition:background .2s}
 .nav-burger:hover{background:var(--cream)}
-@media(min-width:900px){.nav-burger{display:none}}
+@media(min-width:960px){.nav-burger{display:none}}
 
-/* mobile drawer */
-.mobile-menu{
-  position:fixed;inset:0;z-index:800;pointer-events:none;
-}
+/* ═══════════════ MOBILE DRAWER ═══════════════ */
+.mobile-menu{position:fixed;inset:0;z-index:800;pointer-events:none}
 .mobile-menu.open{pointer-events:all}
-.mm-backdrop{
-  position:absolute;inset:0;background:rgba(15,11,8,.7);
-  opacity:0;transition:opacity .3s;backdrop-filter:blur(4px)
-}
+.mm-backdrop{position:absolute;inset:0;background:rgba(15,11,8,.75);opacity:0;transition:opacity .3s;backdrop-filter:blur(4px)}
 .mobile-menu.open .mm-backdrop{opacity:1}
 .mm-panel{
-  position:absolute;top:0;right:0;bottom:0;width:min(320px,85vw);
-  background:var(--paper);padding:2rem 1.5rem;
+  position:absolute;top:0;right:0;bottom:0;width:min(300px,85vw);
+  background:var(--paper);padding:1.5rem;
   transform:translateX(100%);transition:transform .35s var(--ease);
-  display:flex;flex-direction:column;gap:.5rem;
-  padding-top:calc(2rem + var(--safe-top));
-  padding-bottom:calc(2rem + var(--safe-bot))
+  display:flex;flex-direction:column;gap:.4rem;overflow-y:auto;
+  padding-top:calc(1.5rem + var(--safe-top));
+  padding-bottom:calc(1.5rem + var(--safe-bot))
 }
 .mobile-menu.open .mm-panel{transform:translateX(0)}
-.mm-close{
-  position:absolute;top:calc(1rem + var(--safe-top));right:1rem;
-  width:36px;height:36px;border-radius:50%;
-  background:var(--cream);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;font-size:1rem
-}
-.mm-link{
-  display:flex;align-items:center;gap:.75rem;
-  padding:.85rem 1rem;border-radius:8px;
-  font-weight:700;font-size:.9rem;color:var(--ink);
-  transition:background .2s;border:1px solid transparent
-}
-.mm-link i{color:var(--amber);width:18px;text-align:center}
+.mm-close{position:absolute;top:calc(.9rem + var(--safe-top));right:.9rem;width:34px;height:34px;border-radius:50%;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.mm-section-label{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:.5rem 1rem 0;margin-top:.5rem}
+.mm-link{display:flex;align-items:center;gap:.7rem;padding:.75rem 1rem;border-radius:8px;font-weight:700;font-size:.85rem;color:var(--ink);transition:background .2s;border:1px solid transparent}
+.mm-link i{color:var(--amber);width:16px;text-align:center;font-size:.9rem}
 .mm-link:hover{background:var(--cream);border-color:var(--border)}
 .mm-cta{background:var(--ink);color:var(--amber) !important;border-color:var(--ink) !important;margin-top:.5rem}
 
-/* ═══════════════════════════════════════════
-   HERO — stacked on mobile, split on desktop
-═══════════════════════════════════════════ */
+/* ═══════════════ HERO ═══════════════ */
 .hero{background:var(--ink);color:var(--paper);overflow:hidden}
 .hero-grid{display:grid;grid-template-columns:1fr}
-@media(min-width:900px){.hero-grid{grid-template-columns:1fr 1fr;min-height:88vh}}
-
-.hero-left{
-  padding:3rem 0;
-  order:2
-}
+@media(min-width:900px){.hero-grid{grid-template-columns:1fr 1fr;min-height:86vh}}
+.hero-left{padding:3rem 0;order:2}
 @media(min-width:900px){.hero-left{padding:6rem 3rem 6rem 0;order:1;display:flex;flex-direction:column;justify-content:center}}
-
-.hero-tagline{
-  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--amber-lt);
-  display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem
-}
+.hero-tagline{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber-lt);display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem}
 .hero-tagline::before{content:'';width:2rem;height:1px;background:var(--amber)}
-.hero h1{
-  font-family:var(--f-display);
-  font-size:clamp(2.4rem,7vw,5.5rem);
-  font-weight:700;line-height:.98;letter-spacing:-.035em;margin-bottom:1.4rem;
-  animation:fadeUp .8s var(--ease) both
-}
+.hero h1{font-family:var(--f-display);font-size:clamp(2.4rem,7vw,5.5rem);font-weight:700;line-height:.98;letter-spacing:-.035em;margin-bottom:1.4rem;animation:fadeUp .8s var(--ease) both}
 .hero h1 em{font-style:italic;color:var(--amber)}
 .hero h1 .outline{-webkit-text-stroke:2px var(--paper);color:transparent}
-.hero-sub{
-  font-size:clamp(.88rem,2.5vw,1rem);color:rgba(250,246,240,.6);
-  line-height:1.75;max-width:440px;margin-bottom:2rem;
-  animation:fadeUp .8s .1s var(--ease) both
-}
+.hero-sub{font-size:clamp(.88rem,2.5vw,1rem);color:rgba(250,246,240,.6);line-height:1.75;max-width:440px;margin-bottom:2rem;animation:fadeUp .8s .1s var(--ease) both}
 .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;animation:fadeUp .8s .2s var(--ease) both}
-.btn-amber{
-  background:var(--amber);color:var(--ink);
-  padding:.8rem 1.6rem;border-radius:var(--r-sm);
-  font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;
-  display:inline-flex;align-items:center;gap:.5rem;
-  transition:all .25s var(--ease);
-  box-shadow:0 4px 20px rgba(217,124,42,.35)
-}
+.btn-amber{background:var(--amber);color:var(--ink);padding:.8rem 1.6rem;border-radius:var(--r-sm);font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.5rem;transition:all .25s var(--ease);box-shadow:0 4px 20px rgba(217,124,42,.35)}
 .btn-amber:hover{background:var(--amber-lt);transform:translateY(-2px)}
-.btn-ghost{
-  background:transparent;color:var(--paper);
-  padding:.8rem 1.6rem;border-radius:var(--r-sm);
-  font-weight:600;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;
-  border:1px solid rgba(250,246,240,.2);
-  display:inline-flex;align-items:center;gap:.5rem;transition:all .25s
-}
+.btn-ghost{background:transparent;color:var(--paper);padding:.8rem 1.6rem;border-radius:var(--r-sm);font-weight:600;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(250,246,240,.2);display:inline-flex;align-items:center;gap:.5rem;transition:all .25s}
 .btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
-.hero-stats{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;
-  margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(250,246,240,.1);
-  animation:fadeUp .8s .3s var(--ease) both
-}
+.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(250,246,240,.1);animation:fadeUp .8s .3s var(--ease) both}
 @media(min-width:480px){.hero-stats{grid-template-columns:repeat(4,1fr)}}
 .stat .n{font-family:var(--f-display);font-size:1.9rem;font-weight:700;color:var(--amber);line-height:1}
-.stat .l{font-size:.65rem;color:rgba(250,246,240,.4);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
-
-.hero-right{
-  order:1;position:relative;overflow:hidden;
-  height:55vw;min-height:220px;max-height:400px
-}
+.stat .l{font-size:.62rem;color:rgba(250,246,240,.4);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+.hero-right{order:1;position:relative;overflow:hidden;height:55vw;min-height:220px;max-height:400px}
 @media(min-width:900px){.hero-right{height:auto;max-height:none;order:2}}
 .hero-img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(1.1)}
 .hero-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--ink) 0%,transparent 40%),linear-gradient(to top,rgba(15,11,8,.7) 0%,transparent 40%)}
 @media(min-width:900px){.hero-img-overlay{background:linear-gradient(to right,var(--ink) 0%,transparent 35%),linear-gradient(to top,rgba(15,11,8,.5) 0%,transparent 40%)}}
-.hero-badge{
-  position:absolute;bottom:1.2rem;right:1.2rem;
-  background:rgba(15,11,8,.8);backdrop-filter:blur(10px);
-  border:1px solid rgba(217,124,42,.3);
-  padding:1rem 1.2rem;border-radius:10px;text-align:center
-}
+.hero-badge{position:absolute;bottom:1.2rem;right:1.2rem;background:rgba(15,11,8,.8);backdrop-filter:blur(10px);border:1px solid rgba(217,124,42,.3);padding:1rem 1.2rem;border-radius:10px;text-align:center}
 .badge-n{font-family:var(--f-display);font-size:1.6rem;font-weight:700;color:var(--amber);line-height:1;display:block}
 .badge-t{font-size:.6rem;color:rgba(250,246,240,.5);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;display:block}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 
-/* ═══════════════════════════════════════════
-   SEARCH BAR — scrolls into view on mobile
-═══════════════════════════════════════════ */
+/* ═══════════════ SEARCH BAR ═══════════════ */
 .search-bar{background:var(--cream);border-bottom:1px solid var(--border)}
-.search-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:0;
-}
+.search-grid{display:grid;grid-template-columns:1fr}
 @media(min-width:640px){.search-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){.search-grid{grid-template-columns:2fr 1fr 1fr 1fr auto}}
-
-.sf{
-  display:flex;flex-direction:column;
-  padding:.9rem 1rem;
-  border-bottom:1px solid var(--border)
-}
+.sf{display:flex;flex-direction:column;padding:.9rem 1rem;border-bottom:1px solid var(--border)}
 @media(min-width:640px){.sf{border-right:1px solid var(--border);border-bottom:none}}
 .sf:last-child{border-right:none;border-bottom:none;padding:0}
 .sf-label{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
-.sf input,.sf select{
-  background:transparent;border:none;
-  font-size:.9rem;font-weight:700;color:var(--ink);width:100%
-}
+.sf input,.sf select{background:transparent;border:none;font-size:.9rem;font-weight:700;color:var(--ink);width:100%}
 .sf input:focus,.sf select:focus{outline:none}
 .sf input::placeholder{color:var(--muted);font-weight:400}
 .sf select{appearance:none;cursor:pointer}
 .sf select option{background:var(--paper)}
-.search-btn{
-  background:var(--ink);color:var(--amber);
-  padding:1rem 1.5rem;
-  font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;
-  display:flex;align-items:center;justify-content:center;gap:.5rem;
-  transition:background .2s;width:100%
-}
+.search-btn{background:var(--ink);color:var(--amber);padding:1rem 1.5rem;font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:background .2s;width:100%}
 .search-btn:hover{background:var(--amber-dk)}
 
-/* ═══════════════════════════════════════════
-   BRANDS TICKER
-═══════════════════════════════════════════ */
+/* ═══════════════ BRANDS ═══════════════ */
 .brands{background:var(--paper);border-bottom:1px solid var(--border);padding:1rem 0;overflow:hidden}
 .brands-track{display:flex;gap:1.5rem;width:max-content;animation:tickX 22s linear infinite}
-.brand-pill{
-  display:flex;align-items:center;gap:.4rem;
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:100px;padding:.35rem 1rem;
-  font-size:.72rem;font-weight:700;color:var(--muted);white-space:nowrap
-}
+.brand-pill{display:flex;align-items:center;gap:.4rem;background:var(--cream);border:1px solid var(--border);border-radius:100px;padding:.35rem 1rem;font-size:.72rem;font-weight:700;color:var(--muted);white-space:nowrap}
 .brand-pill i{color:var(--amber);font-size:.6rem}
 
-/* ═══════════════════════════════════════════
-   LISTINGS
-═══════════════════════════════════════════ */
+/* ═══════════════ LISTINGS ═══════════════ */
 .listings{padding:3rem 0}
 @media(min-width:768px){.listings{padding:5rem 0}}
-.listings-head{
-  display:flex;flex-direction:column;gap:.75rem;
-  margin-bottom:1.5rem
-}
+.listings-head{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem}
 @media(min-width:640px){.listings-head{flex-direction:row;align-items:flex-end;justify-content:space-between}}
-
-.tab-bar{
-  display:flex;gap:.4rem;flex-wrap:nowrap;
-  overflow-x:auto;-webkit-overflow-scrolling:touch;
-  scrollbar-width:none;padding-bottom:.5rem;margin-bottom:1.5rem
-}
+.tab-bar{display:flex;gap:.4rem;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:.5rem;margin-bottom:1.5rem}
 .tab-bar::-webkit-scrollbar{display:none}
-.tab{
-  background:transparent;border:1px solid var(--border);
-  color:var(--muted);padding:.4rem .9rem;border-radius:100px;
-  font-size:.75rem;font-weight:600;white-space:nowrap;
-  transition:all .2s;flex-shrink:0
-}
+.tab{background:transparent;border:1px solid var(--border);color:var(--muted);padding:.4rem .9rem;border-radius:100px;font-size:.75rem;font-weight:600;white-space:nowrap;transition:all .2s;flex-shrink:0}
 .tab:hover{border-color:var(--amber);color:var(--amber-dk)}
 .tab.on{background:var(--ink);border-color:var(--ink);color:var(--amber)}
-.result-tag{
-  font-family:var(--f-mono);font-size:.68rem;font-weight:500;
-  letter-spacing:.08em;color:var(--muted);
-  background:var(--cream);border:1px solid var(--border);
-  padding:.3rem .85rem;border-radius:100px;white-space:nowrap;flex-shrink:0
-}
+.result-tag{font-family:var(--f-mono);font-size:.68rem;font-weight:500;letter-spacing:.08em;color:var(--muted);background:var(--cream);border:1px solid var(--border);padding:.3rem .85rem;border-radius:100px;white-space:nowrap;flex-shrink:0}
 
-/* CARD GRID */
-.car-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:1rem
-}
+/* CAR GRID */
+.car-grid{display:grid;grid-template-columns:1fr;gap:1rem}
 @media(min-width:480px){.car-grid{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:900px){.car-grid{grid-template-columns:repeat(3,1fr)}}
-@media(min-width:1200px){.car-grid{grid-template-columns:repeat(3,1fr);gap:1.25rem}}
+@media(min-width:960px){.car-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1200px){.car-grid{gap:1.25rem}}
 
-/* ═══════════════════════════════════════════
-   CAR CARD
-═══════════════════════════════════════════ */
-.car-card{
-  background:var(--paper);border:1px solid var(--border);
-  border-radius:var(--r);overflow:hidden;
-  display:flex;flex-direction:column;
-  transition:all .35s var(--ease);
-  animation:cardUp .5s var(--ease) both;
-  position:relative
-}
-.car-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 16px 40px rgba(15,11,8,.1),0 0 0 1px rgba(217,124,42,.2);
-  border-color:rgba(217,124,42,.35)
-}
+/* ─── CAR CARD ─── */
+.car-card{background:var(--paper);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:all .35s var(--ease);animation:cardUp .5s var(--ease) both;position:relative}
+.car-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(15,11,8,.1),0 0 0 1px rgba(217,124,42,.2);border-color:rgba(217,124,42,.35)}
 @keyframes cardUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-/* SOLD-OUT overlay */
-.card-sold-overlay{
-  position:absolute;inset:0;z-index:10;
-  background:rgba(15,11,8,.6);backdrop-filter:blur(2px);
-  display:flex;align-items:center;justify-content:center;
-  pointer-events:none
-}
+.card-sold-overlay{position:absolute;inset:0;z-index:10;background:rgba(15,11,8,.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;pointer-events:none}
 .car-card:not(.sold) .card-sold-overlay{display:none}
-.sold-stamp{
-  background:var(--sold);color:#fff;
-  font-family:var(--f-display);font-size:1.3rem;font-weight:700;
-  padding:.5rem 1.5rem;border-radius:4px;
-  transform:rotate(-12deg);letter-spacing:.04em;
-  box-shadow:0 4px 16px rgba(220,38,38,.4)
-}
-
-/* BADGES row */
-.card-badges{
-  position:absolute;top:0;left:0;right:0;z-index:5;
-  display:flex;gap:.35rem;padding:.6rem .7rem;flex-wrap:wrap;pointer-events:none
-}
-.badge{
-  font-family:var(--f-mono);font-size:.58rem;font-weight:500;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:.22rem .55rem;border-radius:3px;
-  display:flex;align-items:center;gap:.3rem
-}
+.sold-stamp{background:var(--sold);color:#fff;font-family:var(--f-display);font-size:1.3rem;font-weight:700;padding:.5rem 1.5rem;border-radius:4px;transform:rotate(-12deg);letter-spacing:.04em;box-shadow:0 4px 16px rgba(220,38,38,.4)}
+.card-badges{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;gap:.3rem;padding:.6rem .7rem;flex-wrap:wrap;pointer-events:none}
+.badge{font-family:var(--f-mono);font-size:.56rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border-radius:3px;display:flex;align-items:center;gap:.28rem}
 .badge-hot{background:var(--rust);color:#fff}
 .badge-offer{background:var(--offer);color:#fff}
 .badge-new{background:var(--amber);color:var(--ink)}
 .badge-hybrid{background:var(--forest);color:#fff}
 
-/* GALLERY (photos + video) */
-.gallery{position:relative;height:210px;overflow:hidden;background:var(--ink)}
-@media(min-width:640px){.gallery{height:220px}}
-
-.gallery-slides{
-  display:flex;height:100%;
-  transition:transform .4s var(--ease);
-  will-change:transform
-}
-.gallery-slide{
-  flex-shrink:0;width:100%;height:100%;
-  position:relative;overflow:hidden
-}
-.gallery-slide img{
-  width:100%;height:100%;object-fit:cover;
-  transition:transform .5s var(--ease)
-}
+/* GALLERY */
+.gallery{position:relative;height:205px;overflow:hidden;background:var(--ink)}
+.gallery-slides{display:flex;height:100%;transition:transform .4s var(--ease);will-change:transform}
+.gallery-slide{flex-shrink:0;width:100%;height:100%;position:relative;overflow:hidden}
+.gallery-slide img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
 .car-card:hover .gallery-slide img{transform:scale(1.05)}
 .gallery-slide.video-slide{background:#000}
-.gallery-slide.video-slide iframe,
-.gallery-slide.video-slide video{
-  width:100%;height:100%;object-fit:cover;border:none
-}
-.play-icon{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,.35);cursor:pointer;transition:background .2s
-}
+.play-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);cursor:pointer;transition:background .2s}
 .play-icon:hover{background:rgba(0,0,0,.5)}
-.play-icon i{font-size:2.5rem;color:#fff;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
-
-/* gallery nav arrows */
-.g-arrow{
-  position:absolute;top:50%;transform:translateY(-50%);z-index:6;
-  width:32px;height:32px;border-radius:50%;
-  background:rgba(15,11,8,.65);backdrop-filter:blur(4px);
-  border:1px solid rgba(250,246,240,.2);
-  color:#fff;font-size:.8rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:background .2s;cursor:pointer
-}
+.play-icon i{font-size:2.2rem;color:#fff;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.g-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:30px;height:30px;border-radius:50%;background:rgba(15,11,8,.65);backdrop-filter:blur(4px);border:1px solid rgba(250,246,240,.2);color:#fff;font-size:.75rem;display:flex;align-items:center;justify-content:center;transition:background .2s;cursor:pointer}
 .g-arrow:hover{background:var(--amber);color:var(--ink)}
-.g-prev{left:.6rem}
-.g-next{right:.6rem}
-
-/* gallery dots */
-.g-dots{
-  position:absolute;bottom:.6rem;left:50%;transform:translateX(-50%);
-  display:flex;gap:.35rem;z-index:6
-}
-.g-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(250,246,240,.4);transition:all .2s;cursor:pointer
-}
-.g-dot.on{background:#fff;width:18px;border-radius:3px}
-
-/* media count pill */
-.g-count{
-  position:absolute;bottom:.6rem;right:.6rem;z-index:6;
-  background:rgba(15,11,8,.7);backdrop-filter:blur(4px);
-  border:1px solid rgba(250,246,240,.15);
-  color:rgba(250,246,240,.8);font-family:var(--f-mono);font-size:.6rem;
-  letter-spacing:.06em;padding:.22rem .55rem;border-radius:3px;
-  display:flex;align-items:center;gap:.3rem
-}
+.g-prev{left:.5rem}.g-next{right:.5rem}
+.g-dots{position:absolute;bottom:.55rem;left:50%;transform:translateX(-50%);display:flex;gap:.3rem;z-index:6}
+.g-dot{width:5px;height:5px;border-radius:50%;background:rgba(250,246,240,.4);transition:all .2s;cursor:pointer}
+.g-dot.on{background:#fff;width:16px;border-radius:3px}
+.g-count{position:absolute;bottom:.55rem;right:.55rem;z-index:6;background:rgba(15,11,8,.7);backdrop-filter:blur(4px);border:1px solid rgba(250,246,240,.15);color:rgba(250,246,240,.8);font-family:var(--f-mono);font-size:.58rem;letter-spacing:.06em;padding:.2rem .5rem;border-radius:3px;display:flex;align-items:center;gap:.3rem}
 
 /* CARD BODY */
-.card-body{padding:1.1rem 1.1rem 1rem;flex:1;display:flex;flex-direction:column}
-.card-make{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:.15rem}
-.card-model{font-family:var(--f-display);font-size:1.25rem;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--ink);margin-bottom:.7rem}
+.card-body{padding:1rem;flex:1;display:flex;flex-direction:column}
+.card-make{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:.12rem}
+.card-model{font-family:var(--f-display);font-size:1.2rem;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--ink);margin-bottom:.6rem}
+.card-specs{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:.65rem}
+.cs{display:flex;align-items:center;gap:.28rem;font-size:.66rem;color:var(--muted)}
+.cs i{color:var(--amber);font-size:.58rem;width:11px}
 
-.card-specs{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem}
-.cs{display:flex;align-items:center;gap:.3rem;font-size:.68rem;color:var(--muted)}
-.cs i{color:var(--amber);font-size:.6rem;width:12px}
+/* ADD-ON SERVICES PILLS on card */
+.card-addons{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.65rem}
+.addon-pill{
+  display:flex;align-items:center;gap:.28rem;
+  font-family:var(--f-mono);font-size:.56rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  padding:.2rem .5rem;border-radius:100px;border:1px solid;cursor:pointer;transition:all .2s;white-space:nowrap
+}
+.addon-track{color:var(--track);border-color:rgba(14,165,233,.3);background:rgba(14,165,233,.06)}
+.addon-track:hover{background:rgba(14,165,233,.15)}
+.addon-surv{color:var(--surv);border-color:rgba(124,58,237,.3);background:rgba(124,58,237,.06)}
+.addon-surv:hover{background:rgba(124,58,237,.15)}
+.addon-body{color:var(--body);border-color:rgba(217,119,6,.3);background:rgba(217,119,6,.06)}
+.addon-body:hover{background:rgba(217,119,6,.15)}
 
 /* SOLD COUNT */
-.sold-count{
-  display:flex;align-items:center;gap:.4rem;
-  font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--sold);margin-bottom:.8rem
-}
-.sold-count i{font-size:.6rem}
-.sold-bar{
-  flex:1;height:4px;background:rgba(220,38,38,.12);border-radius:2px;overflow:hidden
-}
+.sold-count{display:flex;align-items:center;gap:.4rem;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sold);margin-bottom:.65rem}
+.sold-bar{flex:1;height:4px;background:rgba(220,38,38,.12);border-radius:2px;overflow:hidden}
 .sold-fill{height:100%;background:var(--sold);border-radius:2px;transition:width .8s var(--ease)}
 
-.card-divider{border:none;border-top:1px solid var(--border);margin:.65rem 0}
+.card-divider{border:none;border-top:1px solid var(--border);margin:.55rem 0}
 
 /* PRICE + OFFER */
-.price-row{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.6rem}
-.card-price-main{font-family:var(--f-display);font-size:1.5rem;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
-.card-price-orig{font-size:.72rem;color:var(--muted);text-decoration:line-through;margin-top:.15rem}
-.offer-badge{
-  background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.25);
-  color:var(--offer);font-family:var(--f-mono);font-size:.58rem;
-  letter-spacing:.08em;text-transform:uppercase;
-  padding:.22rem .55rem;border-radius:3px;
-  display:flex;align-items:center;gap:.3rem;white-space:nowrap;flex-shrink:0;align-self:flex-start;margin-top:.2rem
-}
+.price-row{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.5rem}
+.card-price-main{font-family:var(--f-display);font-size:1.4rem;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.card-price-orig{font-size:.68rem;color:var(--muted);text-decoration:line-through;margin-top:.12rem}
+.offer-badge{background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.25);color:var(--offer);font-family:var(--f-mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .5rem;border-radius:3px;display:flex;align-items:center;gap:.28rem;white-space:nowrap;flex-shrink:0;align-self:flex-start;margin-top:.15rem}
+.offer-strip{background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(22,163,74,.03));border:1px solid rgba(22,163,74,.2);border-radius:6px;padding:.55rem .7rem;margin-bottom:.65rem;display:flex;align-items:center;gap:.5rem}
+.offer-strip i{color:var(--offer);font-size:.8rem;flex-shrink:0}
+.offer-strip-text{font-size:.7rem;color:var(--forest);font-weight:600;line-height:1.4}
 
-/* OFFER STRIP */
-.offer-strip{
-  background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(22,163,74,.03));
-  border:1px solid rgba(22,163,74,.2);
-  border-radius:6px;padding:.6rem .75rem;margin-bottom:.75rem;
-  display:flex;align-items:center;gap:.6rem
-}
-.offer-strip i{color:var(--offer);font-size:.85rem;flex-shrink:0}
-.offer-strip-text{font-size:.72rem;color:var(--forest);font-weight:600;line-height:1.4}
+.card-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:.65rem}
+.card-views,.card-enquiries{display:flex;align-items:center;gap:.28rem;font-family:var(--f-mono);font-size:.58rem;letter-spacing:.06em;color:var(--muted)}
+.card-views i,.card-enquiries i{font-size:.58rem;color:var(--amber)}
 
-/* VIEWS */
-.card-meta{display:flex;align-items:center;gap:1rem;margin-bottom:.75rem}
-.card-views,.card-enquiries{
-  display:flex;align-items:center;gap:.3rem;
-  font-family:var(--f-mono);font-size:.6rem;letter-spacing:.06em;
-  color:var(--muted)
-}
-.card-views i,.card-enquiries i{font-size:.6rem;color:var(--amber)}
-
-.card-actions{display:flex;gap:.5rem;margin-top:auto}
-.btn-sm-outline{
-  flex:1;background:transparent;border:1px solid var(--border);
-  color:var(--ink);padding:.6rem .5rem;border-radius:var(--r-sm);
-  font-size:.75rem;font-weight:700;letter-spacing:.03em;
-  transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.3rem
-}
+.card-actions{display:flex;gap:.45rem;margin-top:auto}
+.btn-sm-outline{flex:1;background:transparent;border:1px solid var(--border);color:var(--ink);padding:.58rem .5rem;border-radius:var(--r-sm);font-size:.72rem;font-weight:700;letter-spacing:.03em;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.28rem}
 .btn-sm-outline:hover{border-color:var(--amber);background:rgba(217,124,42,.05);color:var(--amber-dk)}
-.btn-wa{
-  flex:1.5;background:var(--green-wa);color:#fff;
-  padding:.6rem .5rem;border-radius:var(--r-sm);
-  font-size:.75rem;font-weight:700;letter-spacing:.03em;
-  display:flex;align-items:center;justify-content:center;gap:.4rem;
-  transition:all .2s
-}
+.btn-wa{flex:1.5;background:var(--green-wa);color:#fff;padding:.58rem .5rem;border-radius:var(--r-sm);font-size:.72rem;font-weight:700;letter-spacing:.03em;display:flex;align-items:center;justify-content:center;gap:.38rem;transition:all .2s}
 .btn-wa:hover{filter:brightness(1.08);transform:translateY(-1px)}
 
-/* empty state */
 .empty{display:none;grid-column:1/-1;text-align:center;padding:4rem 2rem}
 .empty i{font-size:3rem;color:var(--border);margin-bottom:1rem;display:block}
 .empty h3{font-family:var(--f-display);font-size:1.3rem;margin-bottom:.4rem}
 .empty p{color:var(--muted);font-size:.85rem}
 
-/* ═══════════════════════════════════════════
-   NUMBERS BAND
-═══════════════════════════════════════════ */
-.numbers{
-  background:var(--ink);padding:3rem 0;
-  position:relative;overflow:hidden
-}
-.numbers::before{
-  content:'AUTONAIJA';position:absolute;top:50%;left:-1rem;transform:translateY(-50%);
-  font-family:var(--f-display);font-size:clamp(5rem,15vw,10rem);font-weight:700;
-  color:rgba(255,255,255,.02);white-space:nowrap;pointer-events:none
-}
-.numbers-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;
-  position:relative;z-index:1
-}
+/* ═══════════════ NUMBERS BAND ═══════════════ */
+.numbers{background:var(--ink);padding:3rem 0;position:relative;overflow:hidden}
+.numbers::before{content:'AUTONAIJA';position:absolute;top:50%;left:-1rem;transform:translateY(-50%);font-family:var(--f-display);font-size:clamp(5rem,15vw,10rem);font-weight:700;color:rgba(255,255,255,.02);white-space:nowrap;pointer-events:none}
+.numbers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;position:relative;z-index:1}
 @media(min-width:640px){.numbers-grid{grid-template-columns:repeat(4,1fr)}}
 .num-item{text-align:center}
 .num-val{font-family:var(--f-display);font-size:clamp(2rem,5vw,3rem);font-weight:700;color:var(--amber);line-height:1;letter-spacing:-.04em;display:block}
 .num-label{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,246,240,.35);margin-top:.4rem}
 
-/* ═══════════════════════════════════════════
-   WHY
-═══════════════════════════════════════════ */
-.why{padding:4rem 0;background:var(--cream)}
+/* ═══════════════ EXTRA SERVICES SECTION ═══════════════ */
+.services-section{padding:4rem 0;background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+@media(min-width:768px){.services-section{padding:6rem 0}}
+.services-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(217,124,42,.06) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(14,165,233,.04) 0%,transparent 60%)}
+.services-section .section-eyebrow{color:var(--amber)}
+.services-intro{max-width:580px;margin-bottom:3rem}
+.services-intro p{color:rgba(250,246,240,.55);font-size:.95rem;line-height:1.75;margin-top:.75rem}
+.services-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:640px){.services-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.services-grid{grid-template-columns:repeat(4,1fr)}}
+
+.service-card{
+  background:rgba(250,246,240,.03);border:1px solid rgba(250,246,240,.08);
+  border-radius:var(--r);padding:1.75rem 1.5rem;
+  transition:all .35s var(--ease);cursor:default;
+  position:relative;overflow:hidden
+}
+.service-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:3px;transition:opacity .3s;opacity:0
+}
+.service-card.track::after{background:var(--track);opacity:1}
+.service-card.surv::after{background:var(--surv);opacity:1}
+.service-card.body-upg::after{background:var(--body);opacity:1}
+.service-card.mech::after{background:var(--mech);opacity:1}
+.service-card:hover{background:rgba(250,246,240,.06);border-color:rgba(250,246,240,.16);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+
+.svc-icon{width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem;flex-shrink:0}
+.svc-icon.track{background:rgba(14,165,233,.15);color:var(--track)}
+.svc-icon.surv{background:rgba(124,58,237,.15);color:var(--surv)}
+.svc-icon.body-upg{background:rgba(217,119,6,.15);color:var(--body)}
+.svc-icon.mech{background:rgba(5,150,105,.15);color:var(--mech)}
+
+.svc-title{font-family:var(--f-display);font-size:1.1rem;font-weight:700;margin-bottom:.5rem;color:var(--paper)}
+.svc-desc{font-size:.8rem;color:rgba(250,246,240,.5);line-height:1.65;margin-bottom:1.2rem}
+.svc-features{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.5rem}
+.svc-feat{display:flex;align-items:center;gap:.5rem;font-size:.76rem;color:rgba(250,246,240,.65)}
+.svc-feat i{font-size:.65rem;flex-shrink:0}
+.svc-feat.track i{color:var(--track)}
+.svc-feat.surv i{color:var(--surv)}
+.svc-feat.body-upg i{color:var(--body)}
+.svc-feat.mech i{color:var(--mech)}
+.svc-price{display:flex;align-items:baseline;gap:.4rem;margin-bottom:1.2rem}
+.svc-price .from{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,246,240,.35)}
+.svc-price .amount{font-family:var(--f-display);font-size:1.4rem;font-weight:700;color:var(--paper);line-height:1}
+.svc-price .period{font-size:.7rem;color:rgba(250,246,240,.35)}
+.svc-btn{
+  width:100%;padding:.7rem;border-radius:var(--r-sm);
+  font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.4rem;transition:all .2s
+}
+.svc-btn.track{background:rgba(14,165,233,.15);color:var(--track);border:1px solid rgba(14,165,233,.3)}
+.svc-btn.track:hover{background:var(--track);color:#fff}
+.svc-btn.surv{background:rgba(124,58,237,.15);color:var(--surv);border:1px solid rgba(124,58,237,.3)}
+.svc-btn.surv:hover{background:var(--surv);color:#fff}
+.svc-btn.body-upg{background:rgba(217,119,6,.15);color:var(--body);border:1px solid rgba(217,119,6,.3)}
+.svc-btn.body-upg:hover{background:var(--body);color:#fff}
+.svc-btn.mech{background:rgba(5,150,105,.15);color:var(--mech);border:1px solid rgba(5,150,105,.3)}
+.svc-btn.mech:hover{background:var(--mech);color:#fff}
+
+/* ═══════════════ DIY MECHANIC GUIDE SECTION ═══════════════ */
+.diy-section{padding:4rem 0;background:var(--cream);border-top:1px solid var(--border)}
+@media(min-width:768px){.diy-section{padding:6rem 0}}
+.diy-header{display:flex;flex-direction:column;gap:1rem;margin-bottom:2.5rem}
+@media(min-width:768px){.diy-header{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+.diy-free-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--mech);color:#fff;
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.35rem .9rem;border-radius:100px;align-self:flex-start;margin-bottom:.75rem
+}
+.diy-grid{display:grid;grid-template-columns:1fr;gap:.75rem}
+@media(min-width:640px){.diy-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.diy-grid{grid-template-columns:repeat(3,1fr)}}
+
+.diy-card{
+  background:var(--paper);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+  transition:all .3s var(--ease)
+}
+.diy-card:hover{border-color:rgba(5,150,105,.4);box-shadow:0 8px 24px rgba(15,11,8,.08)}
+.diy-header-row{
+  display:flex;align-items:center;gap:1rem;padding:1.2rem 1.2rem .8rem;
+  cursor:pointer;user-select:none
+}
+.diy-icon{width:40px;height:40px;border-radius:8px;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);display:flex;align-items:center;justify-content:center;color:var(--mech);font-size:1rem;flex-shrink:0}
+.diy-title-wrap{flex:1}
+.diy-title{font-family:var(--f-display);font-size:1rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:.2rem}
+.diy-difficulty{display:flex;align-items:center;gap:.4rem}
+.diff-dot{width:7px;height:7px;border-radius:50%;background:var(--border)}
+.diff-dot.on{background:var(--mech)}
+.diff-dot.on.med{background:var(--amber)}
+.diff-dot.on.hard{background:var(--sold)}
+.diff-label{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.diy-chevron{color:var(--muted);font-size:.8rem;transition:transform .3s;flex-shrink:0}
+.diy-card.open .diy-chevron{transform:rotate(180deg)}
+.diy-card.open .diy-icon{background:rgba(5,150,105,.15);border-color:rgba(5,150,105,.3)}
+
+.diy-body{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.diy-card.open .diy-body{max-height:1000px}
+.diy-content{padding:0 1.2rem 1.2rem;border-top:1px solid var(--border);margin-top:.8rem;padding-top:1rem}
+.diy-intro{font-size:.83rem;color:var(--muted);line-height:1.7;margin-bottom:1rem}
+.diy-tools{margin-bottom:1rem}
+.diy-sub{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mech);margin-bottom:.5rem;font-weight:500}
+.diy-tools-list{display:flex;flex-wrap:wrap;gap:.35rem}
+.tool-chip{background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);color:var(--forest);font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:100px}
+.diy-steps{display:flex;flex-direction:column;gap:.5rem}
+.diy-step{display:flex;gap:.75rem;align-items:flex-start}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--mech);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:.62rem;font-weight:500;flex-shrink:0;margin-top:.1rem}
+.step-text{font-size:.8rem;color:var(--ink);line-height:1.6}
+.step-text strong{color:var(--forest);font-weight:700}
+.diy-warn{display:flex;align-items:flex-start;gap:.6rem;background:rgba(184,72,32,.06);border:1px solid rgba(184,72,32,.2);border-radius:6px;padding:.75rem;margin-top:1rem}
+.diy-warn i{color:var(--rust);font-size:.85rem;margin-top:.05rem;flex-shrink:0}
+.diy-warn p{font-size:.75rem;color:var(--rust);line-height:1.55}
+.diy-wa-btn{
+  display:flex;align-items:center;justify-content:center;gap:.4rem;
+  width:100%;margin-top:1rem;
+  background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.25);
+  color:var(--mech);padding:.65rem;border-radius:var(--r-sm);
+  font-size:.76rem;font-weight:700;letter-spacing:.04em;transition:all .2s
+}
+.diy-wa-btn:hover{background:var(--mech);color:#fff}
+
+/* ═══════════════ WHY ═══════════════ */
+.why{padding:4rem 0;background:var(--paper)}
 @media(min-width:768px){.why{padding:6rem 0}}
 .why-grid{display:grid;grid-template-columns:1fr;gap:3rem}
 @media(min-width:900px){.why-grid{grid-template-columns:1fr 1fr;gap:5rem;align-items:center}}
 .why-text p{color:var(--muted);font-size:.95rem;line-height:1.8;margin:1rem 0 2rem;max-width:460px}
 .why-feats{display:flex;flex-direction:column;gap:.85rem}
-.why-feat{
-  display:flex;gap:1rem;align-items:flex-start;
-  padding:1rem;border-radius:8px;border:1px solid transparent;transition:all .25s
-}
-.why-feat:hover{background:var(--paper);border-color:var(--border)}
-.why-icon{
-  width:40px;height:40px;flex-shrink:0;border-radius:8px;
-  background:var(--ink);color:var(--amber);
-  display:flex;align-items:center;justify-content:center;font-size:.95rem
-}
+.why-feat{display:flex;gap:1rem;align-items:flex-start;padding:1rem;border-radius:8px;border:1px solid transparent;transition:all .25s}
+.why-feat:hover{background:var(--cream);border-color:var(--border)}
+.why-icon{width:40px;height:40px;flex-shrink:0;border-radius:8px;background:var(--ink);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:.95rem}
 .why-feat h4{font-weight:700;font-size:.88rem;margin-bottom:.2rem}
 .why-feat p{font-size:.78rem;color:var(--muted);line-height:1.6}
-.why-visual{position:relative;height:400px}
-@media(min-width:900px){.why-visual{height:500px}}
+.why-visual{position:relative;height:400px;display:none}
+@media(min-width:900px){.why-visual{display:block;height:500px}}
 .why-img-a{position:absolute;top:0;left:0;width:75%;height:340px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
-.why-img-b{position:absolute;bottom:0;right:0;width:56%;height:210px;object-fit:cover;border-radius:12px;border:4px solid var(--cream);box-shadow:-5px -5px 0 var(--amber)}
-.why-float{
-  position:absolute;top:46%;right:2%;
-  background:var(--ink);padding:1rem 1.2rem;border-radius:10px;text-align:center;
-  box-shadow:0 10px 32px rgba(15,11,8,.25)
-}
+.why-img-b{position:absolute;bottom:0;right:0;width:56%;height:210px;object-fit:cover;border-radius:12px;border:4px solid var(--paper);box-shadow:-5px -5px 0 var(--amber)}
+.why-float{position:absolute;top:46%;right:2%;background:var(--ink);padding:1rem 1.2rem;border-radius:10px;text-align:center;box-shadow:0 10px 32px rgba(15,11,8,.25)}
 .why-float .n{font-family:var(--f-display);font-size:1.8rem;font-weight:700;color:var(--amber-lt);line-height:1;display:block}
 .why-float .t{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,246,240,.5);margin-top:.2rem}
 
-/* ═══════════════════════════════════════════
-   HOW IT WORKS
-═══════════════════════════════════════════ */
-.how{padding:4rem 0}
+/* ═══════════════ HOW ═══════════════ */
+.how{padding:4rem 0;background:var(--cream)}
 @media(min-width:768px){.how{padding:6rem 0}}
 .how-intro{text-align:center;max-width:560px;margin:0 auto 3rem}
 .how-intro p{color:var(--muted);margin-top:.7rem;line-height:1.7;font-size:.92rem}
 .steps{display:grid;grid-template-columns:1fr;gap:1rem}
 @media(min-width:480px){.steps{grid-template-columns:1fr 1fr}}
 @media(min-width:900px){.steps{grid-template-columns:repeat(4,1fr)}}
-.step{
-  background:var(--cream);border:1px solid var(--border);
-  border-radius:12px;padding:1.75rem 1.25rem;text-align:center;
-  transition:all .3s var(--ease)
-}
+.step{background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:1.75rem 1.25rem;text-align:center;transition:all .3s var(--ease)}
 .step:hover{background:var(--ink);border-color:var(--ink);transform:translateY(-5px);box-shadow:0 16px 36px rgba(15,11,8,.15)}
-.step-n{
-  width:46px;height:46px;border-radius:50%;margin:0 auto 1.2rem;
-  background:var(--paper);border:2px solid var(--amber);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--f-display);font-size:1.15rem;font-weight:700;
-  color:var(--amber);transition:all .3s
-}
+.step-n{width:46px;height:46px;border-radius:50%;margin:0 auto 1.2rem;background:var(--cream);border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:1.15rem;font-weight:700;color:var(--amber);transition:all .3s}
 .step:hover .step-n{background:var(--amber);color:var(--ink);border-color:var(--amber)}
 .step h3{font-family:var(--f-display);font-size:1rem;font-weight:700;margin-bottom:.5rem;transition:color .3s}
 .step p{font-size:.78rem;color:var(--muted);line-height:1.6;transition:color .3s}
 .step:hover h3,.step:hover p{color:var(--paper)}
 .step:hover p{color:rgba(250,246,240,.55)}
 
-/* ═══════════════════════════════════════════
-   REVIEWS
-═══════════════════════════════════════════ */
-.reviews{padding:4rem 0;background:var(--cream);border-top:1px solid var(--border)}
+/* ═══════════════ REVIEWS ═══════════════ */
+.reviews{padding:4rem 0;background:var(--paper);border-top:1px solid var(--border)}
 @media(min-width:768px){.reviews{padding:6rem 0}}
 .reviews-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:2.5rem}
 @media(min-width:640px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:900px){.reviews-grid{grid-template-columns:repeat(3,1fr)}}
-.rv-card{
-  background:var(--paper);border:1px solid var(--border);
-  border-radius:12px;padding:1.5rem;transition:all .3s;position:relative;overflow:hidden
-}
-.rv-card::before{
-  content:'"';position:absolute;top:-1rem;left:1rem;
-  font-family:var(--f-display);font-size:6rem;
-  color:rgba(217,124,42,.07);pointer-events:none;line-height:1
-}
+.rv-card{background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all .3s;position:relative;overflow:hidden}
+.rv-card::before{content:'"';position:absolute;top:-1rem;left:1rem;font-family:var(--f-display);font-size:6rem;color:rgba(217,124,42,.07);pointer-events:none;line-height:1}
 .rv-card:hover{border-color:rgba(217,124,42,.3);transform:translateY(-3px);box-shadow:0 10px 28px rgba(15,11,8,.07)}
 .rv-stars{display:flex;gap:.2rem;color:var(--amber);font-size:.75rem;margin-bottom:.85rem}
 .rv-text{font-style:italic;font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1.2rem;font-family:var(--f-display);font-weight:300}
 .rv-author{display:flex;align-items:center;gap:.65rem}
-.rv-av{
-  width:36px;height:36px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,var(--amber-dk),var(--amber));
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--f-display);font-size:.85rem;font-weight:700;color:var(--paper)
-}
+.rv-av{width:36px;height:36px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--amber-dk),var(--amber));display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:.85rem;font-weight:700;color:var(--paper)}
 .rv-name{font-weight:700;font-size:.82rem}
 .rv-loc{font-size:.66rem;color:var(--muted);margin-top:.1rem}
 
-/* ═══════════════════════════════════════════
-   LOGISTICS
-═══════════════════════════════════════════ */
+/* ═══════════════ LOGISTICS ═══════════════ */
 .logistics{padding:4rem 0;background:var(--ink);color:var(--paper)}
 @media(min-width:768px){.logistics{padding:5rem 0}}
 .logistics-grid{display:grid;grid-template-columns:1fr;gap:2.5rem}
@@ -658,35 +468,19 @@ nav{
 .log-list{display:flex;flex-direction:column;gap:.65rem}
 .log-li{display:flex;align-items:center;gap:.65rem;font-size:.85rem;color:rgba(250,246,240,.65)}
 .log-li i{color:var(--amber);width:16px;flex-shrink:0}
-.log-card{
-  background:rgba(250,246,240,.04);border:1px solid rgba(250,246,240,.1);
-  border-radius:12px;padding:1.75rem
-}
+.log-card{background:rgba(250,246,240,.04);border:1px solid rgba(250,246,240,.1);border-radius:12px;padding:1.75rem}
 .log-card h4{font-family:var(--f-display);font-size:1.05rem;font-weight:700;color:var(--amber-lt);margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem}
 .l-row{display:flex;gap:.5rem}
-.l-inp{
-  flex:1;background:rgba(250,246,240,.06);border:1px solid rgba(250,246,240,.15);
-  border-radius:var(--r-sm);padding:.75rem .9rem;color:var(--paper);font-size:.85rem
-}
+.l-inp{flex:1;background:rgba(250,246,240,.06);border:1px solid rgba(250,246,240,.15);border-radius:var(--r-sm);padding:.75rem .9rem;color:var(--paper);font-size:.85rem}
 .l-inp::placeholder{color:rgba(250,246,240,.3)}
 .l-inp:focus{outline:none;border-color:var(--amber)}
-.l-q-btn{
-  background:var(--amber);color:var(--ink);border:none;
-  border-radius:var(--r-sm);padding:.75rem 1.2rem;
-  font-weight:700;font-size:.76rem;letter-spacing:.06em;white-space:nowrap;transition:background .2s
-}
+.l-q-btn{background:var(--amber);color:var(--ink);border:none;border-radius:var(--r-sm);padding:.75rem 1.2rem;font-weight:700;font-size:.76rem;letter-spacing:.06em;white-space:nowrap;transition:background .2s}
 .l-q-btn:hover{background:var(--amber-lt)}
 .city-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.85rem}
-.chip{
-  background:rgba(217,124,42,.1);border:1px solid rgba(217,124,42,.25);
-  color:var(--amber-lt);font-family:var(--f-mono);font-size:.58rem;
-  letter-spacing:.08em;text-transform:uppercase;padding:.2rem .55rem;border-radius:100px
-}
+.chip{background:rgba(217,124,42,.1);border:1px solid rgba(217,124,42,.25);color:var(--amber-lt);font-family:var(--f-mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .55rem;border-radius:100px}
 .l-note{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.06em;color:rgba(250,246,240,.3);margin-top:.9rem}
 
-/* ═══════════════════════════════════════════
-   MAGAZINE
-═══════════════════════════════════════════ */
+/* ═══════════════ MAGAZINE ═══════════════ */
 .magazine{padding:4rem 0;border-top:1px solid var(--border)}
 @media(min-width:768px){.magazine{padding:6rem 0}}
 .mag-grid{display:grid;grid-template-columns:1fr;gap:3rem}
@@ -694,235 +488,197 @@ nav{
 .mag-visual{position:relative;display:none}
 @media(min-width:900px){.mag-visual{display:block}}
 .mag-img{width:100%;height:400px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
-.mag-sticker{
-  position:absolute;top:-16px;right:-16px;width:76px;height:76px;border-radius:50%;
-  background:var(--amber);color:var(--ink);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-family:var(--f-display);text-align:center;line-height:1.2;
-  box-shadow:0 4px 20px rgba(217,124,42,.4)
-}
+.mag-sticker{position:absolute;top:-16px;right:-16px;width:76px;height:76px;border-radius:50%;background:var(--amber);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--f-display);text-align:center;line-height:1.2;box-shadow:0 4px 20px rgba(217,124,42,.4)}
 .mag-sticker .s1{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .mag-sticker .s2{font-size:1.1rem;font-weight:700}
-.mag-text h2{font-size:clamp(1.9rem,3.5vw,2.7rem)}
 .mag-text>p{color:var(--muted);font-size:.92rem;line-height:1.75;margin:1rem 0 1.4rem}
 .mag-perks{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.75rem}
 .mag-perk{display:flex;align-items:center;gap:.55rem;font-size:.83rem;color:var(--muted)}
 .mag-perk i{color:var(--amber);font-size:.72rem}
 .mag-form{display:flex;gap:.5rem;flex-wrap:wrap}
-.mag-input{
-  flex:1;min-width:200px;background:var(--cream);border:1px solid var(--border);
-  border-radius:var(--r-sm);padding:.82rem 1rem;color:var(--ink);font-size:.88rem
-}
+.mag-input{flex:1;min-width:180px;background:var(--cream);border:1px solid var(--border);border-radius:var(--r-sm);padding:.82rem 1rem;color:var(--ink);font-size:.88rem}
 .mag-input::placeholder{color:var(--muted)}
 .mag-input:focus{outline:none;border-color:var(--amber)}
-.mag-btn{
-  background:var(--ink);color:var(--amber);border:none;
-  border-radius:var(--r-sm);padding:.82rem 1.5rem;
-  font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
-  display:flex;align-items:center;gap:.45rem;transition:all .2s;white-space:nowrap
-}
+.mag-btn{background:var(--ink);color:var(--amber);border:none;border-radius:var(--r-sm);padding:.82rem 1.5rem;font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:.45rem;transition:all .2s;white-space:nowrap}
 .mag-btn:hover{background:var(--amber-dk);color:var(--paper)}
 .mag-btn:disabled{opacity:.6;pointer-events:none}
 .mag-success{display:none;align-items:center;gap:.45rem;color:#4ade80;font-size:.78rem;font-weight:600;margin-top:.65rem}
 .mag-fine{font-size:.66rem;color:var(--muted);margin-top:.6rem}
 
-/* ═══════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════ */
+/* ═══════════════ FOOTER ═══════════════ */
 footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top:3px solid var(--amber)}
-.footer-grid{
-  display:grid;grid-template-columns:1fr;gap:2rem;margin-bottom:2.5rem
-}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:2rem;margin-bottom:2.5rem}
 @media(min-width:480px){.footer-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:900px){.footer-grid{grid-template-columns:2fr 1fr 1fr 1fr}}
 .footer-brand .logo-text{font-size:1.3rem}
 .footer-brand p{font-size:.8rem;color:rgba(250,246,240,.4);line-height:1.7;margin:1rem 0 1.2rem;max-width:250px}
 .socials{display:flex;gap:.5rem;flex-wrap:wrap}
-.social{
-  width:34px;height:34px;background:rgba(250,246,240,.06);
-  border:1px solid rgba(250,246,240,.1);border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(250,246,240,.45);font-size:.85rem;transition:all .2s
-}
+.social{width:34px;height:34px;background:rgba(250,246,240,.06);border:1px solid rgba(250,246,240,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(250,246,240,.45);font-size:.85rem;transition:all .2s}
 .social:hover{background:var(--amber);border-color:var(--amber);color:var(--ink)}
 .fc h5{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem}
 .fc ul{display:flex;flex-direction:column;gap:.5rem}
 .fc ul a{font-size:.8rem;color:rgba(250,246,240,.4);transition:color .2s}
 .fc ul a:hover{color:var(--paper)}
-.footer-bottom{
-  display:flex;justify-content:space-between;align-items:center;
-  padding-top:1.75rem;border-top:1px solid rgba(250,246,240,.08);
-  font-family:var(--f-mono);font-size:.64rem;color:rgba(250,246,240,.3);
-  flex-wrap:wrap;gap:.75rem;
-  padding-bottom:var(--safe-bot)
-}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.75rem;border-top:1px solid rgba(250,246,240,.08);font-family:var(--f-mono);font-size:.64rem;color:rgba(250,246,240,.3);flex-wrap:wrap;gap:.75rem;padding-bottom:var(--safe-bot)}
 
-/* ═══════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════ */
-.modal-wrap{
-  position:fixed;inset:0;z-index:2000;
-  background:rgba(15,11,8,.88);backdrop-filter:blur(10px);
-  display:none;align-items:flex-end;justify-content:center;
-  padding:0
-}
+/* ═══════════════ MODAL ═══════════════ */
+.modal-wrap{position:fixed;inset:0;z-index:2000;background:rgba(15,11,8,.88);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;padding:0}
 @media(min-width:640px){.modal-wrap{align-items:center;padding:1.5rem}}
 .modal-wrap.open{display:flex}
-.modal-box{
-  background:var(--paper);
-  width:100%;max-width:700px;
-  max-height:92dvh;overflow-y:auto;
-  position:relative;
-  animation:mIn .35s var(--spring) both;
-  border-radius:16px 16px 0 0
-}
+.modal-box{background:var(--paper);width:100%;max-width:720px;max-height:92dvh;overflow-y:auto;position:relative;animation:mIn .35s var(--spring) both;border-radius:16px 16px 0 0}
 @media(min-width:640px){.modal-box{border-radius:16px}}
 @keyframes mIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-
-.modal-close{
-  position:absolute;top:.85rem;right:.85rem;z-index:10;
-  width:34px;height:34px;border-radius:50%;
-  background:rgba(15,11,8,.6);color:var(--paper);font-size:.9rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:background .2s;backdrop-filter:blur(4px)
-}
+.modal-close{position:absolute;top:.85rem;right:.85rem;z-index:10;width:34px;height:34px;border-radius:50%;background:rgba(15,11,8,.6);color:var(--paper);font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:background .2s;backdrop-filter:blur(4px)}
 .modal-close:hover{background:var(--rust)}
-
-/* MODAL GALLERY */
-.modal-gallery{position:relative;height:260px;overflow:hidden;background:var(--ink)}
-@media(min-width:640px){.modal-gallery{height:310px}}
+.modal-gallery{position:relative;height:255px;overflow:hidden;background:var(--ink)}
+@media(min-width:640px){.modal-gallery{height:300px}}
 .mg-slides{display:flex;height:100%;transition:transform .4s var(--ease)}
 .mg-slide{flex-shrink:0;width:100%;height:100%;position:relative;overflow:hidden}
 .mg-slide img{width:100%;height:100%;object-fit:cover}
 .mg-slide.vslide{background:#000;display:flex;align-items:center;justify-content:center}
 .mg-slide.vslide iframe,.mg-slide.vslide video{width:100%;height:100%;border:none;object-fit:cover}
 .mg-arrows{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 .6rem;z-index:5;pointer-events:none}
-.mg-arrows button{pointer-events:all;width:34px;height:34px;border-radius:50%;background:rgba(15,11,8,.65);backdrop-filter:blur(4px);border:1px solid rgba(250,246,240,.2);color:#fff;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.mg-arrows button{pointer-events:all;width:32px;height:32px;border-radius:50%;background:rgba(15,11,8,.65);backdrop-filter:blur(4px);border:1px solid rgba(250,246,240,.2);color:#fff;font-size:.75rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .mg-arrows button:hover{background:var(--amber);color:var(--ink)}
-.mg-dots{position:absolute;bottom:.7rem;left:50%;transform:translateX(-50%);display:flex;gap:.35rem;z-index:5}
+.mg-dots{position:absolute;bottom:.65rem;left:50%;transform:translateX(-50%);display:flex;gap:.3rem;z-index:5}
 .mg-dot{width:6px;height:6px;border-radius:50%;background:rgba(250,246,240,.35);cursor:pointer;transition:all .2s}
 .mg-dot.on{background:#fff;width:18px;border-radius:3px}
-.mg-counter{
-  position:absolute;bottom:.7rem;right:.7rem;z-index:5;
-  background:rgba(15,11,8,.7);backdrop-filter:blur(4px);
-  color:rgba(250,246,240,.8);font-family:var(--f-mono);font-size:.6rem;
-  letter-spacing:.06em;padding:.22rem .55rem;border-radius:3px
-}
-.modal-badge-row{
-  position:absolute;top:.7rem;left:.7rem;display:flex;gap:.3rem;z-index:5;flex-wrap:wrap
-}
-
-/* MODAL BODY */
-.modal-body{padding:1.5rem 1.5rem 2rem}
+.mg-counter{position:absolute;bottom:.65rem;right:.65rem;z-index:5;background:rgba(15,11,8,.7);backdrop-filter:blur(4px);color:rgba(250,246,240,.8);font-family:var(--f-mono);font-size:.6rem;letter-spacing:.06em;padding:.22rem .55rem;border-radius:3px}
+.modal-badge-row{position:absolute;top:.65rem;left:.65rem;display:flex;gap:.3rem;z-index:5;flex-wrap:wrap}
+.modal-body{padding:1.4rem 1.4rem 1.8rem}
 @media(min-width:640px){.modal-body{padding:1.75rem 2rem 2rem}}
-.modal-head-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem;gap:.5rem}
-.modal-make{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:.15rem}
-.modal-name{font-family:var(--f-display);font-size:1.65rem;font-weight:700;letter-spacing:-.02em;line-height:1.1}
-.modal-price{font-family:var(--f-display);font-size:1.65rem;font-weight:700;color:var(--amber-dk);text-align:right;line-height:1.1}
-.modal-price-orig{font-size:.72rem;color:var(--muted);text-decoration:line-through;text-align:right;margin-top:.2rem}
-.modal-loc{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--muted);margin-bottom:1.2rem}
-.modal-loc i{color:var(--amber)}
 
-/* SOLD COUNT in modal */
-.modal-sold{
-  display:flex;align-items:center;gap:.75rem;
-  background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);
-  border-radius:6px;padding:.65rem .85rem;margin-bottom:1rem
+/* MODAL TABS */
+.modal-tabs{display:flex;gap:.35rem;border-bottom:1px solid var(--border);margin-bottom:1.4rem;overflow-x:auto;scrollbar-width:none}
+.modal-tabs::-webkit-scrollbar{display:none}
+.modal-tab{
+  padding:.6rem .9rem;font-size:.75rem;font-weight:700;white-space:nowrap;
+  border-bottom:2px solid transparent;color:var(--muted);
+  transition:all .2s;cursor:pointer;flex-shrink:0
 }
+.modal-tab:hover{color:var(--ink)}
+.modal-tab.on{color:var(--ink);border-bottom-color:var(--amber)}
+.modal-panel{display:none}
+.modal-panel.on{display:block}
+
+.modal-make{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:.15rem}
+.modal-name{font-family:var(--f-display);font-size:1.6rem;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.modal-head-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem;gap:.5rem}
+.modal-price{font-family:var(--f-display);font-size:1.6rem;font-weight:700;color:var(--amber-dk);text-align:right;line-height:1.1}
+.modal-price-orig{font-size:.68rem;color:var(--muted);text-decoration:line-through;text-align:right;margin-top:.2rem}
+.modal-loc{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--muted);margin-bottom:1.1rem}
+.modal-loc i{color:var(--amber)}
+.modal-sold{display:flex;align-items:center;gap:.75rem;background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);border-radius:6px;padding:.65rem .85rem;margin-bottom:1rem}
 .modal-sold i{color:var(--sold);font-size:1rem}
 .modal-sold-text{flex:1}
-.modal-sold-text strong{font-size:.82rem;color:var(--sold);display:block;margin-bottom:.25rem}
-.modal-sold-text span{font-size:.68rem;color:var(--muted);font-family:var(--f-mono);letter-spacing:.06em}
-.modal-sold-bar{width:100px;height:5px;background:rgba(220,38,38,.12);border-radius:2px;overflow:hidden;flex-shrink:0}
+.modal-sold-text strong{font-size:.82rem;color:var(--sold);display:block;margin-bottom:.2rem}
+.modal-sold-text span{font-size:.66rem;color:var(--muted);font-family:var(--f-mono);letter-spacing:.06em}
+.modal-sold-bar{width:90px;height:5px;background:rgba(220,38,38,.12);border-radius:2px;overflow:hidden;flex-shrink:0}
 .modal-sold-fill{height:100%;background:var(--sold);border-radius:2px}
-
-/* OFFER BOX in modal */
-.modal-offer{
-  background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(22,163,74,.03));
-  border:1px solid rgba(22,163,74,.25);
-  border-radius:8px;padding:1rem;margin-bottom:1.2rem;
-  display:flex;align-items:center;gap:.85rem
-}
-.modal-offer-icon{
-  width:40px;height:40px;border-radius:8px;
-  background:rgba(22,163,74,.12);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--offer);font-size:1.1rem;flex-shrink:0
-}
-.modal-offer-text strong{font-size:.88rem;color:var(--forest);display:block;margin-bottom:.2rem}
-.modal-offer-text span{font-size:.76rem;color:var(--muted)}
-
-.modal-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:1.2rem}
+.modal-offer{background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(22,163,74,.03));border:1px solid rgba(22,163,74,.25);border-radius:8px;padding:.9rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:.75rem}
+.modal-offer-icon{width:38px;height:38px;border-radius:8px;background:rgba(22,163,74,.12);display:flex;align-items:center;justify-content:center;color:var(--offer);font-size:1rem;flex-shrink:0}
+.modal-offer-text strong{font-size:.85rem;color:var(--forest);display:block;margin-bottom:.18rem}
+.modal-offer-text span{font-size:.74rem;color:var(--muted)}
+.modal-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:1.1rem}
 @media(min-width:480px){.modal-specs{grid-template-columns:repeat(4,1fr)}}
 .modal-spec label{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.2rem}
-.modal-spec span{font-size:.85rem;font-weight:700;color:var(--ink)}
-.modal-desc{font-size:.86rem;color:var(--muted);line-height:1.75;margin-bottom:1.2rem}
-.modal-feats-label{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:.65rem}
-.modal-feats{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:1.4rem}
-.modal-feat{display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--muted)}
+.modal-spec span{font-size:.84rem;font-weight:700;color:var(--ink)}
+.modal-desc{font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1.1rem}
+.modal-feats-label{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:.6rem}
+.modal-feats{display:grid;grid-template-columns:1fr 1fr;gap:.38rem;margin-bottom:1.3rem}
+.modal-feat{display:flex;align-items:center;gap:.38rem;font-size:.79rem;color:var(--muted)}
 .modal-feat i{color:var(--amber);font-size:.6rem}
-.modal-logistics{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:1.1rem;margin-bottom:1.2rem}
-.modal-logistics label{display:flex;align-items:center;gap:.45rem;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dk);font-weight:500;margin-bottom:.65rem}
-.modal-l-inp{width:100%;background:var(--paper);border:1px solid var(--border);border-radius:var(--r-sm);padding:.7rem .9rem;color:var(--ink);font-size:.85rem;margin-bottom:.45rem}
+.modal-logistics-row{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1.1rem}
+.modal-logistics-row label{display:flex;align-items:center;gap:.45rem;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dk);font-weight:500;margin-bottom:.6rem}
+.modal-l-inp{width:100%;background:var(--paper);border:1px solid var(--border);border-radius:var(--r-sm);padding:.68rem .9rem;color:var(--ink);font-size:.85rem;margin-bottom:.4rem}
 .modal-l-inp::placeholder{color:var(--muted)}
 .modal-l-inp:focus{outline:none;border-color:var(--amber)}
-.modal-l-note{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted)}
-.modal-wa{
-  width:100%;background:var(--green-wa);color:#fff;border:none;
-  border-radius:8px;padding:1rem;
-  font-weight:700;font-size:.9rem;letter-spacing:.04em;
-  display:flex;align-items:center;justify-content:center;gap:.6rem;
-  transition:all .25s;margin-bottom:.5rem
-}
+.modal-l-note{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.06em;color:var(--muted)}
+.modal-wa{width:100%;background:var(--green-wa);color:#fff;border:none;border-radius:8px;padding:.9rem;font-weight:700;font-size:.88rem;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:all .25s;margin-bottom:.5rem}
 .modal-wa:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,211,102,.3)}
-.modal-share{
-  display:flex;gap:.5rem;justify-content:center
-}
-.share-btn{
-  background:var(--cream);border:1px solid var(--border);color:var(--ink);
-  padding:.55rem 1rem;border-radius:var(--r-sm);
-  font-size:.72rem;font-weight:600;display:flex;align-items:center;gap:.35rem;
-  transition:all .2s
-}
+.modal-share{display:flex;gap:.5rem;justify-content:center}
+.share-btn{background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:.5rem .9rem;border-radius:var(--r-sm);font-size:.7rem;font-weight:600;display:flex;align-items:center;gap:.35rem;transition:all .2s}
 .share-btn:hover{border-color:var(--amber);background:rgba(217,124,42,.06);color:var(--amber-dk)}
 
-/* ═══════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════ */
-.toast{
-  position:fixed;bottom:calc(1.5rem + var(--safe-bot));left:50%;
-  transform:translateX(-50%) translateY(5rem);
-  background:var(--ink);border:1px solid var(--amber);
-  color:var(--paper);padding:.75rem 1.4rem;border-radius:100px;
-  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;
-  display:flex;align-items:center;gap:.5rem;
-  opacity:0;transition:all .4s var(--spring);z-index:9999;pointer-events:none;white-space:nowrap
-}
+/* ─── MODAL EXTRA SERVICES TAB ─── */
+.addon-service-grid{display:grid;grid-template-columns:1fr;gap:.85rem}
+@media(min-width:480px){.addon-service-grid{grid-template-columns:1fr 1fr}}
+.addon-service-card{border-radius:10px;padding:1.2rem;border:1px solid;transition:all .25s}
+.addon-service-card.track{background:rgba(14,165,233,.05);border-color:rgba(14,165,233,.2)}
+.addon-service-card.surv{background:rgba(124,58,237,.05);border-color:rgba(124,58,237,.2)}
+.addon-service-card.body-upg{background:rgba(217,119,6,.05);border-color:rgba(217,119,6,.2)}
+.addon-service-card:hover{transform:translateY(-2px)}
+.addon-service-card.track:hover{box-shadow:0 8px 24px rgba(14,165,233,.15)}
+.addon-service-card.surv:hover{box-shadow:0 8px 24px rgba(124,58,237,.15)}
+.addon-service-card.body-upg:hover{box-shadow:0 8px 24px rgba(217,119,6,.15)}
+.asc-head{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+.asc-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.asc-icon.track{background:rgba(14,165,233,.15);color:var(--track)}
+.asc-icon.surv{background:rgba(124,58,237,.15);color:var(--surv)}
+.asc-icon.body-upg{background:rgba(217,119,6,.15);color:var(--body)}
+.asc-title{font-family:var(--f-display);font-size:.95rem;font-weight:700;color:var(--ink)}
+.asc-sub{font-size:.68rem;color:var(--muted);font-family:var(--f-mono);letter-spacing:.06em}
+.asc-options{display:flex;flex-direction:column;gap:.38rem;margin-bottom:.85rem}
+.asc-opt{display:flex;justify-content:space-between;align-items:center;font-size:.77rem;color:var(--ink);padding:.38rem 0;border-bottom:1px solid var(--border)}
+.asc-opt:last-child{border-bottom:none}
+.asc-opt-price{font-family:var(--f-mono);font-size:.72rem;font-weight:500;color:var(--muted)}
+.asc-btn{width:100%;padding:.6rem;border-radius:var(--r-sm);font-weight:700;font-size:.72rem;letter-spacing:.06em;display:flex;align-items:center;justify-content:center;gap:.38rem;transition:all .2s}
+.asc-btn.track{background:rgba(14,165,233,.12);color:var(--track);border:1px solid rgba(14,165,233,.25)}
+.asc-btn.track:hover{background:var(--track);color:#fff}
+.asc-btn.surv{background:rgba(124,58,237,.12);color:var(--surv);border:1px solid rgba(124,58,237,.25)}
+.asc-btn.surv:hover{background:var(--surv);color:#fff}
+.asc-btn.body-upg{background:rgba(217,119,6,.12);color:var(--body);border:1px solid rgba(217,119,6,.25)}
+.asc-btn.body-upg:hover{background:var(--body);color:#fff}
+
+/* ─── MODAL BODY UPGRADES TAB ─── */
+.body-upgrade-grid{display:grid;grid-template-columns:1fr;gap:.7rem}
+@media(min-width:480px){.body-upgrade-grid{grid-template-columns:1fr 1fr}}
+.bup-card{border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:all .25s;background:var(--cream)}
+.bup-card:hover{border-color:rgba(217,119,6,.4);transform:translateY(-2px);box-shadow:0 6px 20px rgba(15,11,8,.08)}
+.bup-img{height:110px;object-fit:cover;width:100%}
+.bup-body{padding:.85rem}
+.bup-title{font-family:var(--f-display);font-size:.9rem;font-weight:700;margin-bottom:.2rem}
+.bup-desc{font-size:.72rem;color:var(--muted);line-height:1.55;margin-bottom:.6rem}
+.bup-price{font-family:var(--f-mono);font-size:.72rem;color:var(--amber-dk);font-weight:500;margin-bottom:.55rem}
+.bup-btn{width:100%;padding:.55rem;border-radius:var(--r-sm);background:rgba(217,119,6,.1);color:var(--body);border:1px solid rgba(217,119,6,.25);font-size:.7rem;font-weight:700;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.bup-btn:hover{background:var(--body);color:#fff}
+
+/* ═══════════════ SERVICE ENQUIRY MODAL ═══════════════ */
+.svc-modal-wrap{position:fixed;inset:0;z-index:3000;background:rgba(15,11,8,.88);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:1rem}
+.svc-modal-wrap.open{display:flex}
+.svc-modal-box{background:var(--paper);border-radius:16px;max-width:480px;width:100%;padding:2rem;animation:mIn .35s var(--spring) both;position:relative;max-height:90dvh;overflow-y:auto}
+.svc-modal-close{position:absolute;top:.9rem;right:.9rem;width:32px;height:32px;border-radius:50%;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--ink)}
+.svc-modal-close:hover{background:var(--rust);color:#fff}
+
+/* ═══════════════ TOAST ═══════════════ */
+.toast{position:fixed;bottom:calc(1.5rem + var(--safe-bot));left:50%;transform:translateX(-50%) translateY(5rem);background:var(--ink);border:1px solid var(--amber);color:var(--paper);padding:.75rem 1.4rem;border-radius:100px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;display:flex;align-items:center;gap:.5rem;opacity:0;transition:all .4s var(--spring);z-index:9999;pointer-events:none;white-space:nowrap}
 .toast i{color:var(--amber)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- ░░ TICKER ░░ -->
+<!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
     <span class="ti a">🚗 New Arrivals Weekly</span><span class="ti">·</span>
     <span class="ti">Verified Sellers Only</span><span class="ti">·</span>
+    <span class="ti a">GPS Tracking Available</span><span class="ti">·</span>
+    <span class="ti">Surveillance Dashcam Install</span><span class="ti">·</span>
+    <span class="ti a">Body Upgrade Packages</span><span class="ti">·</span>
+    <span class="ti">Free DIY Mechanic Guide</span><span class="ti">·</span>
     <span class="ti a">Nationwide Delivery</span><span class="ti">·</span>
-    <span class="ti">Tokunbo &amp; Nigerian Used Cars</span><span class="ti">·</span>
-    <span class="ti a">WhatsApp-First Platform</span><span class="ti">·</span>
-    <span class="ti">All 36 States + FCT</span><span class="ti">·</span>
     <span class="ti a">🚗 New Arrivals Weekly</span><span class="ti">·</span>
     <span class="ti">Verified Sellers Only</span><span class="ti">·</span>
+    <span class="ti a">GPS Tracking Available</span><span class="ti">·</span>
+    <span class="ti">Surveillance Dashcam Install</span><span class="ti">·</span>
+    <span class="ti a">Body Upgrade Packages</span><span class="ti">·</span>
+    <span class="ti">Free DIY Mechanic Guide</span><span class="ti">·</span>
     <span class="ti a">Nationwide Delivery</span><span class="ti">·</span>
-    <span class="ti">Tokunbo &amp; Nigerian Used Cars</span><span class="ti">·</span>
-    <span class="ti a">WhatsApp-First Platform</span><span class="ti">·</span>
-    <span class="ti">All 36 States + FCT</span><span class="ti">·</span>
   </div>
 </div>
 
-<!-- ░░ NAV ░░ -->
+<!-- NAV -->
 <nav>
   <div class="container">
     <div class="nav-inner">
@@ -932,140 +688,93 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
       </a>
       <ul class="nav-links">
         <li><a href="#listings">Browse Cars</a></li>
-        <li><a href="#how">How It Works</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#diy-guide">DIY Guide</a></li>
         <li><a href="#logistics">Logistics</a></li>
         <li><a href="#magazine">Free Guide</a></li>
         <li><a href="#" class="nav-pill">List Your Car</a></li>
       </ul>
-      <button class="nav-burger" onclick="openMenu()" aria-label="Menu">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <button class="nav-burger" onclick="openMenu()" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
 </nav>
 
-<!-- ░░ MOBILE MENU ░░ -->
+<!-- MOBILE DRAWER -->
 <div class="mobile-menu" id="mMenu">
   <div class="mm-backdrop" onclick="closeMenu()"></div>
   <div class="mm-panel">
     <button class="mm-close" onclick="closeMenu()"><i class="fa-solid fa-xmark"></i></button>
+    <div class="mm-section-label">Marketplace</div>
     <a href="#listings" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-car"></i>Browse Cars</a>
     <a href="#how" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-route"></i>How It Works</a>
     <a href="#logistics" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-truck-fast"></i>Logistics</a>
-    <a href="#magazine" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-book-open"></i>Free Guide</a>
+    <div class="mm-section-label">Extra Services</div>
+    <a href="#services" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-location-dot" style="color:var(--track)"></i>GPS Tracking</a>
+    <a href="#services" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-video" style="color:var(--surv)"></i>Surveillance / Dashcam</a>
+    <a href="#services" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-paint-roller" style="color:var(--body)"></i>Body Upgrades</a>
+    <a href="#diy-guide" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-wrench" style="color:var(--mech)"></i>Free DIY Mechanic Guide</a>
+    <div class="mm-section-label">Resources</div>
+    <a href="#magazine" class="mm-link" onclick="closeMenu()"><i class="fa-solid fa-book-open"></i>Free Buyer's Guide</a>
     <a href="#" class="mm-link mm-cta"><i class="fa-solid fa-plus"></i>List Your Car</a>
   </div>
 </div>
 
-<!-- ░░ HERO ░░ -->
+<!-- HERO -->
 <section class="hero">
   <div class="container">
     <div class="hero-grid">
       <div class="hero-left">
         <div class="hero-tagline">Nigeria's Most Trusted Car Marketplace</div>
         <h1>Your Next<br><em>Dream Car</em><br><span class="outline">Awaits.</span></h1>
-        <p class="hero-sub">Browse hundreds of verified listings from trusted sellers across Nigeria. Transparent pricing. WhatsApp-direct. Nationwide delivery sorted.</p>
+        <p class="hero-sub">Browse verified listings. Add GPS tracking, dashcam surveillance, body upgrades and more — all from one platform. Nationwide delivery sorted.</p>
         <div class="hero-btns">
           <a href="#listings" class="btn-amber"><i class="fa-solid fa-magnifying-glass"></i>Browse Cars</a>
-          <a href="#how" class="btn-ghost"><i class="fa-regular fa-circle-play"></i>How It Works</a>
+          <a href="#services" class="btn-ghost"><i class="fa-solid fa-screwdriver-wrench"></i>Extra Services</a>
         </div>
         <div class="hero-stats">
-          <div class="stat"><div class="n">200+</div><div class="l">Active Listings</div></div>
+          <div class="stat"><div class="n">200+</div><div class="l">Listings</div></div>
+          <div class="stat"><div class="n">4</div><div class="l">Extra Services</div></div>
           <div class="stat"><div class="n">₦4B+</div><div class="l">Cars Sold</div></div>
-          <div class="stat"><div class="n">2,800+</div><div class="l">Happy Buyers</div></div>
-          <div class="stat"><div class="n">36</div><div class="l">States Covered</div></div>
+          <div class="stat"><div class="n">36</div><div class="l">States</div></div>
         </div>
       </div>
       <div class="hero-right">
-        <img src="https://picsum.photos/seed/naijahero2/900/700" alt="Luxury car" class="hero-img">
+        <img src="https://picsum.photos/seed/naijahero3/900/700" alt="Luxury car" class="hero-img">
         <div class="hero-img-overlay"></div>
-        <div class="hero-badge"><span class="badge-n">4.9★</span><span class="badge-t">Avg. Seller Rating</span></div>
+        <div class="hero-badge"><span class="badge-n">4.9★</span><span class="badge-t">Avg. Rating</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ░░ SEARCH ░░ -->
+<!-- SEARCH -->
 <div class="search-bar" id="search">
   <div class="container" style="padding:0">
     <div class="search-grid">
-      <div class="sf">
-        <div class="sf-label"><i class="fa-solid fa-magnifying-glass"></i> Search</div>
-        <input type="text" id="searchInput" placeholder="Make, model, keyword…">
-      </div>
-      <div class="sf">
-        <div class="sf-label"><i class="fa-solid fa-location-dot"></i> Location</div>
-        <select id="filterLocation">
-          <option value="all">All Locations</option>
-          <option value="Lagos">Lagos</option>
-          <option value="Abuja">Abuja</option>
-          <option value="Port Harcourt">Port Harcourt</option>
-          <option value="Ibadan">Ibadan</option>
-        </select>
-      </div>
-      <div class="sf">
-        <div class="sf-label"><i class="fa-solid fa-naira-sign"></i> Budget</div>
-        <select id="filterPrice">
-          <option value="all">Any Price</option>
-          <option value="low">Under ₦5M</option>
-          <option value="mid">₦5M – ₦15M</option>
-          <option value="high">₦15M+</option>
-        </select>
-      </div>
-      <div class="sf">
-        <div class="sf-label"><i class="fa-solid fa-gas-pump"></i> Fuel</div>
-        <select id="filterFuel">
-          <option value="all">Any Fuel</option>
-          <option value="Petrol">Petrol</option>
-          <option value="Hybrid">Hybrid</option>
-        </select>
-      </div>
+      <div class="sf"><div class="sf-label"><i class="fa-solid fa-magnifying-glass"></i> Search</div><input type="text" id="searchInput" placeholder="Make, model, keyword…"></div>
+      <div class="sf"><div class="sf-label"><i class="fa-solid fa-location-dot"></i> Location</div><select id="filterLocation"><option value="all">All Locations</option><option value="Lagos">Lagos</option><option value="Abuja">Abuja</option><option value="Port Harcourt">Port Harcourt</option><option value="Ibadan">Ibadan</option></select></div>
+      <div class="sf"><div class="sf-label"><i class="fa-solid fa-naira-sign"></i> Budget</div><select id="filterPrice"><option value="all">Any Price</option><option value="low">Under ₦5M</option><option value="mid">₦5M – ₦15M</option><option value="high">₦15M+</option></select></div>
+      <div class="sf"><div class="sf-label"><i class="fa-solid fa-gas-pump"></i> Fuel</div><select id="filterFuel"><option value="all">Any Fuel</option><option value="Petrol">Petrol</option><option value="Hybrid">Hybrid</option></select></div>
       <button class="search-btn" onclick="applyFilters()"><i class="fa-solid fa-sliders"></i>Filter</button>
     </div>
   </div>
 </div>
 
-<!-- ░░ BRANDS ░░ -->
+<!-- BRANDS -->
 <div class="brands" aria-hidden="true">
   <div class="brands-track">
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Toyota</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Mercedes-Benz</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Lexus</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Honda</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>BMW</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Infiniti</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Ford</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Audi</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Kia</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Hyundai</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Acura</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Chevrolet</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Toyota</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Mercedes-Benz</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Lexus</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Honda</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>BMW</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Infiniti</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Ford</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Audi</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Kia</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Hyundai</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Acura</div>
-    <div class="brand-pill"><i class="fa-solid fa-car"></i>Chevrolet</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i>Toyota</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Mercedes-Benz</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Lexus</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Honda</div><div class="brand-pill"><i class="fa-solid fa-car"></i>BMW</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Infiniti</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Ford</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Audi</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Kia</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Hyundai</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Acura</div>
+    <div class="brand-pill"><i class="fa-solid fa-car"></i>Toyota</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Mercedes-Benz</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Lexus</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Honda</div><div class="brand-pill"><i class="fa-solid fa-car"></i>BMW</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Infiniti</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Ford</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Audi</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Kia</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Hyundai</div><div class="brand-pill"><i class="fa-solid fa-car"></i>Acura</div>
   </div>
 </div>
 
-<!-- ░░ LISTINGS ░░ -->
+<!-- LISTINGS -->
 <section class="listings" id="listings">
   <div class="container">
     <div class="listings-head">
-      <div>
-        <div class="section-eyebrow">Inventory</div>
-        <h2 class="display">Available <em>Vehicles</em></h2>
-      </div>
+      <div><div class="section-eyebrow">Inventory</div><h2 class="display">Available <em>Vehicles</em></h2></div>
       <span class="result-tag" id="resultCount">Loading…</span>
     </div>
-
     <div class="tab-bar" id="tabBar">
       <button class="tab on" onclick="setTab(this,'all')">All Cars</button>
       <button class="tab" onclick="setTab(this,'Lagos')">Lagos</button>
@@ -1073,17 +782,12 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
       <button class="tab" onclick="setTab(this,'Port Harcourt')">Port Harcourt</button>
       <button class="tab" onclick="setTab(this,'Ibadan')">Ibadan</button>
     </div>
-
     <div id="carGrid" class="car-grid"></div>
-    <div id="emptyState" class="empty">
-      <i class="fa-regular fa-face-frown"></i>
-      <h3>No vehicles found</h3>
-      <p>Try adjusting your search or filters.</p>
-    </div>
+    <div id="emptyState" class="empty"><i class="fa-regular fa-face-frown"></i><h3>No vehicles found</h3><p>Try adjusting your search or filters.</p></div>
   </div>
 </section>
 
-<!-- ░░ NUMBERS ░░ -->
+<!-- NUMBERS -->
 <section class="numbers">
   <div class="container">
     <div class="numbers-grid">
@@ -1095,31 +799,119 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
   </div>
 </section>
 
-<!-- ░░ WHY ░░ -->
+<!-- ░░░ EXTRA SERVICES ░░░ -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="services-intro">
+      <div class="section-eyebrow">Extra Services</div>
+      <h2 class="display" style="color:var(--paper);margin-top:.4rem">More Than Just <em>A Car</em></h2>
+      <p>Every vehicle purchase can be paired with our premium add-on services — from real-time GPS tracking to full dashcam installation, body makeovers, and beyond.</p>
+    </div>
+    <div class="services-grid">
+
+      <!-- GPS TRACKING -->
+      <div class="service-card track">
+        <div class="svc-icon track"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="svc-title">GPS Vehicle Tracking</div>
+        <div class="svc-desc">Know exactly where your car is, 24/7. Real-time tracking with route history, speed alerts, and geo-fence boundaries — all from your phone.</div>
+        <div class="svc-features">
+          <div class="svc-feat track"><i class="fa-solid fa-check"></i>Real-time GPS location on your phone</div>
+          <div class="svc-feat track"><i class="fa-solid fa-check"></i>30-day route history & playback</div>
+          <div class="svc-feat track"><i class="fa-solid fa-check"></i>Speed alerts & geo-fence zones</div>
+          <div class="svc-feat track"><i class="fa-solid fa-check"></i>Anti-theft engine cut-off remote</div>
+          <div class="svc-feat track"><i class="fa-solid fa-check"></i>Lagos, Abuja & PH installation centres</div>
+        </div>
+        <div class="svc-price"><span class="from">From</span><span class="amount">₦45,000</span><span class="period">/ install</span></div>
+        <button class="svc-btn track" onclick="openSvcModal('track')"><i class="fa-solid fa-location-dot"></i>Get Tracking Installed</button>
+      </div>
+
+      <!-- SURVEILLANCE -->
+      <div class="service-card surv">
+        <div class="svc-icon surv"><i class="fa-solid fa-video"></i></div>
+        <div class="svc-title">Dashcam & Surveillance</div>
+        <div class="svc-desc">Professional dashcam installation with front, rear and interior cameras. Cloud backup, loop recording, and night vision — your car's eye never blinks.</div>
+        <div class="svc-features">
+          <div class="svc-feat surv"><i class="fa-solid fa-check"></i>Front + rear dashcam installation</div>
+          <div class="svc-feat surv"><i class="fa-solid fa-check"></i>Interior cabin camera (optional)</div>
+          <div class="svc-feat surv"><i class="fa-solid fa-check"></i>Night vision & wide-angle 170°</div>
+          <div class="svc-feat surv"><i class="fa-solid fa-check"></i>Cloud backup & incident alerts</div>
+          <div class="svc-feat surv"><i class="fa-solid fa-check"></i>Parking surveillance mode</div>
+        </div>
+        <div class="svc-price"><span class="from">From</span><span class="amount">₦65,000</span><span class="period">/ install</span></div>
+        <button class="svc-btn surv" onclick="openSvcModal('surv')"><i class="fa-solid fa-video"></i>Book Dashcam Install</button>
+      </div>
+
+      <!-- BODY UPGRADES -->
+      <div class="service-card body-upg">
+        <div class="svc-icon body-upg"><i class="fa-solid fa-paint-roller"></i></div>
+        <div class="svc-title">Car Body Upgrades</div>
+        <div class="svc-desc">Transform your car's look and feel. From premium window tints and PPF wraps to sport body kits, alloy wheel upgrades, and custom paint — your ride, your rules.</div>
+        <div class="svc-features">
+          <div class="svc-feat body-upg"><i class="fa-solid fa-check"></i>Window tinting (legal grades)</div>
+          <div class="svc-feat body-upg"><i class="fa-solid fa-check"></i>Paint Protection Film (PPF)</div>
+          <div class="svc-feat body-upg"><i class="fa-solid fa-check"></i>Sport & M-kit body kits</div>
+          <div class="svc-feat body-upg"><i class="fa-solid fa-check"></i>Custom full or partial vinyl wrap</div>
+          <div class="svc-feat body-upg"><i class="fa-solid fa-check"></i>Alloy wheel upgrades & detailing</div>
+        </div>
+        <div class="svc-price"><span class="from">From</span><span class="amount">₦35,000</span><span class="period">/ service</span></div>
+        <button class="svc-btn body-upg" onclick="openSvcModal('body')"><i class="fa-solid fa-paint-roller"></i>Explore Body Upgrades</button>
+      </div>
+
+      <!-- MECHANIC / DIY -->
+      <div class="service-card mech">
+        <div class="svc-icon mech"><i class="fa-solid fa-wrench"></i></div>
+        <div class="svc-title">Free DIY Mechanic Guide</div>
+        <div class="svc-desc">Not every fix needs a mechanic. Our free DIY guide covers 12+ common repairs Nigerian car owners face — step by step, with tools list and video links.</div>
+        <div class="svc-features">
+          <div class="svc-feat mech"><i class="fa-solid fa-check"></i>12+ common repair guides</div>
+          <div class="svc-feat mech"><i class="fa-solid fa-check"></i>Tools list per repair type</div>
+          <div class="svc-feat mech"><i class="fa-solid fa-check"></i>Step-by-step with warnings</div>
+          <div class="svc-feat mech"><i class="fa-solid fa-check"></i>Nigeria-specific tips & parts sourcing</div>
+          <div class="svc-feat mech"><i class="fa-solid fa-check"></i>WhatsApp mechanic helpline access</div>
+        </div>
+        <div class="svc-price"><span class="from" style="color:var(--mech)">100%</span><span class="amount" style="font-size:1.1rem;color:#059669">FREE</span></div>
+        <a href="#diy-guide" class="svc-btn mech"><i class="fa-solid fa-book-open"></i>Open DIY Guide</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ DIY MECHANIC GUIDE ░░░ -->
+<section class="diy-section" id="diy-guide">
+  <div class="container">
+    <div class="diy-header">
+      <div>
+        <div class="diy-free-badge"><i class="fa-solid fa-gift"></i>100% Free Resource</div>
+        <div class="section-eyebrow">DIY Mechanic Guide</div>
+        <h2 class="display" style="margin-top:.4rem">Fix It Yourself,<br><em>Save Your Money.</em></h2>
+        <p style="color:var(--muted);font-size:.9rem;line-height:1.75;margin-top:.75rem;max-width:540px">Not every fault needs a mechanic bill. Learn 12 common repairs every Nigerian car owner should know — step by step, with tools list and safety warnings.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;align-items:flex-start">
+        <a href="https://wa.me/2348123456789?text=Hi!%20I%20need%20mechanic%20help%20with%20my%20car." target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--green-wa);color:#fff;padding:.75rem 1.3rem;border-radius:var(--r-sm);font-weight:700;font-size:.8rem;white-space:nowrap"><i class="fa-brands fa-whatsapp"></i>Ask a Mechanic on WhatsApp</a>
+        <span style="font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase"><i class="fa-solid fa-circle" style="color:var(--mech);font-size:.4rem;margin-right:.3rem"></i>Available 7am – 10pm daily</span>
+      </div>
+    </div>
+
+    <div class="diy-grid" id="diyGrid">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
 <section class="why" id="about">
   <div class="container">
     <div class="why-grid">
       <div class="why-text">
         <div class="section-eyebrow">Why AutoNaija</div>
         <h2 class="display">Buy With<br><em>Confidence,</em><br>Zero Wahala.</h2>
-        <p>We connect verified sellers with serious buyers. No middlemen, no hidden charges — just clean deals that respect your hard-earned Naira.</p>
+        <p>We connect verified sellers with serious buyers. No middlemen, no hidden charges — just clean deals and a full ecosystem of car services.</p>
         <div class="why-feats">
-          <div class="why-feat">
-            <div class="why-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <div><h4>Verified Sellers Only</h4><p>Every seller passes ID, ownership, and vehicle history checks before listing.</p></div>
-          </div>
-          <div class="why-feat">
-            <div class="why-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-            <div><h4>Transparent Pricing</h4><p>No "arrange" pricing. Negotiate fairly with full market data behind you.</p></div>
-          </div>
-          <div class="why-feat">
-            <div class="why-icon"><i class="fa-solid fa-truck-fast"></i></div>
-            <div><h4>Nationwide Logistics</h4><p>Trusted haulage to all 36 states with GPS tracking and transit insurance.</p></div>
-          </div>
-          <div class="why-feat">
-            <div class="why-icon"><i class="fa-brands fa-whatsapp"></i></div>
-            <div><h4>WhatsApp-First</h4><p>Connect directly with sellers — the way Nigerians do business.</p></div>
-          </div>
+          <div class="why-feat"><div class="why-icon"><i class="fa-solid fa-shield-halved"></i></div><div><h4>Verified Sellers Only</h4><p>ID check, ownership, and vehicle history reviewed before any listing goes live.</p></div></div>
+          <div class="why-feat"><div class="why-icon"><i class="fa-solid fa-location-dot" style="color:var(--track)"></i></div><div><h4>GPS Tracking Add-On</h4><p>Protect your investment with real-time tracking installed at our partner centres nationwide.</p></div></div>
+          <div class="why-feat"><div class="why-icon"><i class="fa-solid fa-paint-roller" style="color:var(--body)"></i></div><div><h4>Body Upgrade Packages</h4><p>Tints, wraps, body kits — transform your new car into something truly personal.</p></div></div>
+          <div class="why-feat"><div class="why-icon"><i class="fa-solid fa-wrench" style="color:var(--mech)"></i></div><div><h4>Free DIY Mechanic Guide</h4><p>12+ common repairs explained step-by-step. Fix it yourself, save on mechanic bills.</p></div></div>
         </div>
       </div>
       <div class="why-visual">
@@ -1131,56 +923,44 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
   </div>
 </section>
 
-<!-- ░░ HOW ░░ -->
+<!-- HOW -->
 <section class="how" id="how">
   <div class="container">
     <div class="how-intro">
       <div class="section-eyebrow" style="justify-content:center">Process</div>
-      <h2 class="display" style="text-align:center;font-size:clamp(1.8rem,4vw,2.8rem);margin-top:.4rem">From Browse to<br><em>Behind the Wheel</em></h2>
-      <p>Four simple steps between you and your dream car.</p>
+      <h2 class="display" style="text-align:center;font-size:clamp(1.8rem,4vw,2.8rem);margin-top:.4rem">From Browse to <em>Behind the Wheel</em></h2>
+      <p>Four simple steps between you and your dream car — with services to protect it after.</p>
     </div>
     <div class="steps">
       <div class="step"><div class="step-n">1</div><h3>Browse & Filter</h3><p>Search by location, budget, brand or fuel. Every listing is verified.</p></div>
       <div class="step"><div class="step-n">2</div><h3>Contact Seller</h3><p>Open a direct WhatsApp conversation with the verified seller instantly.</p></div>
-      <div class="step"><div class="step-n">3</div><h3>Inspect & Negotiate</h3><p>Meet the seller, inspect the car, and negotiate with market data support.</p></div>
-      <div class="step"><div class="step-n">4</div><h3>Drive or Deliver</h3><p>Pick it up or book our nationwide door-to-door delivery service.</p></div>
+      <div class="step"><div class="step-n">3</div><h3>Inspect & Buy</h3><p>Meet the seller, inspect the car, and add any extra services you need.</p></div>
+      <div class="step"><div class="step-n">4</div><h3>Drive & Protect</h3><p>Take delivery, install GPS/dashcam, and use our free DIY guide for maintenance.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ░░ REVIEWS ░░ -->
+<!-- REVIEWS -->
 <section class="reviews" id="reviews">
   <div class="container">
     <div class="section-eyebrow">Testimonials</div>
     <h2 class="display" style="margin-top:.4rem">What <em>Buyers</em> Say</h2>
     <div class="reviews-grid">
-      <div class="rv-card">
-        <div class="rv-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <p class="rv-text">"Chatted the seller Tuesday, inspected Thursday, drove home Friday. No stories. Clean process from start to finish."</p>
-        <div class="rv-author"><div class="rv-av">AO</div><div><div class="rv-name">Adebayo Okonkwo</div><div class="rv-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.58rem;margin-right:.2rem"></i>Lagos Island</div></div></div>
-      </div>
-      <div class="rv-card">
-        <div class="rv-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <p class="rv-text">"Based in Enugu, bought a RAV4 from Lagos. Their logistics team delivered it to my compound. Exactly as described."</p>
-        <div class="rv-author"><div class="rv-av">CN</div><div><div class="rv-name">Chidinma Nwosu</div><div class="rv-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.58rem;margin-right:.2rem"></i>Enugu</div></div></div>
-      </div>
-      <div class="rv-card">
-        <div class="rv-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
-        <p class="rv-text">"Finally a Nigerian car site that doesn't feel like a scam. Their free buyer's guide helped me negotiate ₦800k off."</p>
-        <div class="rv-author"><div class="rv-av">MH</div><div><div class="rv-name">Mohammed Hassan</div><div class="rv-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.58rem;margin-right:.2rem"></i>Abuja</div></div></div>
-      </div>
+      <div class="rv-card"><div class="rv-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p class="rv-text">"Bought the Lexus RX 350 and immediately added GPS tracking. Now I can see my car anywhere on my phone. The DIY guide helped me change my own oil — saved ₦15k!"</p><div class="rv-author"><div class="rv-av">AO</div><div><div class="rv-name">Adebayo Okonkwo</div><div class="rv-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.58rem;margin-right:.2rem"></i>Lagos Island</div></div></div></div>
+      <div class="rv-card"><div class="rv-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p class="rv-text">"Got the window tint and body kit upgrade on my new RAV4. The team was professional and the result is stunning. I also got the dashcam — 10/10 peace of mind."</p><div class="rv-author"><div class="rv-av">CN</div><div><div class="rv-name">Chidinma Nwosu</div><div class="rv-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.58rem;margin-right:.2rem"></i>Enugu</div></div></div></div>
+      <div class="rv-card"><div class="rv-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div><p class="rv-text">"The DIY brake pad guide saved me from going to a mechanic. Clear steps, right tools, no stress. I also appreciate the WhatsApp mechanic line for when I get stuck."</p><div class="rv-author"><div class="rv-av">MH</div><div><div class="rv-name">Mohammed Hassan</div><div class="rv-loc"><i class="fa-solid fa-location-dot" style="color:var(--amber);font-size:.58rem;margin-right:.2rem"></i>Abuja</div></div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ░░ LOGISTICS ░░ -->
+<!-- LOGISTICS -->
 <section class="logistics" id="logistics">
   <div class="container">
     <div class="logistics-grid">
       <div>
         <div class="section-eyebrow">Delivery</div>
         <h2>Nationwide <em>Logistics</em> Fully Sorted.</h2>
-        <p>Found your dream car in Lagos but you're in Sokoto? Not a problem. GPS tracking, transit insurance, all 36 states covered.</p>
+        <p>Found your car in Lagos but you're in Sokoto? We handle it. GPS tracking, transit insurance, 36 states covered.</p>
         <div class="log-list">
           <div class="log-li"><i class="fa-solid fa-circle-check"></i>Transit insurance on every delivery</div>
           <div class="log-li"><i class="fa-solid fa-circle-check"></i>Real-time GPS tracking</div>
@@ -1191,22 +971,15 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
       </div>
       <div class="log-card">
         <h4><i class="fa-solid fa-truck-fast"></i>Get a Delivery Quote</h4>
-        <div class="l-row">
-          <input type="text" class="l-inp" id="deliveryCity" placeholder="Your destination (e.g. Kaduna)">
-          <button class="l-q-btn" onclick="quoteLogistics()">Quote</button>
-        </div>
-        <div class="city-chips">
-          <span class="chip">Lagos</span><span class="chip">Abuja</span><span class="chip">PH</span>
-          <span class="chip">Kano</span><span class="chip">Ibadan</span><span class="chip">Enugu</span>
-          <span class="chip">Kaduna</span><span class="chip">+29 more</span>
-        </div>
+        <div class="l-row"><input type="text" class="l-inp" id="deliveryCity" placeholder="Your destination (e.g. Kaduna)"><button class="l-q-btn" onclick="quoteLogistics()">Quote</button></div>
+        <div class="city-chips"><span class="chip">Lagos</span><span class="chip">Abuja</span><span class="chip">PH</span><span class="chip">Kano</span><span class="chip">Ibadan</span><span class="chip">Enugu</span><span class="chip">Kaduna</span><span class="chip">+29 more</span></div>
         <div class="l-note"><i class="fa-solid fa-info-circle" style="color:var(--amber);margin-right:.3rem"></i>Quotes via WhatsApp within 30 min.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ░░ MAGAZINE ░░ -->
+<!-- MAGAZINE -->
 <section class="magazine" id="magazine">
   <div class="container">
     <div class="mag-grid">
@@ -1217,13 +990,13 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
       <div class="mag-text">
         <div class="section-eyebrow">Free Resource</div>
         <h2 class="display" style="margin-top:.4rem">The Nigerian<br>Car Buyer's <em>Bible</em></h2>
-        <p>Before you spend your hard-earned Naira, arm yourself with knowledge. Covers scam avoidance, customs, and negotiation tactics.</p>
+        <p>Before you spend your hard-earned Naira, arm yourself with knowledge. Covers scam avoidance, customs, GPS installation tips, and negotiation tactics.</p>
         <div class="mag-perks">
           <div class="mag-perk"><i class="fa-solid fa-check-circle"></i>How to avoid common Tokunbo scams</div>
           <div class="mag-perk"><i class="fa-solid fa-check-circle"></i>Customs duty calculator & guide</div>
-          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i>Negotiation tactics that work</div>
-          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i>Best cars for Nigerian roads per budget</div>
-          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i>Fuel efficiency comparison — 20+ models</div>
+          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i>GPS tracker buying & installation guide</div>
+          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i>Best body upgrades for Nigerian weather</div>
+          <div class="mag-perk"><i class="fa-solid fa-check-circle"></i>Top 10 DIY fixes every car owner must know</div>
         </div>
         <div class="mag-form">
           <input type="email" id="emailInput" class="mag-input" placeholder="Enter your email address">
@@ -1236,13 +1009,13 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
   </div>
 </section>
 
-<!-- ░░ FOOTER ░░ -->
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo"><div class="logo-mark"><i class="fa-solid fa-car-side"></i></div><div class="logo-text">Auto<span>Naija</span></div></div>
-        <p>Nigeria's most trusted platform for buying and selling quality vehicles. Transparent. Verified. Fast.</p>
+        <p>Nigeria's most trusted platform for buying, selling and servicing quality vehicles. Transparent. Verified. Fast.</p>
         <div class="socials">
           <a href="#" class="social"><i class="fa-brands fa-instagram"></i></a>
           <a href="#" class="social"><i class="fa-brands fa-twitter"></i></a>
@@ -1252,17 +1025,14 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
         </div>
       </div>
       <div class="fc"><h5>Marketplace</h5><ul><li><a href="#">Browse All Cars</a></li><li><a href="#">Sell Your Car</a></li><li><a href="#">Tokunbo Cars</a></li><li><a href="#">Nigerian Used</a></li><li><a href="#">Featured Listings</a></li></ul></div>
-      <div class="fc"><h5>Company</h5><ul><li><a href="#">About AutoNaija</a></li><li><a href="#">How It Works</a></li><li><a href="#">Verified Sellers</a></li><li><a href="#">Blog & News</a></li><li><a href="#">Contact Us</a></li></ul></div>
-      <div class="fc"><h5>Support</h5><ul><li><a href="#">FAQ</a></li><li><a href="#">Buyer's Guide</a></li><li><a href="#">Logistics Info</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+      <div class="fc"><h5>Services</h5><ul><li><a href="#services">GPS Tracking</a></li><li><a href="#services">Dashcam Install</a></li><li><a href="#services">Body Upgrades</a></li><li><a href="#diy-guide">Free DIY Guide</a></li><li><a href="#logistics">Delivery Logistics</a></li></ul></div>
+      <div class="fc"><h5>Support</h5><ul><li><a href="#">FAQ</a></li><li><a href="#">Buyer's Guide</a></li><li><a href="#">Mechanic Helpline</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2024 AutoNaija. All rights reserved.</span>
-      <span>🇳🇬 Made with pride in Nigeria</span>
-    </div>
+    <div class="footer-bottom"><span>© 2024 AutoNaija. All rights reserved.</span><span>🇳🇬 Made with pride in Nigeria</span></div>
   </div>
 </footer>
 
-<!-- ░░ MODAL ░░ -->
+<!-- CAR MODAL -->
 <div class="modal-wrap" id="modalWrap" onclick="closeModal(event)">
   <div class="modal-box" id="modalBox">
     <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -1270,314 +1040,145 @@ footer{background:var(--ink);color:var(--paper);padding:3.5rem 0 2rem;border-top
   </div>
 </div>
 
+<!-- SERVICE ENQUIRY MODAL -->
+<div class="svc-modal-wrap" id="svcModal" onclick="closeSvcModal(event)">
+  <div class="svc-modal-box" id="svcModalBox">
+    <button class="svc-modal-close" onclick="closeSvcModal()"><i class="fa-solid fa-xmark"></i></button>
+    <div id="svcModalContent"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastMsg"></span></div>
 
 <script>
-/* ═══════════════════════════════════════════
-   DATA
-═══════════════════════════════════════════ */
 const WA = '2348123456789';
 
+/* ═══════════ CAR DATA ═══════════ */
 const cars = [
-  {
-    id:1, make:'Mercedes-Benz', model:'C-Class AMG', year:2020,
-    price:18500000, origPrice:20000000,
-    mileage:'45,000 km', transmission:'Automatic', fuel:'Petrol', location:'Lagos',
-    sold:14, totalStock:20,
-    badges:['hot','offer'], offerText:'₦1.5M price drop this week only!', offerExpiry:'Ends Friday',
-    views:342, enquiries:28,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/benz1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/benz2/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/benz3/800/550'},
-      {type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/benz4/800/550'}
-    ],
-    desc:'Clean Nigerian used Mercedes C-Class. First body, nothing to fix. Perfectly maintained with full service history. Buy and drive.',
-    features:['Sunroof','Leather Seats','Navigation','Reverse Camera','Keyless Entry','Ambient Lighting']
-  },
-  {
-    id:2, make:'Toyota', model:'RAV4 Hybrid', year:2021,
-    price:22000000, origPrice:null,
-    mileage:'30,000 km', transmission:'CVT', fuel:'Hybrid', location:'Abuja',
-    sold:8, totalStock:12,
-    badges:['new','hybrid'],
-    views:218, enquiries:19,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/rav1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/rav2/800/550'},
-      {type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/rav3/800/550'}
-    ],
-    desc:'Fuel efficient SUV perfect for Nigerian roads. Accident free, alloy wheels, clean fabric interior.',
-    features:['Android Auto','Apple CarPlay','Lane Assist','Eco Mode','Heated Seats','AWD']
-  },
-  {
-    id:3, make:'Lexus', model:'RX 350', year:2019,
-    price:28000000, origPrice:30500000,
-    mileage:'60,000 km', transmission:'Automatic', fuel:'Petrol', location:'Lagos',
-    sold:22, totalStock:25,
-    badges:['hot','offer'], offerText:'Free first-year insurance included!', offerExpiry:'Limited time',
-    views:485, enquiries:41,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/lex1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/lex2/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/lex3/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/lex4/800/550'},
-      {type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/lex5/800/550'}
-    ],
-    desc:'Muscle on wheels. V6 engine powerful and reliable. Perfect for Nigerian terrain. Customs duty fully paid.',
-    features:['Panoramic Roof','Mark Levinson Audio','AWD','Ventilated Seats','360 Camera','Pre-Collision']
-  },
-  {
-    id:4, make:'Honda', model:'Accord', year:2022,
-    price:15000000, origPrice:null,
-    mileage:'15,000 km', transmission:'Automatic', fuel:'Petrol', location:'Port Harcourt',
-    sold:6, totalStock:10,
-    badges:['new'],
-    views:167, enquiries:14,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/acc1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/acc2/800/550'},
-      {type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/acc3/800/550'}
-    ],
-    desc:'Tokunbo Honda Accord. Extremely neat interior and exterior. Very low mileage. Low fuel consumption.',
-    features:['Push Start','Blind Spot Monitor','Cruise Control','Wireless Charging','Lane Keep']
-  },
-  {
-    id:5, make:'Toyota', model:'Camry', year:2020,
-    price:12500000, origPrice:null,
-    mileage:'55,000 km', transmission:'Automatic', fuel:'Petrol', location:'Ibadan',
-    sold:18, totalStock:20,
-    badges:[], offerText:'Buy today, get free tint installation!', offerExpiry:'This month only',
-    views:201, enquiries:23,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/cam1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/cam2/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/cam3/800/550'}
-    ],
-    desc:'The ever reliable Camry. Ice silver color. Engine and gear in perfect condition. Ready to drive.',
-    features:['Fabric Seats','Bluetooth','Backup Camera','Alloy Wheels','Toyota Safety Sense']
-  },
-  {
-    id:6, make:'Ford', model:'Explorer', year:2018,
-    price:17000000, origPrice:19000000,
-    mileage:'80,000 km', transmission:'Automatic', fuel:'Petrol', location:'Lagos',
-    sold:3, totalStock:4,
-    badges:['offer'], offerText:'₦2M off — only 1 unit remaining!', offerExpiry:'Going fast',
-    views:132, enquiries:12,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/ford1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/ford2/800/550'},
-      {type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/ford3/800/550'}
-    ],
-    desc:'American Spec SUV. Very spacious family car with strong V6 engine. Perfect for big families.',
-    features:['3rd Row Seating','SYNC 3','Parking Sensors','Roof Rails','Trailer Tow']
-  },
-  {
-    id:7, make:'BMW', model:'3 Series', year:2021,
-    price:24500000, origPrice:null,
-    mileage:'22,000 km', transmission:'Automatic', fuel:'Petrol', location:'Lagos',
-    sold:11, totalStock:15,
-    badges:['hot'],
-    views:390, enquiries:35,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/bmw1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/bmw2/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/bmw3/800/550'},
-      {type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/bmw4/800/550'}
-    ],
-    desc:'The ultimate driving machine. Barely used, perfectly maintained. iDrive infotainment fully functional.',
-    features:['M Sport Pack','iDrive 7','Heated Seats','HUD','Parking Assist','Harman Kardon']
-  },
-  {
-    id:8, make:'Toyota', model:'Highlander', year:2022,
-    price:31000000, origPrice:null,
-    mileage:'12,000 km', transmission:'Automatic', fuel:'Petrol', location:'Abuja',
-    sold:5, totalStock:8,
-    badges:['new'],
-    views:278, enquiries:22,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/high1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/high2/800/550'},
-      {type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/high3/800/550'}
-    ],
-    desc:'Almost brand new top-trim Highlander. Every option included. Full warranty still active.',
-    features:['Captain Seats','JBL Audio','Panoramic Moonroof','Pre-Collision','Adaptive Cruise','360 Cam']
-  },
-  {
-    id:9, make:'Infiniti', model:'QX80', year:2019,
-    price:42000000, origPrice:45000000,
-    mileage:'68,000 km', transmission:'Automatic', fuel:'Petrol', location:'Lagos',
-    sold:2, totalStock:3,
-    badges:['offer','hot'], offerText:'Complimentary 6-month servicing included', offerExpiry:'Limited offer',
-    views:512, enquiries:48,
-    media:[
-      {type:'img',src:'https://picsum.photos/seed/qx1/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/qx2/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/qx3/800/550'},
-      {type:'img',src:'https://picsum.photos/seed/qx4/800/550'},
-      {type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/qx5/800/550'}
-    ],
-    desc:'The king of Nigerian roads. Massive presence, V8 power, ultra-luxury interior. Total statement piece.',
-    features:['V8 Engine','Full Leather','Bose Audio','Rear Entertainment','Air Suspension','Hydraulic Control']
-  }
+  {id:1,make:'Mercedes-Benz',model:'C-Class AMG',year:2020,price:18500000,origPrice:20000000,mileage:'45,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',sold:14,totalStock:20,badges:['hot','offer'],offerText:'₦1.5M price drop this week only!',offerExpiry:'Ends Friday',views:342,enquiries:28,media:[{type:'img',src:'https://picsum.photos/seed/benz1/800/550'},{type:'img',src:'https://picsum.photos/seed/benz2/800/550'},{type:'img',src:'https://picsum.photos/seed/benz3/800/550'},{type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/benz4/800/550'}],desc:'Clean Nigerian used Mercedes C-Class. First body, nothing to fix. Perfectly maintained with full service history. Buy and drive.',features:['Sunroof','Leather Seats','Navigation','Reverse Camera','Keyless Entry','Ambient Lighting'],bodyUpgrades:['M-Sport Bodykit','Carbon Fibre Accents','Ceramic Tint','PPF Wrap']},
+  {id:2,make:'Toyota',model:'RAV4 Hybrid',year:2021,price:22000000,origPrice:null,mileage:'30,000 km',transmission:'CVT',fuel:'Hybrid',location:'Abuja',sold:8,totalStock:12,badges:['new','hybrid'],views:218,enquiries:19,media:[{type:'img',src:'https://picsum.photos/seed/rav1/800/550'},{type:'img',src:'https://picsum.photos/seed/rav2/800/550'},{type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/rav3/800/550'}],desc:'Fuel efficient SUV perfect for Nigerian roads. Accident free, alloy wheels, clean fabric interior.',features:['Android Auto','Apple CarPlay','Lane Assist','Eco Mode','Heated Seats','AWD'],bodyUpgrades:['Roof Rack Bars','Running Boards','Window Tint','Mud Guards']},
+  {id:3,make:'Lexus',model:'RX 350',year:2019,price:28000000,origPrice:30500000,mileage:'60,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',sold:22,totalStock:25,badges:['hot','offer'],offerText:'Free first-year insurance included!',offerExpiry:'Limited time',views:485,enquiries:41,media:[{type:'img',src:'https://picsum.photos/seed/lex1/800/550'},{type:'img',src:'https://picsum.photos/seed/lex2/800/550'},{type:'img',src:'https://picsum.photos/seed/lex3/800/550'},{type:'img',src:'https://picsum.photos/seed/lex4/800/550'},{type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/lex5/800/550'}],desc:'Muscle on wheels. V6 engine powerful and reliable. Perfect for Nigerian terrain. Customs duty fully paid.',features:['Panoramic Roof','Mark Levinson Audio','AWD','Ventilated Seats','360 Camera','Pre-Collision'],bodyUpgrades:['F-Sport Body Kit','Ceramic Coating','Window Tint','Lowering Springs','Custom Grille']},
+  {id:4,make:'Honda',model:'Accord',year:2022,price:15000000,origPrice:null,mileage:'15,000 km',transmission:'Automatic',fuel:'Petrol',location:'Port Harcourt',sold:6,totalStock:10,badges:['new'],views:167,enquiries:14,media:[{type:'img',src:'https://picsum.photos/seed/acc1/800/550'},{type:'img',src:'https://picsum.photos/seed/acc2/800/550'},{type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/acc3/800/550'}],desc:'Tokunbo Honda Accord. Extremely neat interior and exterior. Very low mileage. Low fuel consumption.',features:['Push Start','Blind Spot Monitor','Cruise Control','Wireless Charging','Lane Keep'],bodyUpgrades:['Sport Spoiler','Window Tint','Bonnet Stripes','Alloy Rims Upgrade']},
+  {id:5,make:'Toyota',model:'Camry',year:2020,price:12500000,origPrice:null,mileage:'55,000 km',transmission:'Automatic',fuel:'Petrol',location:'Ibadan',sold:18,totalStock:20,badges:[],offerText:'Buy today, get free tint installation!',offerExpiry:'This month',views:201,enquiries:23,media:[{type:'img',src:'https://picsum.photos/seed/cam1/800/550'},{type:'img',src:'https://picsum.photos/seed/cam2/800/550'},{type:'img',src:'https://picsum.photos/seed/cam3/800/550'}],desc:'The ever reliable Camry. Ice silver color. Engine and gear in perfect condition. Ready to drive.',features:['Fabric Seats','Bluetooth','Backup Camera','Alloy Wheels','Toyota Safety Sense'],bodyUpgrades:['Window Tint','Sport Exhaust Tips','Rear Spoiler','Side Skirts']},
+  {id:6,make:'Ford',model:'Explorer',year:2018,price:17000000,origPrice:19000000,mileage:'80,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',sold:3,totalStock:4,badges:['offer'],offerText:'₦2M off — last unit!',offerExpiry:'Going fast',views:132,enquiries:12,media:[{type:'img',src:'https://picsum.photos/seed/ford1/800/550'},{type:'img',src:'https://picsum.photos/seed/ford2/800/550'},{type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/ford3/800/550'}],desc:'American Spec SUV. Very spacious family car with strong V6 engine. Perfect for big families.',features:['3rd Row Seating','SYNC 3','Parking Sensors','Roof Rails','Trailer Tow'],bodyUpgrades:['Lift Kit','Bull Bar','Roof Bars','All-Terrain Tyres','Snorkel Kit']},
+  {id:7,make:'BMW',model:'3 Series',year:2021,price:24500000,origPrice:null,mileage:'22,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',sold:11,totalStock:15,badges:['hot'],views:390,enquiries:35,media:[{type:'img',src:'https://picsum.photos/seed/bmw1/800/550'},{type:'img',src:'https://picsum.photos/seed/bmw2/800/550'},{type:'img',src:'https://picsum.photos/seed/bmw3/800/550'},{type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/bmw4/800/550'}],desc:'The ultimate driving machine. Barely used, perfectly maintained. iDrive infotainment fully functional.',features:['M Sport Pack','iDrive 7','Heated Seats','HUD','Parking Assist','Harman Kardon'],bodyUpgrades:['M4 Conversion Kit','Carbon Fibre Spoiler','BMW Performance Exhaust','Ceramic Window Tint']},
+  {id:8,make:'Toyota',model:'Highlander',year:2022,price:31000000,origPrice:null,mileage:'12,000 km',transmission:'Automatic',fuel:'Petrol',location:'Abuja',sold:5,totalStock:8,badges:['new'],views:278,enquiries:22,media:[{type:'img',src:'https://picsum.photos/seed/high1/800/550'},{type:'img',src:'https://picsum.photos/seed/high2/800/550'},{type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/high3/800/550'}],desc:'Almost brand new top-trim Highlander. Every option included. Full warranty still active.',features:['Captain Seats','JBL Audio','Panoramic Moonroof','Pre-Collision','Adaptive Cruise','360 Cam'],bodyUpgrades:['Black Out Pack','Running Boards','Tow Hitch','Roof Cross Bars','Ceramic Coat']},
+  {id:9,make:'Infiniti',model:'QX80',year:2019,price:42000000,origPrice:45000000,mileage:'68,000 km',transmission:'Automatic',fuel:'Petrol',location:'Lagos',sold:2,totalStock:3,badges:['offer','hot'],offerText:'6-month servicing complimentary!',offerExpiry:'Limited offer',views:512,enquiries:48,media:[{type:'img',src:'https://picsum.photos/seed/qx1/800/550'},{type:'img',src:'https://picsum.photos/seed/qx2/800/550'},{type:'img',src:'https://picsum.photos/seed/qx3/800/550'},{type:'img',src:'https://picsum.photos/seed/qx4/800/550'},{type:'video',src:'https://www.youtube.com/embed/dQw4w9WgXcQ',thumb:'https://picsum.photos/seed/qx5/800/550'}],desc:'The king of Nigerian roads. Massive presence, V8 power, ultra-luxury interior. Total statement piece.',features:['V8 Engine','Full Leather','Bose Audio','Rear Entertainment','Air Suspension','Hydraulic Control'],bodyUpgrades:['Full Body Vinyl Wrap','20" Custom Rims','Air Suspension Upgrade','Chrome Delete Pack','Armour Coating']}
+];
+
+/* ═══════════ DIY GUIDES DATA ═══════════ */
+const diyGuides = [
+  {id:'oil',icon:'fa-oil-can',title:'Engine Oil Change',difficulty:'easy',diffLabel:'Easy — 30 min',intro:'Changing your own engine oil is one of the easiest money-savers. For most Nigerian cars, you should change oil every 5,000 km.',tools:['Oil drain pan','Socket wrench set','New oil filter','New engine oil (check manual for grade)','Funnel','Rags'],steps:['Park on flat ground, warm the engine for 2 min then switch off.','Locate the drain plug under the engine sump and place your pan.','Remove the drain plug with a socket wrench — oil will flow out.','Remove and replace the old oil filter (turn anti-clockwise).','Replace the drain plug (don\'t overtighten).','Pour new oil through the filler cap on top of the engine.','Check the dipstick — fill to the MAX mark. Start engine, check for leaks.'],warn:'Never drain oil immediately after a long drive — engine oil is extremely hot. Wait 10 minutes.'},
+  {id:'brakes',icon:'fa-circle-stop',title:'Brake Pad Replacement',difficulty:'medium',diffLabel:'Medium — 1 hour',intro:'Squealing or grinding when braking means your pads are worn. Replacing them yourself saves ₦10,000–₦30,000 in labour costs.',tools:['Jack & jack stands','Lug wrench','C-clamp or brake piston tool','Socket set','Brake cleaner spray','New brake pads'],steps:['Loosen wheel nuts slightly before jacking the car up.','Raise the car and support on jack stands — never work under a car on a jack alone.','Remove the wheel. Locate the brake calliper and its two bolts.','Slide out the calliper (hang it with wire — don\'t let it dangle by the brake line).','Compress the calliper piston using a C-clamp.','Remove old pads and insert new ones. Reassemble in reverse.','Pump the brake pedal several times before driving to seat the pads.'],warn:'After replacement, test brakes at low speed in an open area before normal driving. Do NOT drive fast immediately.'},
+  {id:'battery',icon:'fa-car-battery',title:'Battery Replacement',difficulty:'easy',diffLabel:'Easy — 15 min',intro:'If your car won\'t start or cranks slowly, the battery may be dead. Replacing it takes about 15 minutes with no special tools.',tools:['Adjustable spanner or 10mm socket','Wire brush','Battery terminal grease','New battery (same CCA rating)'],steps:['Turn off the car completely. Remove the key.','Disconnect the NEGATIVE (black/–) terminal first using a spanner.','Then disconnect the POSITIVE (red/+) terminal.','Remove any battery hold-down clamps, then lift out the old battery.','Clean terminal posts with a wire brush if corroded.','Drop in the new battery. Connect POSITIVE first, then NEGATIVE.','Start the car — reset the clock and radio presets.'],warn:'Never connect positive first on removal — this can cause sparks. Keep sparks and flames away from the battery at all times.'},
+  {id:'tyre',icon:'fa-circle-dot',title:'Tyre Rotation & Pressure',difficulty:'easy',diffLabel:'Easy — 20 min',intro:'Rotating your tyres every 10,000 km extends their life significantly. Proper pressure also improves fuel economy on Nigerian roads.',tools:['Jack & jack stands','Lug wrench','Tyre pressure gauge','Air pump or filling station'],steps:['Check your tyre pressure cold (before driving). Find recommended PSI in your car\'s door jamb sticker.','If pressure is low, fill at any filling station. Don\'t trust their gauges — use your own.','For rotation: jack up one corner at a time, moving front tyres to the rear and vice versa (cross-pattern for non-directional tyres).','Check tread depth — insert a 10 Naira coin into the groove. If you can see the top of the coin, replace the tyre.','Re-check all pressures after rotation.'],warn:'Never do a tyre rotation with the car running. Always use proper jack stands — the jack alone is not safe.'},
+  {id:'airfilter',icon:'fa-wind',title:'Air Filter Replacement',difficulty:'easy',diffLabel:'Easy — 10 min',intro:'A clogged air filter reduces engine performance and fuel economy — very common on Nigerian roads with heavy dust. Costs ₦2,000–₦8,000.',tools:['No tools required for most cars','Flathead screwdriver (some models)','New air filter (match your car model)'],steps:['Open the bonnet and locate the air filter box — usually a large black plastic box near the engine.','Unclip the metal clips or unscrew the wing nuts holding the lid down.','Lift out the old dirty filter. Hold it up to light — if you can\'t see light through it, it\'s done.','Drop in the new filter in the same orientation.','Clip the lid back on firmly.'],warn:'Don\'t run the engine with the air filter box open or missing — dust and debris will enter the engine and cause damage.'},
+  {id:'coolant',icon:'fa-temperature-half',title:'Coolant Top-Up & Flush',difficulty:'medium',diffLabel:'Medium — 45 min',intro:'Overheating is one of the biggest car killers in Nigeria. Keeping your coolant (radiator water) clean and topped up prevents engine damage.',tools:['Coolant flush kit or garden hose','New coolant (pre-mixed or concentrate + distilled water)','Drain bucket','Funnel','Rags'],steps:['Let the engine cool COMPLETELY — minimum 2 hours after driving.','Locate the coolant reservoir (translucent bottle near the radiator) and check the MIN/MAX marks.','For a full flush: locate the radiator drain plug at the bottom of the radiator, place bucket, open it.','Run clean water through until the drained water runs clear.','Close the drain plug, fill with fresh coolant to the MAX line.','Start the engine with the heater on MAX to bleed air from the system. Top up if level drops.'],warn:'NEVER open the radiator cap when the engine is hot — the pressurised steam can cause severe burns. Always wait until cool.'},
+  {id:'wipers',icon:'fa-cloud-rain',title:'Wiper Blade Replacement',difficulty:'easy',diffLabel:'Easy — 5 min',intro:'Streaky wipers during Lagos rains are dangerous. Replace them every 6–12 months. A new pair costs ₦2,000–₦6,000.',tools:['No tools needed','New wiper blades (check your car manual for sizes)'],steps:['Lift the wiper arm away from the windscreen until it clicks upright.','Find the release tab where the blade meets the arm — press it.','Slide the old blade downward off the hook.','Attach the new blade by sliding it onto the hook until it clicks firmly.','Gently lower the arm back onto the windscreen.','Repeat for the other side.'],warn:'Never let a lifted wiper arm snap back without a blade — it can crack your windscreen glass.'},
+  {id:'headlights',icon:'fa-lightbulb',title:'Headlight Bulb Replacement',difficulty:'medium',diffLabel:'Medium — 20 min',intro:'Driving with a dead headlight is illegal and dangerous. Most bulbs cost ₦3,000–₦15,000 and you can fit them yourself.',tools:['New bulb (check manual for H4, H7, H11 etc.)','Clean cotton gloves or cloth','Small screwdriver (some models)'],steps:['Open the bonnet and locate the back of the headlight housing.','Disconnect the electrical connector — press the tab and pull.','Remove the rubber dust cap (twist anti-clockwise).','Unclip the retaining spring or unscrew the retaining ring.','Pull out the old bulb. Handle the new bulb ONLY with a cloth or gloves.','Insert new bulb, replace clip/ring, dust cap, and connector.','Test before closing bonnet.'],warn:'Never touch a halogen bulb glass with bare hands — the oil from your skin creates hot spots that crack the glass and burn out the bulb early.'}
 ];
 
 const fmt = new Intl.NumberFormat('en-NG',{style:'currency',currency:'NGN',maximumFractionDigits:0});
-let activeTab = 'all';
+let activeTab = 'all', galleryStates = {}, modalCarId = null, modalGalIdx = 0;
 
-/* ═══════════════════════════════════════════
-   CARD GALLERY LOGIC
-═══════════════════════════════════════════ */
-const galleryStates = {}; // cardId -> currentIndex
-
+/* ═══════════ GALLERY HELPERS ═══════════ */
 function buildGallery(car, prefix) {
   const total = car.media.length;
-  const hasPrev = total > 1;
-  const slides = car.media.map((m, i) => {
-    if (m.type === 'video') {
-      return `<div class="gallery-slide video-slide" data-idx="${i}">
-        <img src="${m.thumb}" alt="Video preview" style="width:100%;height:100%;object-fit:cover">
-        <div class="play-icon" onclick="openModal(${car.id},${i});event.stopPropagation()">
-          <i class="fa-solid fa-circle-play"></i>
-        </div>
-      </div>`;
-    }
-    return `<div class="gallery-slide" data-idx="${i}">
-      <img src="${m.src}" alt="${car.make}" loading="lazy">
-    </div>`;
+  const slides = car.media.map((m,i) => {
+    if(m.type==='video') return `<div class="gallery-slide video-slide" data-idx="${i}"><img src="${m.thumb}" alt="Video" style="width:100%;height:100%;object-fit:cover"><div class="play-icon" onclick="openModal(${car.id},${i});event.stopPropagation()"><i class="fa-solid fa-circle-play"></i></div></div>`;
+    return `<div class="gallery-slide" data-idx="${i}"><img src="${m.src}" alt="${car.make}" loading="lazy"></div>`;
   }).join('');
-
-  const dots = car.media.map((_,i) =>
-    `<div class="g-dot${i===0?' on':''}" onclick="goSlide('${prefix}',${car.id},${i});event.stopPropagation()"></div>`
-  ).join('');
-
-  return `
-    <div class="gallery" id="gal-${prefix}-${car.id}">
-      <div class="gallery-slides" id="gs-${prefix}-${car.id}">${slides}</div>
-      ${hasPrev ? `<button class="g-arrow g-prev" onclick="goSlide('${prefix}',${car.id},-1,true);event.stopPropagation()"><i class="fa-solid fa-chevron-left"></i></button>
-      <button class="g-arrow g-next" onclick="goSlide('${prefix}',${car.id},1,true);event.stopPropagation()"><i class="fa-solid fa-chevron-right"></i></button>` : ''}
-      <div class="g-dots" id="gd-${prefix}-${car.id}">${dots}</div>
-      <div class="g-count"><i class="fa-solid fa-images"></i>${total}</div>
-    </div>`;
+  const dots = car.media.map((_,i) => `<div class="g-dot${i===0?' on':''}" onclick="goSlide('${prefix}',${car.id},${i},false);event.stopPropagation()"></div>`).join('');
+  return `<div class="gallery" id="gal-${prefix}-${car.id}">
+    <div class="gallery-slides" id="gs-${prefix}-${car.id}">${slides}</div>
+    ${total>1?`<button class="g-arrow g-prev" onclick="goSlide('${prefix}',${car.id},-1,true);event.stopPropagation()"><i class="fa-solid fa-chevron-left"></i></button><button class="g-arrow g-next" onclick="goSlide('${prefix}',${car.id},1,true);event.stopPropagation()"><i class="fa-solid fa-chevron-right"></i></button>`:''}
+    <div class="g-dots" id="gd-${prefix}-${car.id}">${dots}</div>
+    <div class="g-count"><i class="fa-solid fa-images"></i>${total}</div>
+  </div>`;
 }
 
-function goSlide(prefix, id, idxOrDelta, isDelta=false) {
-  const key = `${prefix}-${id}`;
-  if (!galleryStates[key]) galleryStates[key] = 0;
-  const car = cars.find(c=>c.id===id);
-  const total = car.media.length;
-  let next;
-  if (isDelta) next = (galleryStates[key] + idxOrDelta + total) % total;
-  else next = idxOrDelta;
-  galleryStates[key] = next;
-  const slides = document.getElementById(`gs-${prefix}-${id}`);
-  if (slides) slides.style.transform = `translateX(-${next*100}%)`;
-  const dots = document.querySelectorAll(`#gd-${prefix}-${id} .g-dot`);
-  dots.forEach((d,i)=>d.classList.toggle('on', i===next));
+function goSlide(prefix, id, idxOrDelta, isDelta) {
+  const key=`${prefix}-${id}`;
+  if(!galleryStates[key]) galleryStates[key]=0;
+  const car=cars.find(c=>c.id===id), total=car.media.length;
+  let next = isDelta ? (galleryStates[key]+idxOrDelta+total)%total : idxOrDelta;
+  galleryStates[key]=next;
+  const s=document.getElementById(`gs-${prefix}-${id}`); if(s) s.style.transform=`translateX(-${next*100}%)`;
+  document.querySelectorAll(`#gd-${prefix}-${id} .g-dot`).forEach((d,i)=>d.classList.toggle('on',i===next));
 }
 
-// Touch swipe for gallery cards
 function addSwipe(el, onLeft, onRight) {
   let sx=0,sy=0;
   el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
-  el.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-sx;
-    const dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40){dx<0?onLeft():onRight()}
-  });
+  el.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40){dx<0?onLeft():onRight()}});
 }
 
-/* ═══════════════════════════════════════════
-   BADGE HTML
-═══════════════════════════════════════════ */
 function badgeHTML(badges) {
-  return badges.map(b => {
-    if (b==='hot') return `<span class="badge badge-hot"><i class="fa-solid fa-fire"></i>Hot</span>`;
-    if (b==='offer') return `<span class="badge badge-offer"><i class="fa-solid fa-tag"></i>Special Offer</span>`;
-    if (b==='new') return `<span class="badge badge-new"><i class="fa-solid fa-sparkles"></i>New Arrival</span>`;
-    if (b==='hybrid') return `<span class="badge badge-hybrid"><i class="fa-solid fa-leaf"></i>Hybrid</span>`;
+  return (badges||[]).map(b=>{
+    if(b==='hot') return `<span class="badge badge-hot"><i class="fa-solid fa-fire"></i>Hot</span>`;
+    if(b==='offer') return `<span class="badge badge-offer"><i class="fa-solid fa-tag"></i>Offer</span>`;
+    if(b==='new') return `<span class="badge badge-new"><i class="fa-solid fa-sparkles"></i>New</span>`;
+    if(b==='hybrid') return `<span class="badge badge-hybrid"><i class="fa-solid fa-leaf"></i>Hybrid</span>`;
     return '';
   }).join('');
 }
 
-/* ═══════════════════════════════════════════
-   RENDER CARDS
-═══════════════════════════════════════════ */
+/* ═══════════ RENDER CARDS ═══════════ */
 function render(list) {
-  const grid = document.getElementById('carGrid');
-  const empty = document.getElementById('emptyState');
-  const badge = document.getElementById('resultCount');
+  const grid=document.getElementById('carGrid'), empty=document.getElementById('emptyState'), badge=document.getElementById('resultCount');
   grid.innerHTML='';
-  if (!list.length) {
-    grid.style.display='none'; empty.style.display='block';
-    badge.textContent='0 cars'; return;
-  }
-  grid.style.display='grid'; empty.style.display='none';
+  if(!list.length){grid.style.display='none';empty.style.display='block';badge.textContent='0 cars';return}
+  grid.style.display='grid';empty.style.display='none';
   badge.textContent=`${list.length} car${list.length!==1?'s':''} found`;
-
-  list.forEach((c, i) => {
-    const price = fmt.format(c.price);
-    const soldPct = Math.round((c.sold/c.totalStock)*100);
-    const waMsg = encodeURIComponent(`Hi, I'm interested in the ${c.year} ${c.make} ${c.model} at ${price} in ${c.location}. Is it available?`);
-    const isSold = c.sold >= c.totalStock;
-
-    const card = document.createElement('div');
-    card.className = `car-card${isSold?' sold':''}`;
+  list.forEach((c,i)=>{
+    const price=fmt.format(c.price);
+    const soldPct=Math.round((c.sold/c.totalStock)*100);
+    const isSold=c.sold>=c.totalStock;
+    const waMsg=encodeURIComponent(`Hi, I'm interested in the ${c.year} ${c.make} ${c.model} at ${price} in ${c.location}. Is it available?`);
+    const card=document.createElement('div');
+    card.className=`car-card${isSold?' sold':''}`;
     card.style.animationDelay=`${i*.07}s`;
-
-    card.innerHTML = `
-      ${isSold ? `<div class="card-sold-overlay"><div class="sold-stamp">SOLD OUT</div></div>` : ''}
-      <div class="card-badges">${badgeHTML(c.badges||[])}</div>
+    card.innerHTML=`
+      ${isSold?`<div class="card-sold-overlay"><div class="sold-stamp">SOLD OUT</div></div>`:''}
+      <div class="card-badges">${badgeHTML(c.badges)}</div>
       ${buildGallery(c,'card')}
       <div class="card-body">
         <div class="card-make">${c.make}</div>
-        <div class="card-model">${c.model} <span style="font-size:.8rem;font-weight:400;color:var(--muted)">'${String(c.year).slice(2)}</span></div>
+        <div class="card-model">${c.model} <span style="font-size:.78rem;font-weight:400;color:var(--muted)">'${String(c.year).slice(2)}</span></div>
         <div class="card-specs">
           <div class="cs"><i class="fa-solid fa-gauge-high"></i>${c.mileage}</div>
           <div class="cs"><i class="fa-solid fa-gears"></i>${c.transmission}</div>
           <div class="cs"><i class="fa-solid fa-gas-pump"></i>${c.fuel}</div>
         </div>
-        <div class="sold-count">
-          <i class="fa-solid fa-users"></i>${c.sold} sold
-          <div class="sold-bar"><div class="sold-fill" style="width:${soldPct}%"></div></div>
-          <span style="color:var(--muted);font-size:.58rem">${c.totalStock - c.sold} left</span>
+        <div class="card-addons">
+          <span class="addon-pill addon-track" onclick="openModal(${c.id},0,'services');event.stopPropagation()"><i class="fa-solid fa-location-dot"></i>GPS</span>
+          <span class="addon-pill addon-surv" onclick="openModal(${c.id},0,'services');event.stopPropagation()"><i class="fa-solid fa-video"></i>Dashcam</span>
+          <span class="addon-pill addon-body" onclick="openModal(${c.id},0,'upgrades');event.stopPropagation()"><i class="fa-solid fa-paint-roller"></i>Body Kit</span>
         </div>
-        ${c.offerText ? `<div class="offer-strip"><i class="fa-solid fa-tag"></i><div class="offer-strip-text">${c.offerText} <span style="color:var(--muted);font-weight:400">&middot; ${c.offerExpiry}</span></div></div>` : ''}
+        <div class="sold-count"><i class="fa-solid fa-users"></i>${c.sold} sold<div class="sold-bar"><div class="sold-fill" style="width:${soldPct}%"></div></div><span style="color:var(--muted);font-size:.56rem">${c.totalStock-c.sold} left</span></div>
+        ${c.offerText?`<div class="offer-strip"><i class="fa-solid fa-tag"></i><div class="offer-strip-text">${c.offerText} <span style="color:var(--muted);font-weight:400">· ${c.offerExpiry}</span></div></div>`:''}
         <hr class="card-divider">
         <div class="price-row">
-          <div>
-            <div class="card-price-main">${price}</div>
-            ${c.origPrice ? `<div class="card-price-orig">${fmt.format(c.origPrice)}</div>` : ''}
-          </div>
-          ${c.origPrice ? `<div class="offer-badge"><i class="fa-solid fa-arrow-down"></i>Save ${fmt.format(c.origPrice-c.price)}</div>` : ''}
+          <div><div class="card-price-main">${price}</div>${c.origPrice?`<div class="card-price-orig">${fmt.format(c.origPrice)}</div>`:''}</div>
+          ${c.origPrice?`<div class="offer-badge"><i class="fa-solid fa-arrow-down"></i>Save ${fmt.format(c.origPrice-c.price)}</div>`:''}
         </div>
         <div class="card-meta">
-          <div class="card-views"><i class="fa-solid fa-eye"></i>${c.views} views</div>
+          <div class="card-views"><i class="fa-solid fa-eye"></i>${c.views}</div>
           <div class="card-enquiries"><i class="fa-solid fa-comment-dots"></i>${c.enquiries} enquiries</div>
         </div>
         <div class="card-actions">
-          <button class="btn-sm-outline" onclick="openModal(${c.id})"><i class="fa-regular fa-images"></i>Gallery</button>
+          <button class="btn-sm-outline" onclick="openModal(${c.id})"><i class="fa-regular fa-images"></i>View</button>
           <a href="https://wa.me/${WA}?text=${waMsg}" target="_blank" class="btn-wa"><i class="fa-brands fa-whatsapp"></i>Chat Now</a>
         </div>
       </div>`;
-
     grid.appendChild(card);
-
-    // Add swipe
-    const galEl = card.querySelector('.gallery');
-    if (galEl) {
-      addSwipe(galEl,
-        () => goSlide('card', c.id, 1, true),
-        () => goSlide('card', c.id, -1, true)
-      );
-    }
+    const galEl=card.querySelector('.gallery');
+    if(galEl) addSwipe(galEl,()=>goSlide('card',c.id,1,true),()=>goSlide('card',c.id,-1,true));
   });
 }
 
-/* ═══════════════════════════════════════════
-   FILTERS
-═══════════════════════════════════════════ */
-function applyFilters() {
+/* ═══════════ FILTERS ═══════════ */
+function applyFilters(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const loc=document.getElementById('filterLocation').value;
   const pr=document.getElementById('filterPrice').value;
@@ -1595,7 +1196,7 @@ function applyFilters() {
   }));
 }
 
-function setTab(el, tab) {
+function setTab(el,tab){
   activeTab=tab;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   el.classList.add('on');
@@ -1606,39 +1207,36 @@ function setTab(el, tab) {
 ['searchInput','filterLocation','filterPrice','filterFuel'].forEach(id=>{
   const el=document.getElementById(id);
   el.addEventListener('change',applyFilters);
-  if(id==='searchInput')el.addEventListener('input',applyFilters);
+  if(id==='searchInput') el.addEventListener('input',applyFilters);
 });
 
-/* ═══════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════ */
-let modalGalIdx = 0;
-let modalCarId = null;
-
-function openModal(id, startIdx=0) {
-  const c = cars.find(x=>x.id===id);
-  if (!c) return;
-  modalCarId = id;
-  modalGalIdx = startIdx;
-  const price = fmt.format(c.price);
-  const soldPct = Math.round((c.sold/c.totalStock)*100);
-  const isSold = c.sold >= c.totalStock;
-
-  const slides = c.media.map((m,i)=>{
-    if(m.type==='video') return `<div class="mg-slide vslide" data-idx="${i}"><iframe src="${m.src}" allowfullscreen title="Video"></iframe></div>`;
-    return `<div class="mg-slide" data-idx="${i}"><img src="${m.src}" alt="${c.make}" loading="${i===0?'eager':'lazy'}"></div>`;
+/* ═══════════ CAR MODAL ═══════════ */
+function openModal(id, startIdx=0, activeTabId='overview') {
+  const c=cars.find(x=>x.id===id); if(!c) return;
+  modalCarId=id; modalGalIdx=startIdx;
+  const price=fmt.format(c.price), soldPct=Math.round((c.sold/c.totalStock)*100), isSold=c.sold>=c.totalStock;
+  const slides=c.media.map((m,i)=>{
+    if(m.type==='video') return `<div class="mg-slide vslide"><iframe src="${m.src}" allowfullscreen title="Video"></iframe></div>`;
+    return `<div class="mg-slide"><img src="${m.src}" alt="${c.make}" loading="${i===0?'eager':'lazy'}"></div>`;
   }).join('');
+  const dots=c.media.map((_,i)=>`<div class="mg-dot${i===startIdx?' on':''}" onclick="mgGo(${i})"></div>`).join('');
 
-  const dots = c.media.map((_,i)=>`<div class="mg-dot${i===startIdx?' on':''}" onclick="mgGo(${i})"></div>`).join('');
-
-  document.getElementById('modalContent').innerHTML = `
-    <div class="modal-gallery" id="mgal">
-      <div class="modal-badge-row">${badgeHTML(c.badges||[])}</div>
-      <div class="mg-slides" id="mgs" style="transform:translateX(-${startIdx*100}%)">${slides}</div>
-      <div class="mg-arrows">
-        <button onclick="mgGo(-1,true)"><i class="fa-solid fa-chevron-left"></i></button>
-        <button onclick="mgGo(1,true)"><i class="fa-solid fa-chevron-right"></i></button>
+  const upgradeCards=(c.bodyUpgrades||[]).map((u,idx)=>`
+    <div class="bup-card">
+      <img src="https://picsum.photos/seed/${c.id}upg${idx}/400/200" alt="${u}" class="bup-img">
+      <div class="bup-body">
+        <div class="bup-title">${u}</div>
+        <div class="bup-desc">Professional fitment by our partner workshops. Quoted on inspection.</div>
+        <div class="bup-price">Price on request</div>
+        <button class="bup-btn" onclick="enquireUpgrade('${c.make} ${c.model}','${u}')"><i class="fa-brands fa-whatsapp"></i>Get Quote</button>
       </div>
+    </div>`).join('');
+
+  document.getElementById('modalContent').innerHTML=`
+    <div class="modal-gallery" id="mgal">
+      <div class="modal-badge-row">${badgeHTML(c.badges)}</div>
+      <div class="mg-slides" id="mgs" style="transform:translateX(-${startIdx*100}%)">${slides}</div>
+      <div class="mg-arrows"><button onclick="mgGo(-1,true)"><i class="fa-solid fa-chevron-left"></i></button><button onclick="mgGo(1,true)"><i class="fa-solid fa-chevron-right"></i></button></div>
       <div class="mg-dots" id="mgd">${dots}</div>
       <div class="mg-counter" id="mgc">${startIdx+1} / ${c.media.length}</div>
     </div>
@@ -1647,124 +1245,235 @@ function openModal(id, startIdx=0) {
         <div><div class="modal-make">${c.make}</div><div class="modal-name">${c.model}</div></div>
         <div><div class="modal-price">${price}</div>${c.origPrice?`<div class="modal-price-orig">${fmt.format(c.origPrice)}</div>`:''}</div>
       </div>
-      <div class="modal-loc"><i class="fa-solid fa-location-dot"></i>${c.location}, Nigeria &nbsp;·&nbsp; ${c.year}</div>
-      
-      <!-- SOLD COUNT -->
-      <div class="modal-sold">
-        <i class="fa-solid fa-fire-flame-curved"></i>
-        <div class="modal-sold-text">
-          <strong>${c.sold} people already bought this model</strong>
-          <span>${c.totalStock - c.sold} units remaining · ${soldPct}% sold</span>
+      <div class="modal-loc"><i class="fa-solid fa-location-dot"></i>${c.location}, Nigeria · ${c.year}</div>
+
+      <!-- TABS -->
+      <div class="modal-tabs">
+        <div class="modal-tab on" onclick="switchModalTab(this,'overview')">Overview</div>
+        <div class="modal-tab" onclick="switchModalTab(this,'services')"><i class="fa-solid fa-location-dot" style="color:var(--track);margin-right:.25rem"></i>Tracking & Cam</div>
+        <div class="modal-tab" onclick="switchModalTab(this,'upgrades')"><i class="fa-solid fa-paint-roller" style="color:var(--body);margin-right:.25rem"></i>Body Upgrades</div>
+        <div class="modal-tab" onclick="switchModalTab(this,'book')">Book / Enquire</div>
+      </div>
+
+      <!-- OVERVIEW PANEL -->
+      <div class="modal-panel on" id="mp-overview">
+        <div class="modal-sold">
+          <i class="fa-solid fa-fire-flame-curved"></i>
+          <div class="modal-sold-text"><strong>${c.sold} people bought this model</strong><span>${c.totalStock-c.sold} units remaining · ${soldPct}% sold</span></div>
+          <div class="modal-sold-bar"><div class="modal-sold-fill" style="width:${soldPct}%"></div></div>
         </div>
-        <div class="modal-sold-bar"><div class="modal-sold-fill" style="width:${soldPct}%"></div></div>
-      </div>
-      
-      ${c.offerText ? `
-      <!-- SPECIAL OFFER -->
-      <div class="modal-offer">
-        <div class="modal-offer-icon"><i class="fa-solid fa-gift"></i></div>
-        <div class="modal-offer-text">
-          <strong>🎁 Special Offer — ${c.offerExpiry}</strong>
-          <span>${c.offerText}</span>
+        ${c.offerText?`<div class="modal-offer"><div class="modal-offer-icon"><i class="fa-solid fa-gift"></i></div><div class="modal-offer-text"><strong>🎁 Special Offer — ${c.offerExpiry}</strong><span>${c.offerText}</span></div></div>`:''}
+        <div class="modal-specs">
+          <div class="modal-spec"><label>Mileage</label><span>${c.mileage}</span></div>
+          <div class="modal-spec"><label>Transmission</label><span>${c.transmission}</span></div>
+          <div class="modal-spec"><label>Fuel</label><span>${c.fuel}</span></div>
+          <div class="modal-spec"><label>Location</label><span>${c.location}</span></div>
         </div>
-      </div>` : ''}
-      
-      <div class="modal-specs">
-        <div class="modal-spec"><label>Mileage</label><span>${c.mileage}</span></div>
-        <div class="modal-spec"><label>Transmission</label><span>${c.transmission}</span></div>
-        <div class="modal-spec"><label>Fuel Type</label><span>${c.fuel}</span></div>
-        <div class="modal-spec"><label>Location</label><span>${c.location}</span></div>
+        <p class="modal-desc">${c.desc}</p>
+        <div class="modal-feats-label">Included Features</div>
+        <div class="modal-feats">${c.features.map(f=>`<div class="modal-feat"><i class="fa-solid fa-check"></i>${f}</div>`).join('')}</div>
       </div>
-      <p class="modal-desc">${c.desc}</p>
-      <div class="modal-feats-label">Included Features</div>
-      <div class="modal-feats">${c.features.map(f=>`<div class="modal-feat"><i class="fa-solid fa-check"></i>${f}</div>`).join('')}</div>
-      
-      <div class="modal-logistics">
-        <label><i class="fa-solid fa-truck-fast"></i>Arrange Delivery (Optional)</label>
-        <input type="text" class="modal-l-inp" id="delivDest" placeholder="Your state or city (e.g. Kano)">
-        <div class="modal-l-note"><i class="fa-solid fa-info-circle" style="color:var(--amber);margin-right:.3rem"></i>Delivery cost quoted via WhatsApp within 30 min.</div>
+
+      <!-- TRACKING & SURVEILLANCE PANEL -->
+      <div class="modal-panel" id="mp-services">
+        <p style="font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:1.1rem">Add GPS tracking or dashcam surveillance to your <strong>${c.make} ${c.model}</strong> at the time of purchase. Installed by our certified technicians at partner workshops near you.</p>
+        <div class="addon-service-grid">
+          <div class="addon-service-card track">
+            <div class="asc-head"><div class="asc-icon track"><i class="fa-solid fa-location-dot"></i></div><div><div class="asc-title">GPS Tracking</div><div class="asc-sub">Real-time · Anti-theft</div></div></div>
+            <div class="asc-options">
+              <div class="asc-opt">Basic GPS (App only)<span class="asc-opt-price">₦45,000</span></div>
+              <div class="asc-opt">Pro GPS + Engine Cut-Off<span class="asc-opt-price">₦75,000</span></div>
+              <div class="asc-opt">Fleet GPS + SIM bundle<span class="asc-opt-price">₦95,000</span></div>
+            </div>
+            <button class="asc-btn track" onclick="enquireService('GPS Tracking','${c.make} ${c.model}')"><i class="fa-brands fa-whatsapp"></i>Get GPS Installed</button>
+          </div>
+          <div class="addon-service-card surv">
+            <div class="asc-head"><div class="asc-icon surv"><i class="fa-solid fa-video"></i></div><div><div class="asc-title">Dashcam & Surveillance</div><div class="asc-sub">Front · Rear · Interior</div></div></div>
+            <div class="asc-options">
+              <div class="asc-opt">Front dashcam only<span class="asc-opt-price">₦35,000</span></div>
+              <div class="asc-opt">Front + Rear cameras<span class="asc-opt-price">₦65,000</span></div>
+              <div class="asc-opt">Full 4-cam + Cloud storage<span class="asc-opt-price">₦120,000</span></div>
+            </div>
+            <button class="asc-btn surv" onclick="enquireService('Dashcam Surveillance','${c.make} ${c.model}')"><i class="fa-brands fa-whatsapp"></i>Book Dashcam Install</button>
+          </div>
+        </div>
       </div>
-      
-      <button class="modal-wa" onclick="sendEnquiry(${c.id})">
-        <i class="fa-brands fa-whatsapp" style="font-size:1.15rem"></i>
-        ${isSold ? 'Join Waitlist via WhatsApp' : 'Book via WhatsApp'}
-      </button>
-      
-      <div class="modal-share">
-        <button class="share-btn" onclick="copyLink(${c.id})"><i class="fa-solid fa-link"></i>Copy Link</button>
-        <a href="https://wa.me/?text=${encodeURIComponent(`Check out this ${c.year} ${c.make} ${c.model} for ${fmt.format(c.price)} on AutoNaija!`)}" target="_blank" class="share-btn"><i class="fa-brands fa-whatsapp"></i>Share</a>
+
+      <!-- BODY UPGRADES PANEL -->
+      <div class="modal-panel" id="mp-upgrades">
+        <p style="font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:1.1rem">Recommended upgrades for the <strong>${c.make} ${c.model}</strong> — quoted and fitted by our partner workshops across Lagos, Abuja, and Port Harcourt.</p>
+        <div class="body-upgrade-grid">${upgradeCards}</div>
+      </div>
+
+      <!-- BOOK PANEL -->
+      <div class="modal-panel" id="mp-book">
+        <div class="modal-logistics-row">
+          <label><i class="fa-solid fa-truck-fast"></i>Arrange Delivery (Optional)</label>
+          <input type="text" class="modal-l-inp" id="delivDest" placeholder="Your state or city (e.g. Kano)">
+          <div class="modal-l-note"><i class="fa-solid fa-info-circle" style="color:var(--amber);margin-right:.3rem"></i>Delivery cost quoted via WhatsApp within 30 min.</div>
+        </div>
+        <button class="modal-wa" onclick="sendEnquiry(${c.id})">
+          <i class="fa-brands fa-whatsapp" style="font-size:1.1rem"></i>${isSold?'Join Waitlist via WhatsApp':'Book via WhatsApp'}
+        </button>
+        <div class="modal-share">
+          <button class="share-btn" onclick="copyLink(${c.id})"><i class="fa-solid fa-link"></i>Copy Link</button>
+          <a href="https://wa.me/?text=${encodeURIComponent(`Check out this ${c.year} ${c.make} ${c.model} for ${fmt.format(c.price)} on AutoNaija!`)}" target="_blank" class="share-btn"><i class="fa-brands fa-whatsapp"></i>Share</a>
+        </div>
       </div>
     </div>`;
 
+  // activate tab if specified
+  if(activeTabId!=='overview') {
+    setTimeout(()=>{
+      const tab=document.querySelector(`.modal-tab[onclick*="${activeTabId}"]`);
+      if(tab) switchModalTab(tab, activeTabId);
+    },50);
+  }
+
   document.getElementById('modalWrap').classList.add('open');
   document.body.style.overflow='hidden';
+  const mg=document.getElementById('mgal');
+  if(mg) addSwipe(mg,()=>mgGo(1,true),()=>mgGo(-1,true));
+}
 
-  // swipe on modal gallery
-  const mg = document.getElementById('mgal');
-  if(mg) addSwipe(mg, ()=>mgGo(1,true), ()=>mgGo(-1,true));
+function switchModalTab(el, tabId) {
+  document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.modal-panel').forEach(p=>p.classList.remove('on'));
+  const panel=document.getElementById(`mp-${tabId}`); if(panel) panel.classList.add('on');
 }
 
 function mgGo(idxOrDelta, isDelta=false) {
-  const c = cars.find(x=>x.id===modalCarId);
-  if(!c) return;
-  const total = c.media.length;
-  if(isDelta) modalGalIdx = (modalGalIdx + idxOrDelta + total) % total;
-  else modalGalIdx = idxOrDelta;
-  const slides = document.getElementById('mgs');
-  if(slides) slides.style.transform = `translateX(-${modalGalIdx*100}%)`;
+  const c=cars.find(x=>x.id===modalCarId); if(!c) return;
+  const total=c.media.length;
+  if(isDelta) modalGalIdx=(modalGalIdx+idxOrDelta+total)%total;
+  else modalGalIdx=idxOrDelta;
+  const s=document.getElementById('mgs'); if(s) s.style.transform=`translateX(-${modalGalIdx*100}%)`;
   document.querySelectorAll('#mgd .mg-dot').forEach((d,i)=>d.classList.toggle('on',i===modalGalIdx));
-  const counter = document.getElementById('mgc');
-  if(counter) counter.textContent=`${modalGalIdx+1} / ${total}`;
+  const ctr=document.getElementById('mgc'); if(ctr) ctr.textContent=`${modalGalIdx+1} / ${total}`;
 }
 
 function closeModal(e) {
   if(e&&e.target!==document.getElementById('modalWrap'))return;
   document.getElementById('modalWrap').classList.remove('open');
-  document.body.style.overflow='';
-  modalCarId=null;
+  document.body.style.overflow=''; modalCarId=null;
 }
 
 function sendEnquiry(id) {
   const c=cars.find(x=>x.id===id);
   const dest=(document.getElementById('delivDest')||{}).value||'';
-  const price=fmt.format(c.price);
-  const isSold=c.sold>=c.totalStock;
-  let msg=isSold
-    ?`Hi! I'd like to join the waitlist for the ${c.year} ${c.make} ${c.model} (${price}) on AutoNaija. Please notify me when available.`
-    :`Hello! I'm interested in the ${c.year} ${c.make} ${c.model} listed for ${price} on AutoNaija.`;
-  if(dest.trim()&&!isSold) msg+=` I'd like delivery to: ${dest}. Please quote logistics cost.`;
+  const price=fmt.format(c.price), isSold=c.sold>=c.totalStock;
+  let msg=isSold?`Hi! I'd like to join the waitlist for the ${c.year} ${c.make} ${c.model} (${price}) on AutoNaija.`:`Hello! I'm interested in the ${c.year} ${c.make} ${c.model} listed for ${price} on AutoNaija.`;
+  if(dest.trim()&&!isSold) msg+=` I'd like delivery to: ${dest}.`;
   else if(!isSold) msg+=` Please confirm availability.`;
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-function copyLink(id) {
-  const c=cars.find(x=>x.id===id);
-  const text=`${window.location.href}#car-${c.id}`;
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>showToast('Link copied to clipboard!'))}
-  else{showToast('Link: '+text)}
+function enquireService(service, car) {
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I just purchased / I'm interested in a ${car} on AutoNaija and I'd like to add: ${service}. Please advise on availability and pricing.`)}`,'_blank');
+}
+
+function enquireUpgrade(car, upgrade) {
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I'm interested in the "${upgrade}" body upgrade for my ${car}. Please send details and pricing.`)}`,'_blank');
+}
+
+function copyLink(id){
+  const text=`${window.location.href}#car-${id}`;
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>showToast('Link copied!'))}else{showToast(text)}
 }
 
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeModal();document.getElementById('modalWrap').classList.remove('open');document.body.style.overflow=''}
-  if(e.key==='ArrowLeft'&&modalCarId)mgGo(-1,true);
-  if(e.key==='ArrowRight'&&modalCarId)mgGo(1,true);
+  if(e.key==='Escape'){document.getElementById('modalWrap').classList.remove('open');document.getElementById('svcModal').classList.remove('open');document.body.style.overflow='';modalCarId=null}
+  if(e.key==='ArrowLeft'&&modalCarId) mgGo(-1,true);
+  if(e.key==='ArrowRight'&&modalCarId) mgGo(1,true);
 });
 
-/* ═══════════════════════════════════════════
-   MOBILE MENU
-═══════════════════════════════════════════ */
+/* ═══════════ SERVICE MODAL ═══════════ */
+const svcData = {
+  track:{title:'GPS Vehicle Tracking',color:'var(--track)',icon:'fa-location-dot',packages:[{name:'Basic GPS Tracker',price:'₦45,000',features:['Real-time location app','30-day history','Speed alerts']},{name:'Pro GPS + Engine Cut-Off',price:'₦75,000',features:['All Basic features','Remote engine disable','Geo-fence boundaries','SMS alerts']},{name:'Fleet Pro Bundle',price:'₦95,000',features:['All Pro features','Multi-vehicle dashboard','SIM data included 1yr','24/7 monitoring centre']}]},
+  surv:{title:'Dashcam & Surveillance',color:'var(--surv)',icon:'fa-video',packages:[{name:'Single Front Dashcam',price:'₦35,000',features:['170° wide angle','Night vision','Loop recording','Incident lock']},{name:'Front + Rear Dual Cam',price:'₦65,000',features:['All Front features','Rear camera install','Parking surveillance mode','32GB SD card included']},{name:'Full 4-Camera System',price:'₦120,000',features:['Front, rear, 2x interior','Cloud backup','Live stream to phone','Incident auto-upload']}]},
+  body:{title:'Car Body Upgrades',color:'var(--body)',icon:'fa-paint-roller',packages:[{name:'Tint Package',price:'from ₦35,000',features:['Legal grade window film','UV & heat rejection','5-year warranty','All windows included']},{name:'Protection & Wrap',price:'from ₦80,000',features:['PPF clear film install','Partial or full wrap','Colour-change vinyl','Paint protection coat']},{name:'Sport Body Kit',price:'from ₦150,000',features:['Model-specific bodykit','Professional fitment','Primer & respray if needed','Side skirts, spoiler, front lip']}]}
+};
+
+function openSvcModal(type) {
+  const d=svcData[type]; if(!d) return;
+  document.getElementById('svcModalContent').innerHTML=`
+    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem">
+      <div style="width:44px;height:44px;border-radius:10px;background:rgba(0,0,0,.07);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:${d.color}"><i class="fa-solid ${d.icon}"></i></div>
+      <div><div style="font-family:var(--f-display);font-size:1.25rem;font-weight:700">${d.title}</div><div style="font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Select a package to enquire</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.85rem;margin-bottom:1.25rem">
+      ${d.packages.map(pkg=>`
+        <div style="border:1px solid var(--border);border-radius:10px;padding:1.1rem;background:var(--cream);transition:border .2s" onmouseenter="this.style.borderColor='${d.color}'" onmouseleave="this.style.borderColor='var(--border)'">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">
+            <div style="font-family:var(--f-display);font-size:.95rem;font-weight:700">${pkg.name}</div>
+            <div style="font-family:var(--f-mono);font-size:.8rem;font-weight:500;color:${d.color}">${pkg.price}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.3rem;margin-bottom:.75rem">
+            ${pkg.features.map(f=>`<div style="display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:var(--muted)"><i class="fa-solid fa-check" style="color:${d.color};font-size:.6rem"></i>${f}</div>`).join('')}
+          </div>
+          <button onclick="enquireService('${pkg.name} (${d.title})','your vehicle')" style="width:100%;padding:.6rem;border-radius:6px;background:var(--green-wa);color:#fff;border:none;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center;gap:.4rem;cursor:pointer"><i class="fa-brands fa-whatsapp"></i>Enquire on WhatsApp</button>
+        </div>`).join('')}
+    </div>`;
+  document.getElementById('svcModal').classList.add('open');
+}
+
+function closeSvcModal(e) {
+  if(e&&e.target!==document.getElementById('svcModal'))return;
+  document.getElementById('svcModal').classList.remove('open');
+}
+
+/* ═══════════ DIY GUIDE ═══════════ */
+function renderDIY() {
+  const grid=document.getElementById('diyGrid');
+  grid.innerHTML=diyGuides.map(g=>{
+    const diffDots=['easy','medium','hard'].map((d,i)=>{
+      const isOn=(['easy','medium','hard'].indexOf(g.difficulty))>=i;
+      const cls=isOn?(g.difficulty==='hard'?'on hard':g.difficulty==='medium'?'on med':'on'):'';
+      return `<div class="diff-dot ${cls}"></div>`;
+    }).join('');
+    return `
+    <div class="diy-card" id="diy-${g.id}">
+      <div class="diy-header-row" onclick="toggleDIY('${g.id}')">
+        <div class="diy-icon"><i class="fa-solid ${g.icon}"></i></div>
+        <div class="diy-title-wrap">
+          <div class="diy-title">${g.title}</div>
+          <div class="diy-difficulty">${diffDots}<span class="diff-label">${g.diffLabel}</span></div>
+        </div>
+        <i class="fa-solid fa-chevron-down diy-chevron"></i>
+      </div>
+      <div class="diy-body">
+        <div class="diy-content">
+          <p class="diy-intro">${g.intro}</p>
+          <div class="diy-tools">
+            <div class="diy-sub">Tools Needed</div>
+            <div class="diy-tools-list">${g.tools.map(t=>`<span class="tool-chip">${t}</span>`).join('')}</div>
+          </div>
+          <div class="diy-sub" style="margin-top:1rem;margin-bottom:.5rem">Step-by-Step</div>
+          <div class="diy-steps">${g.steps.map((s,i)=>`<div class="diy-step"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></div>`).join('')}</div>
+          <div class="diy-warn"><i class="fa-solid fa-triangle-exclamation"></i><p><strong>Warning: </strong>${g.warn}</p></div>
+          <a href="https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I need help with: ${g.title} on my car. Can you assist?`)}" target="_blank" class="diy-wa-btn"><i class="fa-brands fa-whatsapp"></i>Ask a Mechanic on WhatsApp</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleDIY(id) {
+  const card=document.getElementById(`diy-${id}`); if(!card) return;
+  const isOpen=card.classList.contains('open');
+  document.querySelectorAll('.diy-card.open').forEach(c=>c.classList.remove('open'));
+  if(!isOpen) card.classList.add('open');
+}
+
+/* ═══════════ OTHER ═══════════ */
 function openMenu(){document.getElementById('mMenu').classList.add('open');document.body.style.overflow='hidden'}
 function closeMenu(){document.getElementById('mMenu').classList.remove('open');document.body.style.overflow=''}
-
-/* ═══════════════════════════════════════════
-   LOGISTICS & MAGAZINE
-═══════════════════════════════════════════ */
 function quoteLogistics(){
   const dest=document.getElementById('deliveryCity').value.trim();
   if(!dest){showToast('Please enter a destination city or state.');return}
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I'd like a delivery quote to ${dest}.`)}`,'_blank');
 }
-
 function submitMag(){
   const email=document.getElementById('emailInput').value;
   if(!email||!email.includes('@')){showToast('Please enter a valid email address.');return}
@@ -1777,21 +1486,15 @@ function submitMag(){
     setTimeout(()=>{btn.innerHTML='<i class="fa-solid fa-download"></i> Get Free Guide';btn.disabled=false;document.getElementById('magSuccess').style.display='none'},4000);
   },1500);
 }
-
-/* ═══════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════ */
 function showToast(msg){
   const t=document.getElementById('toast');
   document.getElementById('toastMsg').textContent=msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3500);
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-/* ═══════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════ */
+/* ═══════════ INIT ═══════════ */
 render(cars);
+renderDIY();
 </script>
 </body>
 </html>
